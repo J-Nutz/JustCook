@@ -6,8 +6,7 @@ import java.sql.*;
 
 public class Database
 {
-    //TODO: Add properties for storing username and password
-    private final JdbcConnectionPool connectionPool; // = JdbcConnectionPool.create("jdbc:h2:tcp:localhost/~/JustCookTest;DB_CLOSE_ON_EXIT=TRUE;FILE_LOCK=NO", "JustCook", "justcooking");
+    private final JdbcConnectionPool connectionPool;
 
     public Database(String user, String password)
     {

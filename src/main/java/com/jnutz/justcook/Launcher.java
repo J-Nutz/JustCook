@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 public class Launcher extends Application
 {
     //Load up driver, connect to database and initialize all tables
-    public static Database database;// = new Database();
+    public static Database database;
 
     //Not called on JavaFX Application Thread
     @Override
@@ -18,11 +18,7 @@ public class Launcher extends Application
     {
         super.init();  //Does this need to be called? No implementation in parent class
 
-        //Dotenv env = Dotenv.load();
-
-        Dotenv env = Dotenv.configure()
-                              .directory("./src/main")
-                              .load();
+        Dotenv env = Dotenv.configure().directory("./src/main").load();
 
         database = new Database(env.get("DATABASE_USERNAME"), env.get("DATABASE_PASSWORD"));
     }
