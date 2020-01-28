@@ -24,6 +24,7 @@ public class Login extends BorderPane
     private VBox bottomBox;
     private Label goToNewUserLabel;
     private Button newUserBtn;
+    private Label copyrightLabel;
 
     public Login()
     {
@@ -39,6 +40,7 @@ public class Login extends BorderPane
         bottomBox = new VBox(15);
         goToNewUserLabel = new Label("Don't Have An Account Yet?");
         newUserBtn = new Button("Go Sign Up");
+        copyrightLabel = new Label("Copyright \u00a9 2020 Jonah Stieglitz");
 
         init();
         addComponents();
@@ -57,8 +59,10 @@ public class Login extends BorderPane
         });
 
         topBox.setAlignment(Pos.CENTER);
+        topBox.setPadding(new Insets(30, 0, 30, 0));
         welcomeLabel.setFont(new Font(30));
         loginLabel.setFont(new Font(20));
+        loginLabel.setPadding(new Insets(0, 0, 30, 0));
 
         centerBox.setAlignment(Pos.CENTER);
 
@@ -124,19 +128,20 @@ public class Login extends BorderPane
         });*/
 
         bottomBox.setAlignment(Pos.CENTER);
-        bottomBox.setPadding(new Insets(0, 0, 15, 0));
+        bottomBox.setPadding(new Insets(15, 0, 15, 0));
 
         goToNewUserLabel.setFont(new Font(16));
 
         newUserBtn.setFont(new Font(14));
         //newUserBtn.setOnAction(e -> switchView(getParent(), View.SIGN_UP));
+        copyrightLabel.setPadding(new Insets(20, 0, 0, 0));
     }
 
     private void addComponents()
     {
         topBox.getChildren().addAll(welcomeLabel, loginLabel, new Separator(Orientation.HORIZONTAL));
         centerBox.getChildren().addAll(usernameTF, passwordTF, loginBtn);
-        bottomBox.getChildren().addAll(new Separator(Orientation.HORIZONTAL), goToNewUserLabel, newUserBtn);
+        bottomBox.getChildren().addAll(new Separator(Orientation.HORIZONTAL), goToNewUserLabel, newUserBtn, copyrightLabel);
 
         setTop(topBox);
         setCenter(centerBox);
