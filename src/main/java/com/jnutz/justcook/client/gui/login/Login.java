@@ -1,5 +1,7 @@
 package com.jnutz.justcook.client.gui.login;
 
+import com.jnutz.justcook.database.users.User;
+import com.jnutz.justcook.database.users.UserDAO;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
@@ -10,6 +12,12 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+
+import java.util.Arrays;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import static com.jnutz.justcook.client.util.security.Encryption.encrypt;
 
 public class Login extends BorderPane
 {
@@ -30,6 +38,8 @@ public class Login extends BorderPane
 
     private Font font14 = new Font(14);
     private Font font16 = new Font(16);
+
+    private Timer errorMessageTimer = new Timer();
 
     public Login()
     {
@@ -69,58 +79,45 @@ public class Login extends BorderPane
         loginBtn.setFont(font16);
         loginBtn.setOnAction(event ->
         {
-            String userName = usernameTF.getText();
+            String username = usernameTF.getText();
             char[] password = passwordTF.getText().toCharArray();
 
-            if(userName.isBlank())
+            //Make sure username has input
+            if(!username.isBlank())
             {
-                errorLabel.setText("Must Enter A Username");
-            }
-
-            /*if(!userName.isEmpty() && password.length != 0)
-            {
-                User correctUser = UserDAO.getUser(userName);
-                User attemptedUser = new User();
-
-                if(correctUser != null)
+                //Make sure password has input
+                if(password.length != 0)
                 {
-                    attemptedUser.setUsername(userName);
-                    attemptedUser.setPassword(encrypt(password, correctUser.getSalt()));
-                    attemptedUser.setSalt(correctUser.getSalt());
+                    User correctUser = UserDAO.getUser(username);
 
-                    //String[] loginAttemptResult = InputValidator.validLogin(attemptedUser);
-                    boolean validLogin = true; //Boolean.parseBoolean(loginAttemptResult[0]);
-                    //String loginResultMessage = loginAttemptResult[1];
-
-                    // Set password[] to all zeroes (Security)
-                    Arrays.fill(password, '0');
-
-                    if(validLogin)
+                    //Make sure user with specified username exists
+                    if(correctUser != null)
                     {
-                        //LoggedInUserTable.setLoggedInUser(attemptedUser);
-                        //switchView(getParent(), View.HOME);
+                        //Make sure password matches user
+                        if(Arrays.equals(UserDAO.getUserPassword(username), encrypt(password, correctUser.getSalt())))
+                        {
+                            Arrays.fill(password, '0');
+                            //TODO: Continue to home screen
+                        }
+                        else
+                        {
+                            showErrorMessage("Incorrect Password");
+                        }
                     }
                     else
                     {
-                        //showErrorMessage(centerBox, loginResultMessage);
+                        showErrorMessage("No User Found With That Username");
                     }
                 }
                 else
                 {
-                    //showErrorMessage(centerBox, "User Not Found");
+                    showErrorMessage("Must Enter A Password");
                 }
             }
             else
             {
-                if(userName.isEmpty())
-                {
-                    //showErrorMessage(centerBox, "Username Not Entered");
-                }
-                else if(password.length == 0)
-                {
-                    //showErrorMessage(centerBox, "Password Not Entered");
-                }
-            }*/
+                showErrorMessage("Must Enter A Username");
+            }
         });
 
         errorLabel.setPadding(new Insets(20, 0, 0 , 0));
@@ -146,5 +143,31 @@ public class Login extends BorderPane
         setTop(topBox);
         setCenter(centerBox);
         setBottom(bottomBox);
+    }
+
+    private void showErrorMessage(String errorMessage)
+    {
+        errorLabel.setText(errorMessage);
+
+        errorMessageTimer.schedule(new TimerTask()
+        {
+            @Override
+            public void run()
+            {
+                try
+                {
+                    Thread.sleep(6000);
+                }
+                catch(InterruptedException e)
+                {
+                    e.printStackTrace();
+                }
+                finally
+                {
+                    Platform.runLater(() -> errorLabel.setText(""));
+                    errorMessageTimer.cancel();
+                }
+            }
+        }, 0);
     }
 }

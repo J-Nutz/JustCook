@@ -81,9 +81,36 @@ public class UserDAO
         catch(SQLException e)
         {
             e.printStackTrace();
+            return null;
         }
+    }
 
-        return new User();
+    public static byte[] getUserPassword(String username)
+    {
+        try(Connection connection = database.getConnection();
+            DSLContext database = H2DSL.using(connection, SQLDialect.H2))
+        {
+            Result<Record1<byte[]>> fetchedPassword =
+                    database.select(USERS.PASSWORD)
+                            .from(USERS)
+                            .where(USERS.USERNAME.equal(val(username)))
+                            .limit(1) //TODO: Is this necessary as there will be logic enforcing unique username's?
+                            .fetch();
+
+            if(fetchedPassword.isNotEmpty())
+            {
+                return fetchedPassword.get(1).get(USERS.PASSWORD);
+            }
+            else
+            {
+                return null;
+            }
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public static boolean addUser(User user)
