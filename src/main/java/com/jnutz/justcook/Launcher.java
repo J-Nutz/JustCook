@@ -9,7 +9,6 @@ import javafx.stage.Stage;
 
 public class Launcher extends Application
 {
-    //Load up driver, connect to database and initialize all tables
     public static Database database;
 
     //Not called on JavaFX Application Thread
@@ -20,7 +19,9 @@ public class Launcher extends Application
 
         Dotenv env = Dotenv.configure().directory("./src/main").load();
 
+        //Load up driver, connect to database and initialize all tables
         database = new Database(env.get("DATABASE_USERNAME"), env.get("DATABASE_PASSWORD"));
+        database.initTables();
     }
 
     @Override

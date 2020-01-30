@@ -15,6 +15,7 @@ import org.jooq.Table;
 import org.jooq.impl.SchemaImpl;
 
 import src.main.java.com.jnutz.jooq.DefaultCatalog;
+import src.main.java.com.jnutz.jooq.public_.tables.Employees;
 import src.main.java.com.jnutz.jooq.public_.tables.Users;
 
 
@@ -31,12 +32,17 @@ import src.main.java.com.jnutz.jooq.public_.tables.Users;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Public extends SchemaImpl {
 
-    private static final long serialVersionUID = -1068424705;
+    private static final long serialVersionUID = -874136387;
 
     /**
      * The reference instance of <code>PUBLIC</code>
      */
     public static final Public PUBLIC = new Public();
+
+    /**
+     * The table <code>PUBLIC.Employees</code>.
+     */
+    public final Employees EMPLOYEES = src.main.java.com.jnutz.jooq.public_.tables.Employees.EMPLOYEES;
 
     /**
      * The table <code>PUBLIC.Users</code>.
@@ -65,6 +71,7 @@ public class Public extends SchemaImpl {
 
     private final List<Table<?>> getTables0() {
         return Arrays.<Table<?>>asList(
+            Employees.EMPLOYEES,
             Users.USERS);
     }
 }

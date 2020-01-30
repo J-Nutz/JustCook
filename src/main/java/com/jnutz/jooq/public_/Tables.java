@@ -6,6 +6,7 @@ package src.main.java.com.jnutz.jooq.public_;
 
 import javax.annotation.processing.Generated;
 
+import src.main.java.com.jnutz.jooq.public_.tables.Employees;
 import src.main.java.com.jnutz.jooq.public_.tables.Users;
 
 
@@ -21,6 +22,11 @@ import src.main.java.com.jnutz.jooq.public_.tables.Users;
 )
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Tables {
+
+    /**
+     * The table <code>PUBLIC.Employees</code>.
+     */
+    public static final Employees EMPLOYEES = Employees.EMPLOYEES;
 
     /**
      * The table <code>PUBLIC.Users</code>.

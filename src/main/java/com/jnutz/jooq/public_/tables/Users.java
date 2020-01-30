@@ -4,22 +4,26 @@
 package src.main.java.com.jnutz.jooq.public_.tables;
 
 
-import java.sql.Date;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.annotation.processing.Generated;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Identity;
+import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Record;
-import org.jooq.Row6;
+import org.jooq.Row5;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
 import org.jooq.impl.TableImpl;
 
+import src.main.java.com.jnutz.jooq.public_.Indexes;
 import src.main.java.com.jnutz.jooq.public_.Keys;
 import src.main.java.com.jnutz.jooq.public_.Public;
 import src.main.java.com.jnutz.jooq.public_.tables.records.UsersRecord;
@@ -38,7 +42,7 @@ import src.main.java.com.jnutz.jooq.public_.tables.records.UsersRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Users extends TableImpl<UsersRecord> {
 
-    private static final long serialVersionUID = 897026498;
+    private static final long serialVersionUID = 659166386;
 
     /**
      * The reference instance of <code>PUBLIC.Users</code>
@@ -54,34 +58,29 @@ public class Users extends TableImpl<UsersRecord> {
     }
 
     /**
-     * The column <code>PUBLIC.Users.ID</code>.
+     * The column <code>PUBLIC.Users.UserID</code>.
      */
-    public final TableField<UsersRecord, Long> ID = createField(DSL.name("ID"), org.jooq.impl.SQLDataType.BIGINT.nullable(false).identity(true), this, "");
-
-    /**
-     * The column <code>PUBLIC.Users.FirstName</code>.
-     */
-    public final TableField<UsersRecord, String> FIRSTNAME = createField(DSL.name("FirstName"), org.jooq.impl.SQLDataType.VARCHAR(64), this, "");
-
-    /**
-     * The column <code>PUBLIC.Users.LastName</code>.
-     */
-    public final TableField<UsersRecord, String> LASTNAME = createField(DSL.name("LastName"), org.jooq.impl.SQLDataType.VARCHAR(64), this, "");
-
-    /**
-     * The column <code>PUBLIC.Users.Age</code>.
-     */
-    public final TableField<UsersRecord, Byte> AGE = createField(DSL.name("Age"), org.jooq.impl.SQLDataType.TINYINT, this, "");
-
-    /**
-     * The column <code>PUBLIC.Users.DOB</code>.
-     */
-    public final TableField<UsersRecord, Date> DOB = createField(DSL.name("DOB"), org.jooq.impl.SQLDataType.DATE, this, "");
+    public final TableField<UsersRecord, Short> USERID = createField(DSL.name("UserID"), org.jooq.impl.SQLDataType.SMALLINT.nullable(false).identity(true), this, "");
 
     /**
      * The column <code>PUBLIC.Users.Email</code>.
      */
     public final TableField<UsersRecord, String> EMAIL = createField(DSL.name("Email"), org.jooq.impl.SQLDataType.VARCHAR(254), this, "");
+
+    /**
+     * The column <code>PUBLIC.Users.Username</code>.
+     */
+    public final TableField<UsersRecord, String> USERNAME = createField(DSL.name("Username"), org.jooq.impl.SQLDataType.VARCHAR(64), this, "");
+
+    /**
+     * The column <code>PUBLIC.Users.Salt</code>.
+     */
+    public final TableField<UsersRecord, byte[]> SALT = createField(DSL.name("Salt"), org.jooq.impl.SQLDataType.VARBINARY, this, "");
+
+    /**
+     * The column <code>PUBLIC.Users.Password</code>.
+     */
+    public final TableField<UsersRecord, byte[]> PASSWORD = createField(DSL.name("Password"), org.jooq.impl.SQLDataType.VARBINARY, this, "");
 
     /**
      * Create a <code>PUBLIC.Users</code> table reference
@@ -122,8 +121,23 @@ public class Users extends TableImpl<UsersRecord> {
     }
 
     @Override
-    public Identity<UsersRecord, Long> getIdentity() {
+    public List<Index> getIndexes() {
+        return Arrays.<Index>asList(Indexes.PRIMARY_KEY_4);
+    }
+
+    @Override
+    public Identity<UsersRecord, Short> getIdentity() {
         return Keys.IDENTITY_USERS;
+    }
+
+    @Override
+    public UniqueKey<UsersRecord> getPrimaryKey() {
+        return Keys.CONSTRAINT_4;
+    }
+
+    @Override
+    public List<UniqueKey<UsersRecord>> getKeys() {
+        return Arrays.<UniqueKey<UsersRecord>>asList(Keys.CONSTRAINT_4);
     }
 
     @Override
@@ -153,11 +167,11 @@ public class Users extends TableImpl<UsersRecord> {
     }
 
     // -------------------------------------------------------------------------
-    // Row6 type methods
+    // Row5 type methods
     // -------------------------------------------------------------------------
 
     @Override
-    public Row6<Long, String, String, Byte, Date, String> fieldsRow() {
-        return (Row6) super.fieldsRow();
+    public Row5<Short, String, String, byte[], byte[]> fieldsRow() {
+        return (Row5) super.fieldsRow();
     }
 }

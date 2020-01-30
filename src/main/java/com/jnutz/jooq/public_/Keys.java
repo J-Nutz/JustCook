@@ -7,9 +7,12 @@ package src.main.java.com.jnutz.jooq.public_;
 import javax.annotation.processing.Generated;
 
 import org.jooq.Identity;
+import org.jooq.UniqueKey;
 import org.jooq.impl.Internal;
 
+import src.main.java.com.jnutz.jooq.public_.tables.Employees;
 import src.main.java.com.jnutz.jooq.public_.tables.Users;
+import src.main.java.com.jnutz.jooq.public_.tables.records.EmployeesRecord;
 import src.main.java.com.jnutz.jooq.public_.tables.records.UsersRecord;
 
 
@@ -31,12 +34,15 @@ public class Keys {
     // IDENTITY definitions
     // -------------------------------------------------------------------------
 
-    public static final Identity<UsersRecord, Long> IDENTITY_USERS = Identities0.IDENTITY_USERS;
+    public static final Identity<EmployeesRecord, Short> IDENTITY_EMPLOYEES = Identities0.IDENTITY_EMPLOYEES;
+    public static final Identity<UsersRecord, Short> IDENTITY_USERS = Identities0.IDENTITY_USERS;
 
     // -------------------------------------------------------------------------
     // UNIQUE and PRIMARY KEY definitions
     // -------------------------------------------------------------------------
 
+    public static final UniqueKey<EmployeesRecord> CONSTRAINT_1 = UniqueKeys0.CONSTRAINT_1;
+    public static final UniqueKey<UsersRecord> CONSTRAINT_4 = UniqueKeys0.CONSTRAINT_4;
 
     // -------------------------------------------------------------------------
     // FOREIGN KEY definitions
@@ -48,6 +54,12 @@ public class Keys {
     // -------------------------------------------------------------------------
 
     private static class Identities0 {
-        public static Identity<UsersRecord, Long> IDENTITY_USERS = Internal.createIdentity(Users.USERS, Users.USERS.ID);
+        public static Identity<EmployeesRecord, Short> IDENTITY_EMPLOYEES = Internal.createIdentity(Employees.EMPLOYEES, Employees.EMPLOYEES.USERID);
+        public static Identity<UsersRecord, Short> IDENTITY_USERS = Internal.createIdentity(Users.USERS, Users.USERS.USERID);
+    }
+
+    private static class UniqueKeys0 {
+        public static final UniqueKey<EmployeesRecord> CONSTRAINT_1 = Internal.createUniqueKey(Employees.EMPLOYEES, "CONSTRAINT_1", Employees.EMPLOYEES.USERID);
+        public static final UniqueKey<UsersRecord> CONSTRAINT_4 = Internal.createUniqueKey(Users.USERS, "CONSTRAINT_4", Users.USERS.USERID);
     }
 }

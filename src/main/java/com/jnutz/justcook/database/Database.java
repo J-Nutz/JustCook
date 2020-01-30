@@ -1,5 +1,7 @@
 package com.jnutz.justcook.database;
 
+import com.jnutz.justcook.database.employees.EmployeesTable;
+import com.jnutz.justcook.database.users.UsersTable;
 import org.h2.jdbcx.JdbcConnectionPool;
 
 import java.sql.*;
@@ -25,9 +27,13 @@ public class Database
             System.err.println("Unable To Load Database Driver");
             e.printStackTrace();
         }
+    }
 
+    public void initTables()
+    {
         //TODO: Initialize all tables here?
-        //UsersTable.initUsersTable();
+        UsersTable.initUsersTable();
+        EmployeesTable.initEmployeesTable();
     }
 
     public Connection getConnection() throws SQLException

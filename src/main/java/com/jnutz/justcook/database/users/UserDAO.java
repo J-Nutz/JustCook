@@ -1,8 +1,9 @@
 package com.jnutz.justcook.database.users;
 
-import org.jetbrains.annotations.NotNull;
 import org.jooq.DSLContext;
-import org.jooq.InsertValuesStep5;
+import org.jooq.InsertValuesStep3;
+import org.jooq.Record;
+import org.jooq.Result;
 import org.jooq.util.h2.H2DSL;
 import src.main.java.com.jnutz.jooq.public_.tables.Users;
 import src.main.java.com.jnutz.jooq.public_.tables.records.UsersRecord;
@@ -14,7 +15,7 @@ import java.util.List;
 
 import static com.jnutz.justcook.Launcher.database;
 
-public class UserDAO //implements IUserDAO
+public class UserDAO
 {
     private static final Users USERS = Users.USERS;
 
@@ -50,17 +51,49 @@ public class UserDAO //implements IUserDAO
 
     public static User getUser(String username)
     {
+        try(Connection connection = database.getConnection();
+            DSLContext database = H2DSL.using(connection))
+        {
+            Result<Record> fetchedUser = database.select()
+                                                 .from(USERS)
+                                                 .where(USERS.EMAIL.equal(username))
+                                                 .fetch();
+
+            if(fetchedUser.isNotEmpty())
+            {
+                User user = new User();
+
+                for (Record record : fetchedUser)
+                {
+                    user.setID(record.get(USERS.USERID));
+                    user.setUsername(record.get(USERS.USERNAME));
+                    user.setSalt(record.get(USERS.SALT));
+                    user.setPassword(record.get(USERS.PASSWORD));
+                }
+
+                return user;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+        }
+
         return new User();
     }
 
-    public static boolean addUser(@NotNull User user)
+    public static boolean addUser(User user)
     {
         try(Connection tempConnection =  database.getConnection();
             DSLContext tempDatabaseConnection = H2DSL.using(tempConnection))
         {
-            InsertValuesStep5<UsersRecord, String, String, Byte, Date, String> addUserStep =
-                    tempDatabaseConnection.insertInto(USERS, USERS.FIRSTNAME, USERS.LASTNAME, USERS.AGE, USERS.DOB, USERS.EMAIL)
-                                          .values(user.getFirstName(), user.getLastName(), user.getAge(), user.getDateOfBirth(), user.getEmail());
+            InsertValuesStep3<UsersRecord, String, byte[], byte[]> addUserStep =
+                    tempDatabaseConnection.insertInto(USERS, USERS.USERNAME, USERS.SALT, USERS.PASSWORD)
+                                          .values(user.getUsername(), user.getSalt(), user.getPassword());
 
             return addUserStep.execute() == 1;
         }

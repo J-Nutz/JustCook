@@ -49,10 +49,10 @@ public class Encryption
         }
     }
 
-    private static byte[] addSalt()
+    public static byte[] addSalt()
     {
         SecureRandom random = new SecureRandom();
-        byte[] bytes = new byte[32];
+        byte[] bytes = new byte[8];
         random.nextBytes(bytes);
 
         return bytes;
