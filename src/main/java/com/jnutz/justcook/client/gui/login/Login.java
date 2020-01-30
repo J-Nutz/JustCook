@@ -1,7 +1,5 @@
 package com.jnutz.justcook.client.gui.login;
 
-import com.jnutz.justcook.database.users.User;
-import com.jnutz.justcook.database.users.UserDAO;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
@@ -10,44 +8,31 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-
-import java.util.Arrays;
-
-import static com.jnutz.justcook.client.util.security.Encryption.encrypt;
 
 public class Login extends BorderPane
 {
-    private VBox topBox;
-    private Label welcomeLabel;
-    private Label loginLabel;
+    private VBox topBox = new VBox(5);
+    private Label welcomeLabel = new Label("Welcome To Just Cook!");
+    private Label loginLabel = new Label("Login Below");
 
-    private VBox centerBox;
-    private TextField usernameTF;
-    private PasswordField passwordTF;
-    private Button loginBtn;
+    private VBox centerBox = new VBox(5);
+    private TextField usernameTF = new TextField();
+    private PasswordField passwordTF = new PasswordField();
+    private Button loginBtn = new Button("Login");
+    private Label errorLabel = new Label();
 
-    private VBox bottomBox;
-    private Label goToNewUserLabel;
-    private Button newUserBtn;
-    private Label copyrightLabel;
+    private VBox bottomBox = new VBox(15);
+    private Label goToNewUserLabel = new Label("Don't Have An Account Yet?");
+    private Button newUserBtn = new Button("Go Sign Up");
+    private Label copyrightLabel = new Label("Copyright \u00a9 2020 Jonah Stieglitz & Noah Manders");
+
+    private Font font14 = new Font(14);
+    private Font font16 = new Font(16);
 
     public Login()
     {
-        topBox = new VBox(5);
-        welcomeLabel = new Label("Welcome To Just Cook!");
-        loginLabel = new Label("Login Below");
-
-        centerBox = new VBox(5);
-        usernameTF = new TextField();
-        passwordTF = new PasswordField();
-        loginBtn = new Button("Login");
-
-        bottomBox = new VBox(15);
-        goToNewUserLabel = new Label("Don't Have An Account Yet?");
-        newUserBtn = new Button("Go Sign Up");
-        copyrightLabel = new Label("Copyright \u00a9 2020 Jonah Stieglitz & Noah Manders");
-
         init();
         addComponents();
     }
@@ -74,20 +59,25 @@ public class Login extends BorderPane
 
         usernameTF.setPromptText("Username");
         usernameTF.setMaxWidth(150);
-        usernameTF.setFont(new Font(14));
+        usernameTF.setFont(font14);
 
         passwordTF.setPromptText("Password");
         passwordTF.setMaxWidth(150);
-        passwordTF.setFont(new Font(14));
+        passwordTF.setFont(font14);
 
         loginBtn.setAlignment(Pos.CENTER);
-        loginBtn.setFont(new Font(15));
+        loginBtn.setFont(font16);
         loginBtn.setOnAction(event ->
         {
             String userName = usernameTF.getText();
             char[] password = passwordTF.getText().toCharArray();
 
-            if(!userName.isEmpty() && password.length != 0)
+            if(userName.isBlank())
+            {
+                errorLabel.setText("Must Enter A Username");
+            }
+
+            /*if(!userName.isEmpty() && password.length != 0)
             {
                 User correctUser = UserDAO.getUser(userName);
                 User attemptedUser = new User();
@@ -130,15 +120,19 @@ public class Login extends BorderPane
                 {
                     //showErrorMessage(centerBox, "Password Not Entered");
                 }
-            }
+            }*/
         });
+
+        errorLabel.setPadding(new Insets(20, 0, 0 , 0));
+        errorLabel.setFont(font16);
+        errorLabel.setTextFill(Color.RED);
 
         bottomBox.setAlignment(Pos.CENTER);
         bottomBox.setPadding(new Insets(15, 0, 15, 0));
 
-        goToNewUserLabel.setFont(new Font(16));
+        goToNewUserLabel.setFont(font16);
 
-        newUserBtn.setFont(new Font(14));
+        newUserBtn.setFont(font14);
         //newUserBtn.setOnAction(e -> switchView(getParent(), View.SIGN_UP));
         copyrightLabel.setPadding(new Insets(20, 0, 0, 0));
     }
@@ -146,7 +140,7 @@ public class Login extends BorderPane
     private void addComponents()
     {
         topBox.getChildren().addAll(welcomeLabel, loginLabel, new Separator(Orientation.HORIZONTAL));
-        centerBox.getChildren().addAll(usernameTF, passwordTF, loginBtn);
+        centerBox.getChildren().addAll(usernameTF, passwordTF, loginBtn, errorLabel);
         bottomBox.getChildren().addAll(new Separator(Orientation.HORIZONTAL), goToNewUserLabel, newUserBtn, copyrightLabel);
 
         setTop(topBox);
