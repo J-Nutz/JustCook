@@ -10,14 +10,20 @@ public class User
     public User() {}
 
     //Used when adding a new user to database
-    public User(String username)
+    public User(String username, byte[] salt, byte[] password)
     {
+        this.username = username;
+        this.salt = salt;
+        this.password = password;
     }
 
     //Used when getting a user from database
-    public User(short id)
+    public User(short id, String username, byte[] salt, byte[] password)
     {
         this.id = id;
+        this.username = username;
+        this.salt = salt;
+        this.password = password;
     }
 
     public short getID()

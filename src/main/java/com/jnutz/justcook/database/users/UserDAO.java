@@ -52,11 +52,12 @@ public class UserDAO
         try(Connection connection = database.getConnection();
             DSLContext database = H2DSL.using(connection, SQLDialect.H2))
         {
-            Result<Record> fetchedUser = database.select()
-                                                 .from(USERS)
-                                                 .where(USERS.USERNAME.equal(val(username)))
-                                                 .limit(1)//TODO: Is this necessary as there will be logic enforcing unique username's?
-                                                 .fetch();
+            Result<Record> fetchedUser =
+                    database.select()
+                            .from(USERS)
+                            .where(USERS.USERNAME.equal(val(username)))
+                            .limit(1) //TODO: Is this necessary as there will be logic enforcing unique username's?
+                            .fetch();
 
             if(fetchedUser.isNotEmpty())
             {
@@ -87,14 +88,14 @@ public class UserDAO
 
     public static boolean addUser(User user)
     {
-        try(Connection tempConnection =  database.getConnection();
-            DSLContext tempDatabaseConnection = H2DSL.using(tempConnection, SQLDialect.H2))
+        try(Connection connection =  database.getConnection();
+            DSLContext database = H2DSL.using(connection, SQLDialect.H2))
         {
-            InsertValuesStep3<UsersRecord, String, byte[], byte[]> addUserStep =
-                    tempDatabaseConnection.insertInto(USERS, USERS.USERNAME, USERS.SALT, USERS.PASSWORD)
+            InsertValuesStep3<UsersRecord, String, byte[], byte[]> addUser =
+                    database.insertInto(USERS, USERS.USERNAME, USERS.SALT, USERS.PASSWORD)
                                           .values(user.getUsername(), user.getSalt(), user.getPassword());
 
-            return addUserStep.execute() == 1;
+            return addUser.execute() == 1;
         }
         catch(SQLException e)
         {

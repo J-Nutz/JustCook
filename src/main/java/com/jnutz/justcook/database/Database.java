@@ -14,8 +14,8 @@ public class Database
     {
         //Set up connection pool
         connectionPool = JdbcConnectionPool.create("jdbc:h2:tcp:localhost/~/JustCookTest;DB_CLOSE_ON_EXIT=TRUE;FILE_LOCK=NO", user, password);
-        connectionPool.setMaxConnections(15);
-        connectionPool.setLoginTimeout(15);
+        connectionPool.setMaxConnections(15); //TODO: Base this on the client using the software
+        connectionPool.setLoginTimeout(15); //TODO: More testing on this
 
         //Try to load database driver
         try
@@ -31,7 +31,6 @@ public class Database
 
     public void initTables()
     {
-        //TODO: Initialize all tables here?
         UsersTable.initUsersTable();
         EmployeesTable.initEmployeesTable();
     }
@@ -49,28 +48,6 @@ public class Database
     public int getMaxNumberOfConnections()
     {
         return connectionPool.getMaxConnections();
-    }
-
-    // This statement type is used for any arbitrary type of SQL statement
-    // It is particularly useful with inlined parameters
-    public boolean runStatement(Statement statement)
-    {
-        return false;
-    }
-
-    // This statement type is used for any arbitrary type of SQL statement
-    // It is particularly useful with indexed parameters (JDBC does not support named parameters)
-    public boolean runPreparedStatement(PreparedStatement statement)
-    {
-        return false;
-    }
-
-    // This statement type is used for SQL statements that are "called" rather than "executed"
-    // In particular, this includes calls to stored procedures
-    // Callable statements can register OUT parameters
-    public boolean runCallableStatement(CallableStatement statement)
-    {
-        return false;
     }
 
     public void closeDatabase()

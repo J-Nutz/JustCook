@@ -8,13 +8,13 @@ public class Employee
     private String email;
     private String firstName;
     private String lastName;
-    private Byte age;
+    private byte age;
     private Date dateOfBirth;
 
     public Employee() {}
 
     //Used when adding a new employee to database
-    public Employee(String firstName, String lastName, Byte age, Date dateOfBirth, String email)
+    public Employee(String firstName, String lastName, byte age, Date dateOfBirth, String email)
     {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -24,7 +24,7 @@ public class Employee
     }
 
     //Used when getting a employee from database
-    public Employee(short id, String firstName, String lastName, Byte age, Date dateOfBirth, String email)
+    public Employee(short id, String firstName, String lastName, byte age, Date dateOfBirth, String email)
     {
         this.id = id;
         this.firstName = firstName;
@@ -74,12 +74,12 @@ public class Employee
         this.lastName = lastName;
     }
 
-    public Byte getAge()
+    public byte getAge()
     {
         return age;
     }
 
-    public void setAge(Byte age)
+    public void setAge(byte age)
     {
         this.age = age;
     }

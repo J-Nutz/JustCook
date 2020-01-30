@@ -1,11 +1,9 @@
 package com.jnutz.justcook.database.employees;
 
-import org.jooq.DSLContext;
-import org.jooq.Record;
-import org.jooq.Result;
-import org.jooq.SQLDialect;
+import org.jooq.*;
 import org.jooq.util.h2.H2DSL;
 import src.main.java.com.jnutz.jooq.public_.tables.Employees;
+import src.main.java.com.jnutz.jooq.public_.tables.records.EmployeesRecord;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -43,20 +41,17 @@ public class EmployeeDAO
         return null;
     }
 
-    public static Employee getEmployee(int id)
-    {
-        return null;
-    }
-
     public static Employee getEmployee(short userID)
     {
         try(Connection connection = database.getConnection();
             DSLContext database = H2DSL.using(connection, SQLDialect.H2))
         {
-            Result<Record> fetchedEmployee = database.select()
-                                                     .from(EMPLOYEES)
-                                                     .where(EMPLOYEES.USERID.eq(userID))
-                                                     .fetch();
+            Result<Record> fetchedEmployee =
+                    database.select()
+                            .from(EMPLOYEES)
+                            .where(EMPLOYEES.USERID.eq(userID))
+                            .limit(1) //TODO: Is this necessary as there will be logic enforcing unique username's?
+                            .fetch();
 
             if(fetchedEmployee.isNotEmpty())
             {
@@ -92,7 +87,11 @@ public class EmployeeDAO
         try(Connection connection =  database.getConnection();
             DSLContext database = H2DSL.using(connection, SQLDialect.H2))
         {
-            return true;
+            InsertValuesStep5<EmployeesRecord, String, String, String, Byte, Date> addEmployee =
+                    database.insertInto(EMPLOYEES, EMPLOYEES.EMAIL, EMPLOYEES.FIRSTNAME, EMPLOYEES.LASTNAME, EMPLOYEES.AGE, EMPLOYEES.DATEOFBIRTH)
+                                          .values(employee.getEmail(), employee.getFirstName(), employee.getLastName(), employee.getAge(), employee.getDateOfBirth());
+
+            return addEmployee.execute() == 1;
         }
         catch(SQLException e)
         {
