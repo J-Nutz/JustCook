@@ -4,6 +4,7 @@ import com.jnutz.justcook.client.gui.login.Login;
 import com.jnutz.justcook.database.Database;
 import io.github.cdimascio.dotenv.Dotenv;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -49,6 +50,9 @@ public class Launcher extends Application
 
         //Close database & connections in background
         database.closeDatabase();
+
+        Platform.exit();
+        System.exit(0);
     }
 
     public static void main(String[] args)
