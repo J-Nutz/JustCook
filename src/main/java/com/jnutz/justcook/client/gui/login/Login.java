@@ -32,7 +32,7 @@ public class Login extends BorderPane
     private Label errorLabel = new Label();
 
     private VBox bottomBox = new VBox(15);
-    private Label goToNewUserLabel = new Label("Don't Have An Account Yet?");
+    private Label newUserLabel = new Label("Don't Have An Account Yet?");
     private Button newUserBtn = new Button("Go Sign Up");
     private Label copyrightLabel = new Label("Copyright \u00a9 2020 Jonah Stieglitz & Noah Manders");
 
@@ -127,7 +127,7 @@ public class Login extends BorderPane
         bottomBox.setAlignment(Pos.CENTER);
         bottomBox.setPadding(new Insets(15, 0, 15, 0));
 
-        goToNewUserLabel.setFont(font16);
+        newUserLabel.setFont(font16);
 
         newUserBtn.setFont(font14);
         //newUserBtn.setOnAction(e -> switchView(getParent(), View.SIGN_UP));
@@ -138,7 +138,7 @@ public class Login extends BorderPane
     {
         topBox.getChildren().addAll(welcomeLabel, loginLabel, new Separator(Orientation.HORIZONTAL));
         centerBox.getChildren().addAll(usernameTF, passwordTF, loginBtn, errorLabel);
-        bottomBox.getChildren().addAll(new Separator(Orientation.HORIZONTAL), goToNewUserLabel, newUserBtn, copyrightLabel);
+        bottomBox.getChildren().addAll(new Separator(Orientation.HORIZONTAL), newUserLabel, newUserBtn, copyrightLabel);
 
         setTop(topBox);
         setCenter(centerBox);
@@ -165,7 +165,6 @@ public class Login extends BorderPane
                 finally
                 {
                     Platform.runLater(() -> errorLabel.setText(""));
-                    errorMessageTimer.cancel();
                 }
             }
         }, 0);
