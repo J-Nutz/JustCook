@@ -1,9 +1,6 @@
 package com.jnutz.justcook.database.users;
 
-import org.jooq.DSLContext;
-import org.jooq.InsertValuesStep3;
-import org.jooq.Record;
-import org.jooq.Result;
+import org.jooq.*;
 import org.jooq.util.h2.H2DSL;
 import src.main.java.com.jnutz.jooq.public_.tables.Users;
 import src.main.java.com.jnutz.jooq.public_.tables.records.UsersRecord;
@@ -14,6 +11,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import static com.jnutz.justcook.Launcher.database;
+import static org.jooq.impl.DSL.val;
 
 public class UserDAO
 {
@@ -52,11 +50,12 @@ public class UserDAO
     public static User getUser(String username)
     {
         try(Connection connection = database.getConnection();
-            DSLContext database = H2DSL.using(connection))
+            DSLContext database = H2DSL.using(connection, SQLDialect.H2))
         {
             Result<Record> fetchedUser = database.select()
                                                  .from(USERS)
-                                                 .where(USERS.EMAIL.equal(username))
+                                                 .where(USERS.USERNAME.equal(val(username)))
+                                                 .limit(1)//TODO: Is this necessary as there will be logic enforcing unique username's?
                                                  .fetch();
 
             if(fetchedUser.isNotEmpty())
@@ -89,7 +88,7 @@ public class UserDAO
     public static boolean addUser(User user)
     {
         try(Connection tempConnection =  database.getConnection();
-            DSLContext tempDatabaseConnection = H2DSL.using(tempConnection))
+            DSLContext tempDatabaseConnection = H2DSL.using(tempConnection, SQLDialect.H2))
         {
             InsertValuesStep3<UsersRecord, String, byte[], byte[]> addUserStep =
                     tempDatabaseConnection.insertInto(USERS, USERS.USERNAME, USERS.SALT, USERS.PASSWORD)

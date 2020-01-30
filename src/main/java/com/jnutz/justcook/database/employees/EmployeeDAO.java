@@ -3,6 +3,7 @@ package com.jnutz.justcook.database.employees;
 import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.jooq.Result;
+import org.jooq.SQLDialect;
 import org.jooq.util.h2.H2DSL;
 import src.main.java.com.jnutz.jooq.public_.tables.Employees;
 
@@ -50,7 +51,7 @@ public class EmployeeDAO
     public static Employee getEmployee(short userID)
     {
         try(Connection connection = database.getConnection();
-            DSLContext database = H2DSL.using(connection))
+            DSLContext database = H2DSL.using(connection, SQLDialect.H2))
         {
             Result<Record> fetchedEmployee = database.select()
                                                      .from(EMPLOYEES)
@@ -88,8 +89,8 @@ public class EmployeeDAO
 
     public static boolean addEmployee(Employee employee)
     {
-        try(Connection tempConnection =  database.getConnection();
-            DSLContext tempDatabaseConnection = H2DSL.using(tempConnection))
+        try(Connection connection =  database.getConnection();
+            DSLContext database = H2DSL.using(connection, SQLDialect.H2))
         {
             return true;
         }

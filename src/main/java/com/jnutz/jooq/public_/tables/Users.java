@@ -15,7 +15,7 @@ import org.jooq.Identity;
 import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Record;
-import org.jooq.Row5;
+import org.jooq.Row4;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -42,7 +42,7 @@ import src.main.java.com.jnutz.jooq.public_.tables.records.UsersRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Users extends TableImpl<UsersRecord> {
 
-    private static final long serialVersionUID = 659166386;
+    private static final long serialVersionUID = 1534494165;
 
     /**
      * The reference instance of <code>PUBLIC.Users</code>
@@ -61,11 +61,6 @@ public class Users extends TableImpl<UsersRecord> {
      * The column <code>PUBLIC.Users.UserID</code>.
      */
     public final TableField<UsersRecord, Short> USERID = createField(DSL.name("UserID"), org.jooq.impl.SQLDataType.SMALLINT.nullable(false).identity(true), this, "");
-
-    /**
-     * The column <code>PUBLIC.Users.Email</code>.
-     */
-    public final TableField<UsersRecord, String> EMAIL = createField(DSL.name("Email"), org.jooq.impl.SQLDataType.VARCHAR(254), this, "");
 
     /**
      * The column <code>PUBLIC.Users.Username</code>.
@@ -167,11 +162,11 @@ public class Users extends TableImpl<UsersRecord> {
     }
 
     // -------------------------------------------------------------------------
-    // Row5 type methods
+    // Row4 type methods
     // -------------------------------------------------------------------------
 
     @Override
-    public Row5<Short, String, String, byte[], byte[]> fieldsRow() {
-        return (Row5) super.fieldsRow();
+    public Row4<Short, String, byte[], byte[]> fieldsRow() {
+        return (Row4) super.fieldsRow();
     }
 }
