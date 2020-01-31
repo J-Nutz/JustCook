@@ -1,5 +1,6 @@
 package com.jnutz.justcook.client.gui.login;
 
+import com.jnutz.justcook.client.gui.container.Container;
 import com.jnutz.justcook.database.users.User;
 import com.jnutz.justcook.database.users.UserDAO;
 import javafx.application.Platform;
@@ -17,6 +18,7 @@ import java.util.Arrays;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static com.jnutz.justcook.client.gui.container.Container.switchView;
 import static com.jnutz.justcook.client.util.security.Encryption.encrypt;
 
 public class Login extends BorderPane
@@ -98,6 +100,7 @@ public class Login extends BorderPane
                         {
                             Arrays.fill(password, '0');
                             //TODO: Continue to home screen
+                            //TODO: Store current user
                         }
                         else
                         {
@@ -130,7 +133,7 @@ public class Login extends BorderPane
         newUserLabel.setFont(font16);
 
         newUserBtn.setFont(font14);
-        //newUserBtn.setOnAction(e -> switchView(getParent(), View.SIGN_UP));
+        newUserBtn.setOnAction(e -> switchView(Container.View.BLANK, Container.Position.CENTER));
         copyrightLabel.setPadding(new Insets(20, 0, 0, 0));
     }
 

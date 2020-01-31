@@ -1,6 +1,6 @@
 package com.jnutz.justcook;
 
-import com.jnutz.justcook.client.gui.login.Login;
+import com.jnutz.justcook.client.gui.container.Container;
 import com.jnutz.justcook.database.Database;
 import io.github.cdimascio.dotenv.Dotenv;
 import javafx.application.Application;
@@ -28,14 +28,12 @@ public class Launcher extends Application
     @Override
     public void start(Stage homeStage)
     {
-        Login loginView = new Login();
-
-        Scene homePage = new Scene(loginView);
+        Scene containerScene = new Scene(Container.container);
 
         homeStage.setTitle("Just Cook");
         homeStage.setMaximized(true);
         homeStage.setResizable(false);
-        homeStage.setScene(homePage);
+        homeStage.setScene(containerScene);
 
         homeStage.show();
     }
@@ -51,6 +49,7 @@ public class Launcher extends Application
         //Close database & connections in background
         database.closeDatabase();
 
+        //Terminate application and resources
         Platform.exit();
         System.exit(0);
     }
