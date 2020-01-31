@@ -5,36 +5,38 @@ import com.jnutz.justcook.client.gui.login.Login;
 import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
 
-public class Container//extends BorderPane
+public class Container
 {
     //Set default view to login screen
     public static final BorderPane container = new BorderPane(new Login());
 
-    public static void switchView(View view, Position position)
+    //Set view to specified Pane and specified position in BorderPane
+    public static void switchView(View view, ViewPosition viewPosition)
     {
-        if(position == Position.TOP)
+        if(viewPosition == ViewPosition.TOP)
         {
-            container.setTop(getSelectedView(view));
+            container.setTop(getView(view));
         }
-        else if(position == Position.BOTTOM)
+        else if(viewPosition == ViewPosition.BOTTOM)
         {
-            container.setBottom(getSelectedView(view));
+            container.setBottom(getView(view));
         }
-        else if(position == Position.LEFT)
+        else if(viewPosition == ViewPosition.LEFT)
         {
-            container.setLeft(getSelectedView(view));
+            container.setLeft(getView(view));
         }
-        else if(position == Position.RIGHT)
+        else if(viewPosition == ViewPosition.RIGHT)
         {
-            container.setRight(getSelectedView(view));
+            container.setRight(getView(view));
         }
-        else if(position == Position.CENTER)
+        else if(viewPosition == ViewPosition.CENTER)
         {
-            container.setCenter(getSelectedView(view));
+            container.setCenter(getView(view));
         }
     }
 
-    private static Node getSelectedView(View view)
+    //Get actual Pane object from enum View
+    private static Node getView(View view)
     {
         if(view == View.BLANK)
         {
@@ -50,11 +52,11 @@ public class Container//extends BorderPane
         }
         else
         {
-            //Default to login screen
             return new Login();
         }
     }
 
+    //Enums for all Views of project
     public enum View
     {
         BLANK,
@@ -64,7 +66,8 @@ public class Container//extends BorderPane
         HOME
     }
 
-    public enum Position
+    //Enums for positions in BorderPane
+    public enum ViewPosition
     {
         TOP,
         BOTTOM,

@@ -90,6 +90,7 @@ public class Login extends BorderPane
                 //Make sure password has input
                 if(password.length != 0)
                 {
+                    //Get User info for attempted login
                     User correctUser = UserDAO.getUser(username);
 
                     //Make sure user with specified username exists
@@ -99,7 +100,9 @@ public class Login extends BorderPane
                         if(Arrays.equals(UserDAO.getUserPassword(username), encrypt(password, correctUser.getSalt())))
                         {
                             Arrays.fill(password, '0');
-                            //TODO: Continue to home screen
+
+                            switchView(Container.View.HOME, Container.ViewPosition.CENTER);
+
                             //TODO: Store current user
                         }
                         else
@@ -133,7 +136,7 @@ public class Login extends BorderPane
         newUserLabel.setFont(font16);
 
         newUserBtn.setFont(font14);
-        newUserBtn.setOnAction(e -> switchView(Container.View.BLANK, Container.Position.CENTER));
+        newUserBtn.setOnAction(e -> switchView(Container.View.BLANK, Container.ViewPosition.CENTER));
         copyrightLabel.setPadding(new Insets(20, 0, 0, 0));
     }
 
@@ -152,6 +155,7 @@ public class Login extends BorderPane
     {
         errorLabel.setText(errorMessage);
 
+        //Timer to show error message and then remove after 6 seconds
         errorMessageTimer.schedule(new TimerTask()
         {
             @Override
