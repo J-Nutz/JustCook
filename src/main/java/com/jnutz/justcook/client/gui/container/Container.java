@@ -1,8 +1,6 @@
 package com.jnutz.justcook.client.gui.container;
 
-import com.jnutz.justcook.client.gui.home.Home;
 import com.jnutz.justcook.client.gui.login.Login;
-import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
 
 public class Container
@@ -11,68 +9,27 @@ public class Container
     public static final BorderPane container = new BorderPane(new Login());
 
     //Set view to specified Pane and specified position in BorderPane
-    public static void switchView(View view, ViewPosition viewPosition)
+    public static void switchView(View view, View.Position viewPosition)
     {
-        if(viewPosition == ViewPosition.TOP)
+        if(viewPosition == View.Position.TOP)
         {
-            container.setTop(getView(view));
+            container.setTop(view.getViewPane());
         }
-        else if(viewPosition == ViewPosition.BOTTOM)
+        else if(viewPosition == View.Position.BOTTOM)
         {
-            container.setBottom(getView(view));
+            container.setBottom(view.getViewPane());
         }
-        else if(viewPosition == ViewPosition.LEFT)
+        else if(viewPosition == View.Position.LEFT)
         {
-            container.setLeft(getView(view));
+            container.setLeft(view.getViewPane());
         }
-        else if(viewPosition == ViewPosition.RIGHT)
+        else if(viewPosition == View.Position.RIGHT)
         {
-            container.setRight(getView(view));
+            container.setRight(view.getViewPane());
         }
-        else if(viewPosition == ViewPosition.CENTER)
+        else if(viewPosition == View.Position.CENTER)
         {
-            container.setCenter(getView(view));
+            container.setCenter(view.getViewPane());
         }
-    }
-
-    //Get actual Pane object from enum View
-    private static Node getView(View view)
-    {
-        if(view == View.BLANK)
-        {
-            return null;
-        }
-        else if(view == View.LOGIN)
-        {
-            return new Login();
-        }
-        else if(view == View.HOME)
-        {
-            return new Home();
-        }
-        else
-        {
-            return new Login();
-        }
-    }
-
-    //Enums for all Views of project
-    public enum View
-    {
-        BLANK,
-
-        LOGIN,
-
-        HOME
-    }
-
-    //Enums for positions in BorderPane
-    public enum ViewPosition
-    {
-        TOP,
-        BOTTOM,
-        LEFT,
-        RIGHT,
-        CENTER
     }
 }

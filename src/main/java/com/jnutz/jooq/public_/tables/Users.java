@@ -15,7 +15,7 @@ import org.jooq.Identity;
 import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Record;
-import org.jooq.Row4;
+import org.jooq.Row5;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -42,7 +42,7 @@ import src.main.java.com.jnutz.jooq.public_.tables.records.UsersRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Users extends TableImpl<UsersRecord> {
 
-    private static final long serialVersionUID = 1534494165;
+    private static final long serialVersionUID = -2046431322;
 
     /**
      * The reference instance of <code>PUBLIC.Users</code>
@@ -76,6 +76,11 @@ public class Users extends TableImpl<UsersRecord> {
      * The column <code>PUBLIC.Users.Password</code>.
      */
     public final TableField<UsersRecord, byte[]> PASSWORD = createField(DSL.name("Password"), org.jooq.impl.SQLDataType.VARBINARY, this, "");
+
+    /**
+     * The column <code>PUBLIC.Users.AccessLevel</code>.
+     */
+    public final TableField<UsersRecord, String> ACCESSLEVEL = createField(DSL.name("AccessLevel"), org.jooq.impl.SQLDataType.VARCHAR(16), this, "");
 
     /**
      * Create a <code>PUBLIC.Users</code> table reference
@@ -162,11 +167,11 @@ public class Users extends TableImpl<UsersRecord> {
     }
 
     // -------------------------------------------------------------------------
-    // Row4 type methods
+    // Row5 type methods
     // -------------------------------------------------------------------------
 
     @Override
-    public Row4<Short, String, byte[], byte[]> fieldsRow() {
-        return (Row4) super.fieldsRow();
+    public Row5<Short, String, byte[], byte[], String> fieldsRow() {
+        return (Row5) super.fieldsRow();
     }
 }

@@ -1,6 +1,7 @@
 package com.jnutz.justcook.client.gui.login;
 
-import com.jnutz.justcook.client.gui.container.Container;
+import com.jnutz.justcook.client.gui.container.View;
+import com.jnutz.justcook.database.users.CurrentUser;
 import com.jnutz.justcook.database.users.User;
 import com.jnutz.justcook.database.users.UserDAO;
 import javafx.application.Platform;
@@ -101,9 +102,14 @@ public class Login extends BorderPane
                         {
                             Arrays.fill(password, '0');
 
-                            switchView(Container.View.HOME, Container.ViewPosition.CENTER);
+                            switchView(View.HOME, View.Position.CENTER);
 
-                            //TODO: Store current user
+                            CurrentUser.setId(correctUser.getID());
+                            CurrentUser.setAccessLevel(correctUser.getAccessLevel());
+
+                            //TODO:
+                            // Store access level of user and which panes they should have access to.
+                            // Should only do this on login - Shouldn't be rechecking each time user goes back to the home screen
                         }
                         else
                         {
@@ -136,7 +142,7 @@ public class Login extends BorderPane
         newUserLabel.setFont(font16);
 
         newUserBtn.setFont(font14);
-        newUserBtn.setOnAction(e -> switchView(Container.View.BLANK, Container.ViewPosition.CENTER));
+        newUserBtn.setOnAction(e -> switchView(View.BLANK, View.Position.CENTER));
         copyrightLabel.setPadding(new Insets(20, 0, 0, 0));
     }
 

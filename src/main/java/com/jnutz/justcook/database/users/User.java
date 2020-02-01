@@ -1,11 +1,14 @@
 package com.jnutz.justcook.database.users;
 
+import com.jnutz.justcook.client.gui.container.AccessLevel;
+
 public class User
 {
     private short id; //Primary Key
     private String username; //Foreign key???
     private byte[] salt;
     private byte[] password;
+    private AccessLevel accessLevel;
 
     public User() {}
 
@@ -64,5 +67,20 @@ public class User
     public void setPassword(byte[] password)
     {
         this.password = password;
+    }
+
+    public AccessLevel getAccessLevel()
+    {
+        return accessLevel;
+    }
+
+    public void setAccessLevel(AccessLevel accessLevel)
+    {
+        this.accessLevel = accessLevel;
+    }
+
+    public void setAccessLevel(String accessLevel)
+    {
+        this.accessLevel = AccessLevel.valueOf(accessLevel);
     }
 }

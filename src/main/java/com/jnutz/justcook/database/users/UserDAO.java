@@ -1,5 +1,6 @@
 package com.jnutz.justcook.database.users;
 
+import com.jnutz.justcook.client.gui.container.AccessLevel;
 import org.jooq.*;
 import org.jooq.util.h2.H2DSL;
 import src.main.java.com.jnutz.jooq.public_.tables.Users;
@@ -42,6 +43,11 @@ public class UserDAO
         return null;
     }
 
+    public static List<User> getUsersByAccessLevel(AccessLevel accessLevel)
+    {
+        return null;
+    }
+
     public static User getUser(int id)
     {
         return null;
@@ -69,6 +75,7 @@ public class UserDAO
                     user.setUsername(record.get(USERS.USERNAME));
                     user.setSalt(record.get(USERS.SALT));
                     user.setPassword(record.get(USERS.PASSWORD));
+                    user.setAccessLevel(record.get(USERS.ACCESSLEVEL));
                 }
 
                 return user;
@@ -118,9 +125,9 @@ public class UserDAO
         try(Connection connection =  database.getConnection();
             DSLContext database = H2DSL.using(connection, SQLDialect.H2))
         {
-            InsertValuesStep3<UsersRecord, String, byte[], byte[]> addUser =
-                    database.insertInto(USERS, USERS.USERNAME, USERS.SALT, USERS.PASSWORD)
-                                          .values(user.getUsername(), user.getSalt(), user.getPassword());
+            InsertValuesStep4<UsersRecord, String, byte[], byte[], String> addUser =
+                    database.insertInto(USERS, USERS.USERNAME, USERS.SALT, USERS.PASSWORD, USERS.ACCESSLEVEL)
+                            .values(user.getUsername(), user.getSalt(), user.getPassword(), user.getAccessLevel().name());
 
             return addUser.execute() == 1;
         }

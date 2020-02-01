@@ -28,6 +28,7 @@ public class UsersTable
                        .column("Username", SQLDataType.VARCHAR(64))
                        .column("Salt", SQLDataType.BINARY(8))
                        .column("Password", SQLDataType.BINARY(128)) //TODO: Length
+                       .column("AccessLevel", SQLDataType.VARCHAR(16)) //TODO: Length
                        .constraints(DSL.constraint().primaryKey("UserID"))
                        .execute();
         }
