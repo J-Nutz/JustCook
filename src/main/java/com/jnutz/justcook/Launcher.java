@@ -1,6 +1,6 @@
 package com.jnutz.justcook;
 
-import com.jnutz.justcook.client.gui.container.Container;
+import com.jnutz.justcook.client.gui.container.ViewContainer;
 import com.jnutz.justcook.database.Database;
 import io.github.cdimascio.dotenv.Dotenv;
 import javafx.application.Application;
@@ -18,7 +18,7 @@ public class Launcher extends Application
     {
         super.init();  //Does this need to be called? No implementation in parent class
 
-        //Load env
+        //Load .env file
         Dotenv env = Dotenv.configure().directory("./src/main").load();
 
         //Load up driver, connect to database and initialize all tables
@@ -29,12 +29,12 @@ public class Launcher extends Application
     @Override
     public void start(Stage homeStage)
     {
-        Scene containerScene = new Scene(Container.container);
+        Scene viewContainerScene = new Scene(ViewContainer.viewContainer);
 
         homeStage.setTitle("Just Cook");
         homeStage.setMaximized(true);
         homeStage.setResizable(false);
-        homeStage.setScene(containerScene);
+        homeStage.setScene(viewContainerScene);
 
         homeStage.show();
     }

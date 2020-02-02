@@ -49,4 +49,11 @@ public class CurrentUser
     {
         return accessibleViews;
     }
+
+    public static void logout()
+    {
+        id = -1;
+        accessLevel = null;
+        accessibleViews.clear();
+    }
 }

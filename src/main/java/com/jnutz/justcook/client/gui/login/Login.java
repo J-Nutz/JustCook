@@ -19,7 +19,7 @@ import javafx.scene.text.Font;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import static com.jnutz.justcook.client.gui.container.Container.switchView;
+import static com.jnutz.justcook.client.gui.container.ViewContainer.switchView;
 
 public class Login extends BorderPane
 {
@@ -84,7 +84,6 @@ public class Login extends BorderPane
             //This needs to be called in this order due to the dependency of AccessLevel during loading of home screen
             CurrentUser.setAccessLevel(AccessLevel.MANAGER);
             switchView(PublicView.HOME);
-
 
             /*String username = usernameTF.getText();
             char[] password = passwordTF.getText().toCharArray();
