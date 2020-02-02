@@ -18,6 +18,7 @@ public class Launcher extends Application
     {
         super.init();  //Does this need to be called? No implementation in parent class
 
+        //Load env
         Dotenv env = Dotenv.configure().directory("./src/main").load();
 
         //Load up driver, connect to database and initialize all tables

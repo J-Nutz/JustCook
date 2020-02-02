@@ -1,9 +1,10 @@
 package com.jnutz.justcook.database.users;
 
 import com.jnutz.justcook.client.gui.container.AccessLevel;
-import com.jnutz.justcook.client.gui.container.View;
+import com.jnutz.justcook.client.gui.container.ProtectedView;
 import javafx.scene.layout.Pane;
 
+import java.util.Arrays;
 import java.util.LinkedHashSet;
 
 public class CurrentUser
@@ -17,6 +18,7 @@ public class CurrentUser
     private static short id;
     private static AccessLevel accessLevel;
     private static LinkedHashSet<Pane> permittedViews = new LinkedHashSet<>();
+    private static LinkedHashSet<ProtectedView> accessibleViews = new LinkedHashSet<>();
 
     public static void setId(short newId)
     {
@@ -32,7 +34,8 @@ public class CurrentUser
     {
         accessLevel = newAccessLevel;
 
-        addPermittedViews();
+        setAccessibleViews();
+        //addPermittedViews();
     }
 
     public static AccessLevel getAccessLevel()
@@ -45,11 +48,23 @@ public class CurrentUser
         return permittedViews;
     }
 
+    private static void setAccessibleViews()
+    {
+        accessibleViews.addAll(Arrays.asList(accessLevel.getAccessibleProtectedViews()));
+    }
+
+    public static LinkedHashSet<ProtectedView> getAccessibleViews()
+    {
+        return accessibleViews;
+    }
+
     private static void addPermittedViews()
     {
-        for(View view : accessLevel.getAccessibleViews())
+        for(ProtectedView protectedView : accessLevel.getAccessibleProtectedViews())
         {
-            permittedViews.add(view.getViewPane());
+            System.out.println("Adding View: " + protectedView.name());
+
+            permittedViews.add(protectedView.getViewPane());
         }
     }
 }

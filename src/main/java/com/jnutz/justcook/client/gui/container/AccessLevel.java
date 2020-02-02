@@ -8,25 +8,25 @@ package com.jnutz.justcook.client.gui.container;
 
 public enum AccessLevel
 {
-    ALL(View.values()), //TODO: Is this necessary? Shouldn't managers have access to everything?
+    ALL(ProtectedView.values()), //TODO: Is this necessary? Shouldn't managers have access to everything?
 
-    MANAGER(View.HOME, View.PAYROLL, View.RECIPES),
+    MANAGER(ProtectedView.PAYROLL, ProtectedView.RECIPES),
 
-    EMPLOYEE(View.HOME),
+    EMPLOYEE(),
 
-    COOK(View.HOME, View.RECIPES),
+    COOK(ProtectedView.RECIPES),
 
     ;
 
-    private View[] accessibleViews;
+    private ProtectedView[] accessibleProtectedViews;
 
-    AccessLevel(View... views)
+    AccessLevel(ProtectedView... protectedViews)
     {
-        accessibleViews = views;
+        accessibleProtectedViews = protectedViews;
     }
 
-    public View[] getAccessibleViews()
+    public ProtectedView[] getAccessibleProtectedViews()
     {
-        return accessibleViews;
+        return accessibleProtectedViews;
     }
 }

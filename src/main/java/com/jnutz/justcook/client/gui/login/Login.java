@@ -1,9 +1,11 @@
 package com.jnutz.justcook.client.gui.login;
 
-import com.jnutz.justcook.client.gui.container.View;
+import com.jnutz.justcook.client.gui.container.AccessLevel;
+import com.jnutz.justcook.client.gui.container.ProtectedView;
+import com.jnutz.justcook.client.gui.container.PublicView;
+import com.jnutz.justcook.client.gui.container.ViewPosition;
 import com.jnutz.justcook.database.users.CurrentUser;
-import com.jnutz.justcook.database.users.User;
-import com.jnutz.justcook.database.users.UserDAO;
+
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
@@ -15,12 +17,10 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
-import java.util.Arrays;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import static com.jnutz.justcook.client.gui.container.Container.switchView;
-import static com.jnutz.justcook.client.util.security.Encryption.encrypt;
 
 public class Login extends BorderPane
 {
@@ -82,7 +82,11 @@ public class Login extends BorderPane
         loginBtn.setFont(font16);
         loginBtn.setOnAction(event ->
         {
-            String username = usernameTF.getText();
+            CurrentUser.setAccessLevel(AccessLevel.MANAGER);
+
+            switchView(PublicView.HOME);
+
+            /*String username = usernameTF.getText();
             char[] password = passwordTF.getText().toCharArray();
 
             //Make sure username has input
@@ -129,7 +133,7 @@ public class Login extends BorderPane
             else
             {
                 showErrorMessage("Must Enter A Username");
-            }
+            }*/
         });
 
         errorLabel.setPadding(new Insets(20, 0, 0 , 0));
@@ -142,7 +146,7 @@ public class Login extends BorderPane
         newUserLabel.setFont(font16);
 
         newUserBtn.setFont(font14);
-        newUserBtn.setOnAction(e -> switchView(View.BLANK, View.Position.CENTER));
+        newUserBtn.setOnAction(e -> switchView(ProtectedView.BLANK, ViewPosition.CENTER));
         copyrightLabel.setPadding(new Insets(20, 0, 0, 0));
     }
 
