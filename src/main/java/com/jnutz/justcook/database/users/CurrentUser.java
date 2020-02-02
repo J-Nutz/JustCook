@@ -2,7 +2,6 @@ package com.jnutz.justcook.database.users;
 
 import com.jnutz.justcook.client.gui.container.AccessLevel;
 import com.jnutz.justcook.client.gui.container.ProtectedView;
-import javafx.scene.layout.Pane;
 
 import java.util.Arrays;
 import java.util.LinkedHashSet;
@@ -17,7 +16,6 @@ public class CurrentUser
 
     private static short id;
     private static AccessLevel accessLevel;
-    private static LinkedHashSet<Pane> permittedViews = new LinkedHashSet<>();
     private static LinkedHashSet<ProtectedView> accessibleViews = new LinkedHashSet<>();
 
     public static void setId(short newId)
@@ -35,17 +33,11 @@ public class CurrentUser
         accessLevel = newAccessLevel;
 
         setAccessibleViews();
-        //addPermittedViews();
     }
 
     public static AccessLevel getAccessLevel()
     {
         return accessLevel;
-    }
-
-    public static LinkedHashSet<Pane> getPermittedViews()
-    {
-        return permittedViews;
     }
 
     private static void setAccessibleViews()
@@ -56,15 +48,5 @@ public class CurrentUser
     public static LinkedHashSet<ProtectedView> getAccessibleViews()
     {
         return accessibleViews;
-    }
-
-    private static void addPermittedViews()
-    {
-        for(ProtectedView protectedView : accessLevel.getAccessibleProtectedViews())
-        {
-            System.out.println("Adding View: " + protectedView.name());
-
-            permittedViews.add(protectedView.getViewPane());
-        }
     }
 }

@@ -5,7 +5,6 @@ import com.jnutz.justcook.client.gui.container.ProtectedView;
 import com.jnutz.justcook.client.gui.container.PublicView;
 import com.jnutz.justcook.client.gui.container.ViewPosition;
 import com.jnutz.justcook.database.users.CurrentUser;
-
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
@@ -82,9 +81,10 @@ public class Login extends BorderPane
         loginBtn.setFont(font16);
         loginBtn.setOnAction(event ->
         {
+            //This needs to be called in this order due to the dependency of AccessLevel during loading of home screen
             CurrentUser.setAccessLevel(AccessLevel.MANAGER);
-
             switchView(PublicView.HOME);
+
 
             /*String username = usernameTF.getText();
             char[] password = passwordTF.getText().toCharArray();
