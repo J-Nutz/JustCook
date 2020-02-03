@@ -59,49 +59,51 @@ public class Menu extends VBox
             menuButtonGroup.getToggles().add(menuButton);
             this.getChildren().add(menuButton);
         }
-
+    
         //Special home button implementation
         ToggleButton menuButtonHome = new ToggleButton("HOME");
-
+    
         menuButtonHome.setFont(menuButtonFont);
         menuButtonHome.setPrefWidth(100);
         menuButtonHome.setMinWidth(85);
-
-        menuButtonHome.setOnAction((event) -> ViewContainer.switchPublicView(PublicView.HOME));
-
+        menuButtonHome.setDisable(true);
+    
+        menuButtonHome.setOnAction((event) -> {
+            menuButtonHome.setDisable(true);
+            ViewContainer.switchPublicView(PublicView.HOME);
+        });
+    
         menuButtonGroup.getToggles().add(menuButtonHome);
         this.getChildren().add(0, menuButtonHome);
-
+    
         //Special logout button implementation
         ToggleButton menuButtonLogout = new ToggleButton("LOGOUT");
-
+    
         menuButtonLogout.setFont(menuButtonFont);
         menuButtonLogout.setPrefWidth(100);
         menuButtonLogout.setMinWidth(85);
-
-        menuButtonLogout.setOnAction((event) ->
-                                     {
-                                         menuButtonGroup.selectToggle(null);
-                                         ViewContainer.switchPublicView(PublicView.LOGIN);
-                                     });
+    
+        menuButtonLogout.setOnAction((event) -> {
+            menuButtonGroup.selectToggle(null);
+            ViewContainer.switchPublicView(PublicView.LOGIN);
+            menuButtonHome.setDisable(true);
+        });
 
         menuButtonGroup.getToggles().add(menuButtonLogout);
         this.getChildren().add(menuButtonLogout);
 
         //This Re-enables the previously selected button
-        menuButtonGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) ->
-                                                             {
-                                                                 if(oldValue != newValue)
-                                                                 {
-                                                                     getChildren().forEach(node ->
-                                                                                           {
-                                                                                               if(node instanceof ToggleButton)
-                                                                                               {
-                                                                                                   ToggleButton toEnable = (ToggleButton) node;
-                                                                                                   toEnable.setDisable(false);
-                                                                                               }
-                                                                                           });
-                                                                 }
-                                                             });
+        menuButtonGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
+            if(oldValue != newValue)
+            {
+                getChildren().forEach(node -> {
+                    if(node instanceof ToggleButton)
+                    {
+                        ToggleButton toEnable = (ToggleButton) node;
+                        toEnable.setDisable(false);
+                    }
+                });
+            }
+        });
     }
 }

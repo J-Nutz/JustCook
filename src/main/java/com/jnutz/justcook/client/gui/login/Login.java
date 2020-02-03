@@ -74,12 +74,11 @@ public class Login extends BorderPane
 
         loginBtn.setAlignment(Pos.CENTER);
         loginBtn.setFont(font16);
-        loginBtn.setOnAction(event ->
-                             {
-                                 //This needs to be called in this order due to the dependency of AccessLevel during loading of home screen
-                                 CurrentUser.login((short) 1, AccessLevel.MANAGER);
-
-                                 ViewContainer.switchPublicView(PublicView.HOME);
+        loginBtn.setOnAction(event -> {
+            //This needs to be called in this order due to the dependency of AccessLevel during loading of home screen
+            CurrentUser.login((short) 1, AccessLevel.MANAGER);
+    
+            ViewContainer.switchPublicView(PublicView.HOME);
 
             /*String username = usernameTF.getText();
             char[] password = passwordTF.getText().toCharArray();
