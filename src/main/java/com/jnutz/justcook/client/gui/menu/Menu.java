@@ -13,97 +13,93 @@ import javafx.scene.text.Font;
 
 public class Menu extends VBox
 {
+    private ToggleGroup menuButtonGroup = new ToggleGroup();
+    
+    private ToggleButton menuButtonHome = new ToggleButton("HOME");
+    private ToggleButton menuButtonLogout = new ToggleButton("LOGOUT");
+    
     private Font menuButtonFont = new Font(14);
-
+    
     public Menu()
     {
         init();
         addComponents();
     }
-
+    
     private void init()
     {
-        loadMenuItems();
-
         setSpacing(20);
-        setPadding(new Insets(25));
-    }
-
-    private void addComponents()
-    {
-
-    }
-
-    private void loadMenuItems()
-    {
-        ToggleGroup menuButtonGroup = new ToggleGroup();
-
-        //Adds a menu button for each of the accessible views of the current user
-        for(ProtectedView protectedView : CurrentUser.getAccessibleViews())
-        {
-            ToggleButton menuButton = new ToggleButton(protectedView.name());
-
-            menuButton.setFont(menuButtonFont);
-            menuButton.setPrefWidth(100);
-            menuButton.setMinWidth(85);
-
-            menuButton.setOnAction((event) ->
-                                   {
-                                       System.out.println("Switching View");
-                                       ViewContainer.switchProtectedView(protectedView, ViewPosition.CENTER);
-
-                                       //Disables the currently selected button so it can't be spammed resulting in the selected view being re-created (n) amount of times
-                                       menuButton.setDisable(true);
-                                   });
-
-            menuButtonGroup.getToggles().add(menuButton);
-            this.getChildren().add(menuButton);
-        }
-    
-        //Special home button implementation
-        ToggleButton menuButtonHome = new ToggleButton("HOME");
-    
-        menuButtonHome.setFont(menuButtonFont);
-        menuButtonHome.setPrefWidth(100);
-        menuButtonHome.setMinWidth(85);
+        setPadding(new Insets(45));
+        setStyle("-fx-border-color : black; -fx-border-width : 0 1 0 0 ");
+        
+        loadMenuItems();
+        
+        //Init the "Home" menu button
+        applyStyling(menuButtonHome);
         menuButtonHome.setDisable(true);
-    
         menuButtonHome.setOnAction((event) -> {
             menuButtonHome.setDisable(true);
             ViewContainer.switchPublicView(PublicView.HOME);
         });
-    
-        menuButtonGroup.getToggles().add(menuButtonHome);
-        this.getChildren().add(0, menuButtonHome);
-    
-        //Special logout button implementation
-        ToggleButton menuButtonLogout = new ToggleButton("LOGOUT");
-    
-        menuButtonLogout.setFont(menuButtonFont);
-        menuButtonLogout.setPrefWidth(100);
-        menuButtonLogout.setMinWidth(85);
-    
+        
+        //Init the "Logout" menu button
+        applyStyling(menuButtonLogout);
         menuButtonLogout.setOnAction((event) -> {
             menuButtonGroup.selectToggle(null);
-            ViewContainer.switchPublicView(PublicView.LOGIN);
+            
             menuButtonHome.setDisable(true);
+            
+            ViewContainer.switchPublicView(PublicView.LOGIN);
         });
-
-        menuButtonGroup.getToggles().add(menuButtonLogout);
-        this.getChildren().add(menuButtonLogout);
-
-        //This Re-enables the previously selected button
+        
+        //This re-enables the previously selected button
         menuButtonGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
             if(oldValue != newValue)
             {
-                getChildren().forEach(node -> {
+                this.getChildren().forEach(node -> {
                     if(node instanceof ToggleButton)
                     {
-                        ToggleButton toEnable = (ToggleButton) node;
-                        toEnable.setDisable(false);
+                        node.setDisable(false);
                     }
                 });
             }
         });
+    }
+    
+    private void addComponents()
+    {
+        menuButtonGroup.getToggles().addAll(menuButtonHome, menuButtonLogout);
+        
+        this.getChildren().add(0, menuButtonHome);
+        this.getChildren().add(menuButtonLogout);
+    }
+    
+    //Init the menu buttons that are dependant on the access level of the current user
+    private void loadMenuItems()
+    {
+        //Adds a menu button for each of the accessible views of the current user
+        for(ProtectedView protectedView : CurrentUser.getAccessibleViews())
+        {
+            ToggleButton menuButton = new ToggleButton(protectedView.name());
+            
+            applyStyling(menuButton);
+            menuButton.setOnAction((event) -> {
+                //Disables the currently selected button so it can't be spammed resulting in the selected view being re-created (n) amount of times
+                menuButton.setDisable(true);
+                
+                ViewContainer.switchProtectedView(protectedView, ViewPosition.CENTER);
+            });
+            
+            menuButtonGroup.getToggles().add(menuButton);
+            this.getChildren().add(menuButton);
+        }
+    }
+    
+    private void applyStyling(ToggleButton button)
+    {
+        button.setFont(menuButtonFont);
+        button.setPrefWidth(100);
+        button.setMinWidth(85);
+        button.setFocusTraversable(false);
     }
 }
