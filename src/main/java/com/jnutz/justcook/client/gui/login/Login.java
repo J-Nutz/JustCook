@@ -1,9 +1,6 @@
 package com.jnutz.justcook.client.gui.login;
 
-import com.jnutz.justcook.client.gui.container.AccessLevel;
-import com.jnutz.justcook.client.gui.container.ProtectedView;
-import com.jnutz.justcook.client.gui.container.PublicView;
-import com.jnutz.justcook.client.gui.container.ViewPosition;
+import com.jnutz.justcook.client.gui.container.*;
 import com.jnutz.justcook.database.users.CurrentUser;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -18,8 +15,6 @@ import javafx.scene.text.Font;
 
 import java.util.Timer;
 import java.util.TimerTask;
-
-import static com.jnutz.justcook.client.gui.container.ViewContainer.switchView;
 
 public class Login extends BorderPane
 {
@@ -80,10 +75,11 @@ public class Login extends BorderPane
         loginBtn.setAlignment(Pos.CENTER);
         loginBtn.setFont(font16);
         loginBtn.setOnAction(event ->
-        {
-            //This needs to be called in this order due to the dependency of AccessLevel during loading of home screen
-            CurrentUser.setAccessLevel(AccessLevel.MANAGER);
-            switchView(PublicView.HOME);
+                             {
+                                 //This needs to be called in this order due to the dependency of AccessLevel during loading of home screen
+                                 CurrentUser.login((short) 1, AccessLevel.MANAGER);
+
+                                 ViewContainer.switchPublicView(PublicView.HOME);
 
             /*String username = usernameTF.getText();
             char[] password = passwordTF.getText().toCharArray();
@@ -106,9 +102,6 @@ public class Login extends BorderPane
                             Arrays.fill(password, '0');
 
                             switchView(View.HOME, View.Position.CENTER);
-
-                            CurrentUser.setId(correctUser.getID());
-                            CurrentUser.setAccessLevel(correctUser.getAccessLevel());
 
                             //TODO:
                             // Store access level of user and which panes they should have access to.
@@ -145,7 +138,7 @@ public class Login extends BorderPane
         newUserLabel.setFont(font16);
 
         newUserBtn.setFont(font14);
-        newUserBtn.setOnAction(e -> switchView(ProtectedView.BLANK, ViewPosition.CENTER));
+        newUserBtn.setOnAction(e -> ViewContainer.switchProtectedView(ProtectedView.BLANK, ViewPosition.CENTER));
         copyrightLabel.setPadding(new Insets(20, 0, 0, 0));
     }
 

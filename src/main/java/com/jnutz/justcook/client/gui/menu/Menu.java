@@ -2,6 +2,7 @@ package com.jnutz.justcook.client.gui.menu;
 
 import com.jnutz.justcook.client.gui.container.ProtectedView;
 import com.jnutz.justcook.client.gui.container.PublicView;
+import com.jnutz.justcook.client.gui.container.ViewContainer;
 import com.jnutz.justcook.client.gui.container.ViewPosition;
 import com.jnutz.justcook.database.users.CurrentUser;
 import javafx.geometry.Insets;
@@ -9,8 +10,6 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-
-import static com.jnutz.justcook.client.gui.container.ViewContainer.switchView;
 
 public class Menu extends VBox
 {
@@ -27,7 +26,6 @@ public class Menu extends VBox
         loadMenuItems();
 
         setSpacing(20);
-
         setPadding(new Insets(25));
     }
 
@@ -52,7 +50,7 @@ public class Menu extends VBox
             menuButton.setOnAction((event) ->
                                    {
                                        System.out.println("Switching View");
-                                       switchView(protectedView, ViewPosition.CENTER);
+                                       ViewContainer.switchProtectedView(protectedView, ViewPosition.CENTER);
 
                                        //Disables the currently selected button so it can't be spammed resulting in the selected view being re-created (n) amount of times
                                        menuButton.setDisable(true);
@@ -69,7 +67,7 @@ public class Menu extends VBox
         menuButtonHome.setPrefWidth(100);
         menuButtonHome.setMinWidth(85);
 
-        menuButtonHome.setOnAction((event) -> switchView(PublicView.HOME));
+        menuButtonHome.setOnAction((event) -> ViewContainer.switchPublicView(PublicView.HOME));
 
         menuButtonGroup.getToggles().add(menuButtonHome);
         this.getChildren().add(0, menuButtonHome);
@@ -84,7 +82,7 @@ public class Menu extends VBox
         menuButtonLogout.setOnAction((event) ->
                                      {
                                          menuButtonGroup.selectToggle(null);
-                                         switchView(PublicView.LOGIN);
+                                         ViewContainer.switchPublicView(PublicView.LOGIN);
                                      });
 
         menuButtonGroup.getToggles().add(menuButtonLogout);

@@ -31,8 +31,6 @@ public class CurrentUser
     public static void setAccessLevel(AccessLevel newAccessLevel)
     {
         accessLevel = newAccessLevel;
-
-        setAccessibleViews();
     }
 
     public static AccessLevel getAccessLevel()
@@ -48,6 +46,13 @@ public class CurrentUser
     public static LinkedHashSet<ProtectedView> getAccessibleViews()
     {
         return accessibleViews;
+    }
+
+    public static void login(short id, AccessLevel accessLevel)
+    {
+        setId(id);
+        setAccessLevel(accessLevel);
+        setAccessibleViews();
     }
 
     public static void logout()

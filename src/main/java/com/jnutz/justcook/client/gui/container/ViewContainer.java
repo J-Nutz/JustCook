@@ -12,7 +12,7 @@ public class ViewContainer
     public static final BorderPane viewContainer = new BorderPane(new Login());
 
     //Set view to specified Pane and specified position in BorderPane
-    public static void switchView(ProtectedView protectedView, ViewPosition viewPosition)
+    public static void switchProtectedView(ProtectedView protectedView, ViewPosition viewPosition)
     {
         if(viewPosition == ViewPosition.TOP)
         {
@@ -37,7 +37,7 @@ public class ViewContainer
     }
 
     //Should only be used for switching to views that don't require an access level Ex. Home, Login, Lock Screen
-    public static void switchView(PublicView publicView)
+    public static void switchPublicView(PublicView publicView)
     {
         if(publicView == PublicView.HOME)
         {
