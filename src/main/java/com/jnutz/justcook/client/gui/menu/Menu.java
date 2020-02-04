@@ -30,7 +30,7 @@ public class Menu extends VBox
     {
         setSpacing(20);
         setPadding(new Insets(45));
-        setStyle("-fx-border-color : black; -fx-border-width : 0 1 0 0 ");
+        setStyle("-fx-border-color : black; -fx-border-width : 0 0.25 0 0 ");
         
         loadMenuItems();
         
@@ -84,7 +84,7 @@ public class Menu extends VBox
             
             applyStyling(menuButton);
             menuButton.setOnAction((event) -> {
-                //Disables the currently selected button so it can't be spammed resulting in the selected view being re-created (n) amount of times
+                //Disables the currently selected button so it can't be spam clicked resulting in the selected view being re-created (n) amount of times
                 menuButton.setDisable(true);
                 
                 ViewContainer.switchProtectedView(protectedView, ViewPosition.CENTER);

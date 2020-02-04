@@ -75,7 +75,7 @@ public class Login extends BorderPane
         loginBtn.setAlignment(Pos.CENTER);
         loginBtn.setFont(font16);
         loginBtn.setOnAction(event -> {
-            //This needs to be called in this order due to the dependency of AccessLevel during loading of home screen
+            //This needs to be called in this order due to the dependency of AccessLevel during loading of menu screen
             CurrentUser.login((short) 1, AccessLevel.MANAGER);
     
             ViewContainer.switchPublicView(PublicView.HOME);
@@ -101,10 +101,6 @@ public class Login extends BorderPane
                             Arrays.fill(password, '0');
 
                             switchView(View.HOME, View.Position.CENTER);
-
-                            //TODO:
-                            // Store access level of user and which panes they should have access to.
-                            // Should only do this on login - Shouldn't be rechecking each time user goes back to the home screen
                         }
                         else
                         {
@@ -140,22 +136,29 @@ public class Login extends BorderPane
         newUserBtn.setOnAction(e -> ViewContainer.switchProtectedView(ProtectedView.BLANK, ViewPosition.CENTER));
         copyrightLabel.setPadding(new Insets(20, 0, 0, 0));
     }
-
+    
     private void addComponents()
     {
         topBox.getChildren().addAll(welcomeLabel, loginLabel, new Separator(Orientation.HORIZONTAL));
         centerBox.getChildren().addAll(usernameTF, passwordTF, loginBtn, errorLabel);
         bottomBox.getChildren().addAll(new Separator(Orientation.HORIZONTAL), newUserLabel, newUserBtn, copyrightLabel);
-
+        
         setTop(topBox);
         setCenter(centerBox);
         setBottom(bottomBox);
     }
-
+    
+    private void applyStyling()
+    {
+        //TODO: Figure out if this would be good, If so, find the best way to implement it for each class
+        // Ideas So Far:
+        // Each node gets a one liner like node.setStyle("All the styling to be done in one line");
+    }
+    
     private void showErrorMessage(String errorMessage)
     {
         errorLabel.setText(errorMessage);
-
+        
         //Timer to show error message and then remove after 6 seconds
         errorMessageTimer.schedule(new TimerTask()
         {
