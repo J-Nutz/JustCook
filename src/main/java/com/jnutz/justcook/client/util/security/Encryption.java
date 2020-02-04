@@ -9,27 +9,6 @@ import java.util.Arrays;
 
 public class Encryption
 {
-    //Used for encrypting new passwords at sign up - TODO: Need a way to store the salt to each user
-    public static byte[] encrypt(char[] password)
-    {
-        try
-        {
-            SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA512");
-            PBEKeySpec keySpec = new PBEKeySpec(password, addSalt(), 5000, 512);
-
-            byte[] encrypted = keyFactory.generateSecret(keySpec).getEncoded();
-
-            Arrays.fill(password, '0');
-
-            return encrypted;
-        }
-        catch(NoSuchAlgorithmException | InvalidKeySpecException e)
-        {
-            throw new RuntimeException(e);
-        }
-    }
-
-    //Used for encrypting already generated passwords at login
     public static byte[] encrypt(char[] password, byte[] salt)
     {
         try

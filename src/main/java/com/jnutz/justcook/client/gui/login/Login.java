@@ -2,6 +2,8 @@ package com.jnutz.justcook.client.gui.login;
 
 import com.jnutz.justcook.client.gui.container.*;
 import com.jnutz.justcook.database.users.CurrentUser;
+import com.jnutz.justcook.database.users.User;
+import com.jnutz.justcook.database.users.UserDAO;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
@@ -13,8 +15,12 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
+import java.util.Arrays;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import static com.jnutz.justcook.client.gui.container.ViewContainer.switchPublicView;
+import static com.jnutz.justcook.client.util.security.Encryption.encrypt;
 
 public class Login extends BorderPane
 {
@@ -75,14 +81,9 @@ public class Login extends BorderPane
         loginBtn.setAlignment(Pos.CENTER);
         loginBtn.setFont(font16);
         loginBtn.setOnAction(event -> {
-            //This needs to be called in this order due to the dependency of AccessLevel during loading of menu screen
-            CurrentUser.login((short) 1, AccessLevel.MANAGER);
-    
-            ViewContainer.switchPublicView(PublicView.HOME);
-
-            /*String username = usernameTF.getText();
+            String username = usernameTF.getText();
             char[] password = passwordTF.getText().toCharArray();
-
+    
             //Make sure username has input
             if(!username.isBlank())
             {
@@ -91,16 +92,19 @@ public class Login extends BorderPane
                 {
                     //Get User info for attempted login
                     User correctUser = UserDAO.getUser(username);
-
+    
                     //Make sure user with specified username exists
                     if(correctUser != null)
                     {
                         //Make sure password matches user
-                        if(Arrays.equals(UserDAO.getUserPassword(username), encrypt(password, correctUser.getSalt())))
+                        if(Arrays.equals(correctUser.getPassword(), encrypt(password, correctUser.getSalt())))
                         {
-                            Arrays.fill(password, '0');
-
-                            switchView(View.HOME, View.Position.CENTER);
+                            //Arrays.fill(password, '0');
+        
+                            //This needs to be called in this order due to the dependency of AccessLevel during loading of menu screen
+                            CurrentUser.login((short) 1, AccessLevel.MANAGER);
+        
+                            switchPublicView(PublicView.HOME);
                         }
                         else
                         {
@@ -120,7 +124,7 @@ public class Login extends BorderPane
             else
             {
                 showErrorMessage("Must Enter A Username");
-            }*/
+            }
         });
 
         errorLabel.setPadding(new Insets(20, 0, 0 , 0));

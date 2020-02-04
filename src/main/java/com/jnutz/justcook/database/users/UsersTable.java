@@ -1,5 +1,6 @@
 package com.jnutz.justcook.database.users;
 
+import com.jnutz.justcook.client.gui.container.AccessLevel;
 import org.jooq.DSLContext;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
@@ -10,6 +11,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import static com.jnutz.justcook.Launcher.database;
+import static com.jnutz.justcook.client.util.security.Encryption.addSalt;
+import static com.jnutz.justcook.client.util.security.Encryption.encrypt;
 
 public class UsersTable
 {
@@ -21,16 +24,17 @@ public class UsersTable
             //Instead of having to manually do it each time table is changed
             databaseDSL.dropTableIfExists("Users")
                        .execute();
-
+    
             //TODO: What is the overhead of calling this each time the application is launched?
-            databaseDSL.createTableIfNotExists("Users")
-                       .column("UserID", SQLDataType.SMALLINT.identity(true)) //Range of -32,768 to 32,767 - TODO: UserID or just ID?
-                       .column("Username", SQLDataType.VARCHAR(64))
-                       .column("Salt", SQLDataType.BINARY(8))
-                       .column("Password", SQLDataType.BINARY(128)) //TODO: Length
+            databaseDSL.createTableIfNotExists("Users").column("ID", SQLDataType.SMALLINT.identity(true)) //Range of -32,768 to 32,767 - TODO: UserID or just ID?
+                       .column("Username", SQLDataType.VARCHAR(64)).column("Salt", SQLDataType.BINARY) //TODO: Length
+                       .column("Password", SQLDataType.BINARY) //TODO: Length
                        .column("AccessLevel", SQLDataType.VARCHAR(16)) //TODO: Length
-                       .constraints(DSL.constraint().primaryKey("UserID"))
-                       .execute();
+                       .constraints(DSL.constraint().primaryKey("ID")).execute();
+    
+            byte[] salt = addSalt();
+    
+            UserDAO.addUser(new User("Jonah", salt, encrypt(new char[] {'1', '2', '3', '4'}, salt), AccessLevel.MANAGER));
         }
         catch(DataAccessException | SQLException e)
         {

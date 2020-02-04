@@ -59,25 +59,22 @@ public class UserDAO
             DSLContext database = H2DSL.using(connection, SQLDialect.H2))
         {
             Result<Record> fetchedUser =
-                    database.select()
-                            .from(USERS)
-                            .where(USERS.USERNAME.equal(val(username)))
+                    database.select().from(USERS).where(USERS.USERNAME.eq(username))
                             .limit(1) //TODO: Is this necessary as there will be logic enforcing unique username's?
                             .fetch();
 
             if(fetchedUser.isNotEmpty())
             {
                 User user = new User();
-
-                for (Record record : fetchedUser)
-                {
-                    user.setID(record.get(USERS.USERID));
-                    user.setUsername(record.get(USERS.USERNAME));
-                    user.setSalt(record.get(USERS.SALT));
-                    user.setPassword(record.get(USERS.PASSWORD));
-                    user.setAccessLevel(record.get(USERS.ACCESSLEVEL));
-                }
-
+    
+                Record record = fetchedUser.get(0);
+    
+                user.setID(record.get(USERS.ID));
+                user.setUsername(record.get(USERS.USERNAME));
+                user.setSalt(record.get(USERS.SALT));
+                user.setPassword(record.get(USERS.PASSWORD));
+                user.setAccessLevel(record.get(USERS.ACCESSLEVEL));
+    
                 return user;
             }
             else
@@ -106,7 +103,7 @@ public class UserDAO
 
             if(fetchedPassword.isNotEmpty())
             {
-                return fetchedPassword.get(1).get(USERS.PASSWORD);
+                return fetchedPassword.get(0).get(USERS.PASSWORD);
             }
             else
             {
