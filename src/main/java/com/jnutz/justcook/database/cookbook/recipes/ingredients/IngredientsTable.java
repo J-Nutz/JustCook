@@ -23,9 +23,11 @@ public class IngredientsTable
             databaseDSL.dropTableIfExists("Ingredients").execute();
     
             //TODO: What is the overhead of calling this each time the application is launched?
-            databaseDSL.createTableIfNotExists("Ingredients").column("Id", SQLDataType.SMALLINT.identity(true)) //This would be the Id of the actual 'Item' in 'Inventory'
+            databaseDSL.createTableIfNotExists("Ingredients")
+                       .column("Id", SQLDataType.SMALLINT.identity(
+                               true)) //This would be the Id of the actual 'Item' in 'Inventory'
                        .column("Name", SQLDataType.VARCHAR(32)) //TODO: Length
-                       .column("Type", SQLDataType.VARCHAR(16)) //TODO: Length
+                       .column("Group", SQLDataType.VARCHAR(16)) //TODO: Length
                        .column("Measurement", SQLDataType.VARCHAR(8)) //TODO: Length
                        //.column("Stock_Amount", SQLDataType.SMALLINT) //Should get the actual amount using Id at view time
                        .constraints(DSL.constraint().primaryKey("Id")).execute();

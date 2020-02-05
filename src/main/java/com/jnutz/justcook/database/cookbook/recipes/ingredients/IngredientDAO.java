@@ -21,33 +21,43 @@ public class IngredientDAO
     
     public static boolean addIngredient(Ingredient ingredient)
     {
-        try(Connection connection = database.getConnection(); DSLContext database = H2DSL.using(connection, SQLDialect.H2))
+        try(Connection connection = database.getConnection();
+            DSLContext database = H2DSL.using(connection, SQLDialect.H2))
         {
-            return database.insertInto(INGREDIENTS, INGREDIENTS.NAME, INGREDIENTS.TYPE, INGREDIENTS.MEASUREMENT).values(ingredient.getName(), ingredient.getItemGroup().name(), ingredient.getMeasurement().name()).execute() == 1;
+            return database.insertInto(INGREDIENTS, INGREDIENTS.NAME, INGREDIENTS.GROUP, INGREDIENTS.MEASUREMENT)
+                           .values(ingredient.getName(), ingredient.getItemGroup()
+                                                                   .name(), ingredient.getMeasurement()
+                                                                                      .name())
+                           .execute() == 1;
         }
         catch(SQLException e)
         {
             e.printStackTrace();
-            
+        
             return false;
         }
     }
     
     public static Ingredient getIngredient(short id)
     {
-        try(Connection connection = database.getConnection(); DSLContext database = H2DSL.using(connection, SQLDialect.H2))
+        try(Connection connection = database.getConnection();
+            DSLContext database = H2DSL.using(connection, SQLDialect.H2))
         {
-            Result<Record> fetchedIngredient = database.select().from(INGREDIENTS).where(INGREDIENTS.ID.equal(id)).limit(1).fetch();
-            
+            Result<Record> fetchedIngredient = database.select()
+                                                       .from(INGREDIENTS)
+                                                       .where(INGREDIENTS.ID.equal(id))
+                                                       .limit(1)
+                                                       .fetch();
+        
             if(fetchedIngredient.isNotEmpty())
             {
                 Ingredient ingredient = new Ingredient();
-                
+            
                 Record record = fetchedIngredient.get(0);
-                
+            
                 ingredient.setId(record.get(INGREDIENTS.ID));
                 ingredient.setName(record.get(INGREDIENTS.NAME));
-                ingredient.setItemGroup(ItemGroup.valueOf(record.get(INGREDIENTS.TYPE)));
+                ingredient.setItemGroup(ItemGroup.valueOf(record.get(INGREDIENTS.GROUP)));
                 ingredient.setMeasurement(Measurement.valueOf(record.get(INGREDIENTS.MEASUREMENT)));
                 
                 return ingredient;
@@ -69,15 +79,23 @@ public class IngredientDAO
         AtomicReference<Ingredient> ingredient = new AtomicReference<>(null);
         
         Thread newThread = new Thread(() -> {
-            try(Connection connection = database.getConnection(); DSLContext database = H2DSL.using(connection, SQLDialect.H2))
+            try(Connection connection = database.getConnection();
+                DSLContext database = H2DSL.using(connection, SQLDialect.H2))
             {
-                Result<Record> fetchedIngredient = database.select().from(INGREDIENTS).where(INGREDIENTS.ID.equal(id)).limit(1).fetch();
-                
+                Result<Record> fetchedIngredient = database.select()
+                                                           .from(INGREDIENTS)
+                                                           .where(INGREDIENTS.ID.equal(id))
+                                                           .limit(1)
+                                                           .fetch();
+        
                 if(fetchedIngredient.isNotEmpty())
                 {
                     Record record = fetchedIngredient.get(0);
-    
-                    ingredient.set(new Ingredient(record.get(INGREDIENTS.ID), record.get(INGREDIENTS.NAME), ItemGroup.valueOf(record.get(INGREDIENTS.TYPE)), Measurement.valueOf(record.get(INGREDIENTS.MEASUREMENT))));
+            
+                    ingredient.set(new Ingredient(record.get(INGREDIENTS.ID),
+                                                  record.get(INGREDIENTS.NAME),
+                                                  ItemGroup.valueOf(record.get(INGREDIENTS.GROUP)),
+                                                  Measurement.valueOf(record.get(INGREDIENTS.MEASUREMENT))));
                 }
             }
             catch(SQLException e)

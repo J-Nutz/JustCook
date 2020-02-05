@@ -21,6 +21,7 @@ public class Item
     {
     }
     
+    //Used when creating a new Item
     public Item(String name, ItemGroup group, BigDecimal price, short availableAmount, Measurement measurement)
     {
         this.name = name;
@@ -30,6 +31,7 @@ public class Item
         this.measurement = measurement;
     }
     
+    //Used when retrieving an already created Item from the database
     public Item(short id, String name, ItemGroup group, BigDecimal price, short availableAmount, Measurement measurement)
     {
         this.id = id;
