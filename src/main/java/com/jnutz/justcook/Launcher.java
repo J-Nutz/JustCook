@@ -50,7 +50,7 @@ public class Launcher extends Application
     
         //TODO: Get any non-saved information
     
-        //Closes Connections & Database, then closes TCP Server
+        //Closes Connections & Database //, then closes TCP Server
         database.closeDatabase();
         //server.stop();
     

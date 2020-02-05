@@ -1,4 +1,4 @@
-package com.jnutz.justcook.database.cookbook.recipes.ingredients;
+package com.jnutz.justcook.database.inventory;
 
 public enum Measurement
 {

@@ -5,6 +5,7 @@ package src.main.java.com.jnutz.jooq.public_;
 
 import src.main.java.com.jnutz.jooq.public_.tables.Employees;
 import src.main.java.com.jnutz.jooq.public_.tables.Ingredients;
+import src.main.java.com.jnutz.jooq.public_.tables.Items;
 import src.main.java.com.jnutz.jooq.public_.tables.Users;
 
 import javax.annotation.processing.Generated;
@@ -26,6 +27,11 @@ public class Tables
      * The table <code>PUBLIC.Ingredients</code>.
      */
     public static final Ingredients INGREDIENTS = Ingredients.INGREDIENTS;
+    
+    /**
+     * The table <code>PUBLIC.Items</code>.
+     */
+    public static final Items ITEMS = Items.ITEMS;
     
     /**
      * The table <code>PUBLIC.Users</code>.

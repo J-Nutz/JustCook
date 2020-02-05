@@ -2,6 +2,7 @@ package com.jnutz.justcook.database;
 
 import com.jnutz.justcook.database.cookbook.recipes.ingredients.IngredientsTable;
 import com.jnutz.justcook.database.employees.EmployeesTable;
+import com.jnutz.justcook.database.inventory.ItemsTable;
 import com.jnutz.justcook.database.users.UsersTable;
 import org.h2.jdbcx.JdbcConnectionPool;
 
@@ -36,6 +37,7 @@ public class Database
     {
         UsersTable.initUsersTable();
         EmployeesTable.initEmployeesTable();
+        ItemsTable.initItemsTable();
         IngredientsTable.initIngredientsTable();
     }
 

@@ -1,32 +1,32 @@
 package com.jnutz.justcook.database.cookbook.recipes.ingredients;
 
+import com.jnutz.justcook.database.inventory.ItemGroup;
+import com.jnutz.justcook.database.inventory.Measurement;
+
 public class Ingredient
 {
-    private short id;
+    private short id; //TODO: Should be itemId
     private String name;
-    private IngredientType ingredientType;
+    private ItemGroup itemGroup; //TODO: Rethink this class
     private Measurement measurement;
-    private short inStockAmount;
     
     public Ingredient()
     {
     }
     
-    public Ingredient(String name, IngredientType ingredientType, Measurement measurement, short inStockAmount)
+    public Ingredient(String name, ItemGroup itemGroup, Measurement measurement)
     {
         this.name = name;
-        this.ingredientType = ingredientType;
+        this.itemGroup = itemGroup;
         this.measurement = measurement;
-        this.inStockAmount = inStockAmount;
     }
     
-    public Ingredient(short id, String name, IngredientType ingredientType, Measurement measurement, short inStockAmount)
+    public Ingredient(short id, String name, ItemGroup itemGroup, Measurement measurement)
     {
         this.id = id;
         this.name = name;
-        this.ingredientType = ingredientType;
+        this.itemGroup = itemGroup;
         this.measurement = measurement;
-        this.inStockAmount = inStockAmount;
     }
     
     public short getId()
@@ -49,14 +49,14 @@ public class Ingredient
         this.name = name;
     }
     
-    public IngredientType getIngredientType()
+    public ItemGroup getItemGroup()
     {
-        return ingredientType;
+        return itemGroup;
     }
     
-    public void setIngredientType(IngredientType ingredientType)
+    public void setItemGroup(ItemGroup itemGroup)
     {
-        this.ingredientType = ingredientType;
+        this.itemGroup = itemGroup;
     }
     
     public Measurement getMeasurement()
@@ -67,15 +67,5 @@ public class Ingredient
     public void setMeasurement(Measurement measurement)
     {
         this.measurement = measurement;
-    }
-    
-    public short getInStockAmount()
-    {
-        return inStockAmount;
-    }
-    
-    public void setInStockAmount(short inStockAmount)
-    {
-        this.inStockAmount = inStockAmount;
     }
 }

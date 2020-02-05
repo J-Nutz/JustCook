@@ -9,17 +9,17 @@ package com.jnutz.justcook.client.gui.container;
 public enum AccessLevel
 {
     ALL(ProtectedView.values()), //TODO: Is this necessary? Shouldn't managers have access to everything?
-
-    MANAGER(ProtectedView.PAYROLL, ProtectedView.RECIPES),
-
+    
+    MANAGER(ProtectedView.PAYROLL, ProtectedView.COOKBOOK),
+    
     EMPLOYEE(),
-
-    COOK(ProtectedView.RECIPES),
-
+    
+    COOK(ProtectedView.COOKBOOK),
+    
     ;
-
+    
     private ProtectedView[] accessibleProtectedViews;
-
+    
     AccessLevel(ProtectedView... protectedViews)
     {
         accessibleProtectedViews = protectedViews;

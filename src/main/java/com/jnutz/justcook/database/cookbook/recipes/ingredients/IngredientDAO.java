@@ -1,5 +1,7 @@
 package com.jnutz.justcook.database.cookbook.recipes.ingredients;
 
+import com.jnutz.justcook.database.inventory.ItemGroup;
+import com.jnutz.justcook.database.inventory.Measurement;
 import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.jooq.Result;
@@ -17,20 +19,17 @@ public class IngredientDAO
 {
     private static final Ingredients INGREDIENTS = Ingredients.INGREDIENTS;
     
-    public static void addIngredient(Ingredient ingredient)
+    public static boolean addIngredient(Ingredient ingredient)
     {
         try(Connection connection = database.getConnection(); DSLContext database = H2DSL.using(connection, SQLDialect.H2))
         {
-            //InsertValuesStep4<IngredientsRecord, String, String, String, Short> addIngredient =
-            database.insertInto(INGREDIENTS, INGREDIENTS.NAME, INGREDIENTS.TYPE, INGREDIENTS.MEASUREMENT, INGREDIENTS.STOCK_AMOUNT).values(ingredient.getName(), ingredient.getIngredientType().name(), ingredient.getMeasurement().name(), ingredient.getInStockAmount()).execute();
-            
-            //return addIngredient.execute() == 1;
+            return database.insertInto(INGREDIENTS, INGREDIENTS.NAME, INGREDIENTS.TYPE, INGREDIENTS.MEASUREMENT).values(ingredient.getName(), ingredient.getItemGroup().name(), ingredient.getMeasurement().name()).execute() == 1;
         }
         catch(SQLException e)
         {
             e.printStackTrace();
             
-            //return false;
+            return false;
         }
     }
     
@@ -48,9 +47,8 @@ public class IngredientDAO
                 
                 ingredient.setId(record.get(INGREDIENTS.ID));
                 ingredient.setName(record.get(INGREDIENTS.NAME));
-                ingredient.setIngredientType(IngredientType.valueOf(record.get(INGREDIENTS.TYPE)));
+                ingredient.setItemGroup(ItemGroup.valueOf(record.get(INGREDIENTS.TYPE)));
                 ingredient.setMeasurement(Measurement.valueOf(record.get(INGREDIENTS.MEASUREMENT)));
-                ingredient.setInStockAmount(record.get(INGREDIENTS.STOCK_AMOUNT));
                 
                 return ingredient;
             }
@@ -77,25 +75,14 @@ public class IngredientDAO
                 
                 if(fetchedIngredient.isNotEmpty())
                 {
-                    ingredient.set(new Ingredient());
-                    
                     Record record = fetchedIngredient.get(0);
-                    
-                    ingredient.get().setId(record.get(INGREDIENTS.ID));
-                    ingredient.get().setName(record.get(INGREDIENTS.NAME));
-                    ingredient.get().setIngredientType(IngredientType.valueOf(record.get(INGREDIENTS.TYPE)));
-                    ingredient.get().setMeasurement(Measurement.valueOf(record.get(INGREDIENTS.MEASUREMENT)));
-                    ingredient.get().setInStockAmount(record.get(INGREDIENTS.STOCK_AMOUNT));
-                }
-                else
-                {
-                    //ingredient.set(null);
+    
+                    ingredient.set(new Ingredient(record.get(INGREDIENTS.ID), record.get(INGREDIENTS.NAME), ItemGroup.valueOf(record.get(INGREDIENTS.TYPE)), Measurement.valueOf(record.get(INGREDIENTS.MEASUREMENT))));
                 }
             }
             catch(SQLException e)
             {
                 e.printStackTrace();
-                //ingredient.set(null);
             }
         });
         
