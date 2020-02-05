@@ -21,9 +21,7 @@ public class ItemDAO
             DSLContext database = H2DSL.using(connection, SQLDialect.H2))
         {
             return database.insertInto(ITEMS, ITEMS.NAME, ITEMS.GROUP, ITEMS.MEASUREMENT)
-                           .values(item.getName(), item.getGroup()
-                                                       .name(), item.getMeasurement()
-                                                                    .name())
+                           .values(item.getName(), item.getGroup().name(), item.getMeasurement().name())
                            .execute() == 1;
         }
         catch(SQLException e)

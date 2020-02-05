@@ -25,9 +25,8 @@ public class IngredientDAO
             DSLContext database = H2DSL.using(connection, SQLDialect.H2))
         {
             return database.insertInto(INGREDIENTS, INGREDIENTS.NAME, INGREDIENTS.GROUP, INGREDIENTS.MEASUREMENT)
-                           .values(ingredient.getName(), ingredient.getItemGroup()
-                                                                   .name(), ingredient.getMeasurement()
-                                                                                      .name())
+                           .values(ingredient.getName(), ingredient.getItemGroup().name(),
+                                   ingredient.getMeasurement().name())
                            .execute() == 1;
         }
         catch(SQLException e)

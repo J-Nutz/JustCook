@@ -32,8 +32,7 @@ public class ItemsTable
                        .column("Price", SQLDataType.DECIMAL(19, 4))
                        .column("AvailableAmount", SQLDataType.SMALLINT)
                        .column("Measurement", SQLDataType.VARCHAR(16)) //TODO: Length
-                       .constraints(DSL.constraint()
-                                       .primaryKey("Id"))
+                       .constraints(DSL.constraint().primaryKey("Id"))
                        .execute();
         
             IngredientDAO.addIngredient(new Ingredient("Potato", ItemGroup.VEGETABLE, Measurement.LB));

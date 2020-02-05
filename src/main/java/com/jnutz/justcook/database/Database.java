@@ -59,6 +59,5 @@ public class Database
     public void closeDatabase()
     {
         connectionPool.dispose();
-        System.out.println("Database Closed");
     }
 }
