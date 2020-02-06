@@ -26,11 +26,12 @@ public class UsersTable
                        .execute();
     
             //TODO: What is the overhead of calling this each time the application is launched?
-            databaseDSL.createTableIfNotExists("Users").column("ID", SQLDataType.SMALLINT.identity(true)) //Range of -32,768 to 32,767 - TODO: UserID or just ID?
+            databaseDSL.createTableIfNotExists("Users").column("Id", SQLDataType.SMALLINT
+                    .identity(true)) //Range of -32,768 to 32,767 - TODO: UserID or just ID?
                        .column("Username", SQLDataType.VARCHAR(64)).column("Salt", SQLDataType.BINARY) //TODO: Length
                        .column("Password", SQLDataType.BINARY) //TODO: Length
                        .column("AccessLevel", SQLDataType.VARCHAR(16)) //TODO: Length
-                       .constraints(DSL.constraint().primaryKey("ID")).execute();
+                       .constraints(DSL.constraint().primaryKey("Id")).execute();
     
             byte[] salt = addSalt();
     

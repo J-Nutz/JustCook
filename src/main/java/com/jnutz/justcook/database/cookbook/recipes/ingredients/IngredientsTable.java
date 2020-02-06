@@ -20,7 +20,8 @@ public class IngredientsTable
         try(Connection connection = database.getConnection(); DSLContext databaseDSL = H2DSL.using(connection))
         {
             //Instead of having to manually do it each time table is changed
-            databaseDSL.dropTableIfExists("Ingredients").execute();
+            databaseDSL.dropTableIfExists("Ingredients")
+                       .execute();
     
             //TODO: What is the overhead of calling this each time the application is launched?
             databaseDSL.createTableIfNotExists("Ingredients")
@@ -29,7 +30,6 @@ public class IngredientsTable
                        .column("Name", SQLDataType.VARCHAR(32)) //TODO: Length
                        .column("Group", SQLDataType.VARCHAR(16)) //TODO: Length
                        .column("Measurement", SQLDataType.VARCHAR(8)) //TODO: Length
-                       //.column("Stock_Amount", SQLDataType.SMALLINT) //Should get the actual amount using Id at view time
                        .constraints(DSL.constraint().primaryKey("Id")).execute();
     
             IngredientDAO.addIngredient(new Ingredient("Potato", ItemGroup.VEGETABLE, Measurement.LB));

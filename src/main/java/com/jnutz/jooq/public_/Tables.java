@@ -3,10 +3,7 @@
  */
 package src.main.java.com.jnutz.jooq.public_;
 
-import src.main.java.com.jnutz.jooq.public_.tables.Employees;
-import src.main.java.com.jnutz.jooq.public_.tables.Ingredients;
-import src.main.java.com.jnutz.jooq.public_.tables.Items;
-import src.main.java.com.jnutz.jooq.public_.tables.Users;
+import src.main.java.com.jnutz.jooq.public_.tables.*;
 
 import javax.annotation.processing.Generated;
 
@@ -25,11 +22,6 @@ public class Tables
 {
     
     /**
-     * The table <code>PUBLIC.Employees</code>.
-     */
-    public static final Employees EMPLOYEES = Employees.EMPLOYEES;
-    
-    /**
      * The table <code>PUBLIC.Ingredients</code>.
      */
     public static final Ingredients INGREDIENTS = Ingredients.INGREDIENTS;
@@ -38,6 +30,26 @@ public class Tables
      * The table <code>PUBLIC.Items</code>.
      */
     public static final Items ITEMS = Items.ITEMS;
+    
+    /**
+     * The table <code>PUBLIC.Recipe_Ingredients</code>.
+     */
+    public static final RecipeIngredients RECIPE_INGREDIENTS = RecipeIngredients.RECIPE_INGREDIENTS;
+    
+    /**
+     * The table <code>PUBLIC.Recipe_Steps</code>.
+     */
+    public static final RecipeSteps RECIPE_STEPS = RecipeSteps.RECIPE_STEPS;
+    
+    /**
+     * The table <code>PUBLIC.Recipes</code>.
+     */
+    public static final Recipes RECIPES = Recipes.RECIPES;
+    
+    /**
+     * The table <code>PUBLIC.Steps</code>.
+     */
+    public static final Steps STEPS = Steps.STEPS;
     
     /**
      * The table <code>PUBLIC.Users</code>.

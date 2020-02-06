@@ -11,6 +11,8 @@ import src.main.java.com.jnutz.jooq.public_.tables.Ingredients;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static com.jnutz.justcook.Launcher.database;
@@ -102,9 +104,52 @@ public class IngredientDAO
                 e.printStackTrace();
             }
         });
-        
+    
         newThread.start();
-        
+    
         return ingredient.get();
+    }
+    
+    public static List<Ingredient> getIngredients(short... ids)
+    {
+        try(Connection connection = database.getConnection();
+            DSLContext database = H2DSL.using(connection, SQLDialect.H2))
+        {
+            List<Ingredient> ingredients = new ArrayList<>();
+            
+            for(short id : ids)
+            {
+                Result<Record> fetchedIngredient = database.select()
+                                                           .from(INGREDIENTS)
+                                                           .where(INGREDIENTS.ID.equal(id))
+                                                           .limit(1)
+                                                           .fetch();
+                
+                if(fetchedIngredient.isNotEmpty())
+                {
+                    Ingredient ingredient = new Ingredient();
+                    
+                    Record record = fetchedIngredient.get(0);
+                    
+                    ingredient.setId(record.get(INGREDIENTS.ID));
+                    ingredient.setName(record.get(INGREDIENTS.NAME));
+                    ingredient.setItemGroup(ItemGroup.valueOf(record.get(INGREDIENTS.GROUP)));
+                    ingredient.setMeasurement(Measurement.valueOf(record.get(INGREDIENTS.MEASUREMENT)));
+                    
+                    ingredients.add(ingredient);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            
+            return ingredients;
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

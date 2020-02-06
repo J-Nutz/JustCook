@@ -6,17 +6,10 @@ package src.main.java.com.jnutz.jooq.public_;
 import org.jooq.Identity;
 import org.jooq.UniqueKey;
 import org.jooq.impl.Internal;
-import src.main.java.com.jnutz.jooq.public_.tables.Employees;
-import src.main.java.com.jnutz.jooq.public_.tables.Ingredients;
-import src.main.java.com.jnutz.jooq.public_.tables.Items;
-import src.main.java.com.jnutz.jooq.public_.tables.Users;
-import src.main.java.com.jnutz.jooq.public_.tables.records.EmployeesRecord;
-import src.main.java.com.jnutz.jooq.public_.tables.records.IngredientsRecord;
-import src.main.java.com.jnutz.jooq.public_.tables.records.ItemsRecord;
-import src.main.java.com.jnutz.jooq.public_.tables.records.UsersRecord;
+import src.main.java.com.jnutz.jooq.public_.tables.*;
+import src.main.java.com.jnutz.jooq.public_.tables.records.*;
 
 import javax.annotation.processing.Generated;
-
 
 /**
  * A class modelling foreign key relationships and constraints of tables of
@@ -36,18 +29,21 @@ public class Keys {
     // IDENTITY definitions
     // -------------------------------------------------------------------------
 
-    public static final Identity<EmployeesRecord, Short> IDENTITY_EMPLOYEES = Identities0.IDENTITY_EMPLOYEES;
     public static final Identity<IngredientsRecord, Short> IDENTITY_INGREDIENTS = Identities0.IDENTITY_INGREDIENTS;
     public static final Identity<ItemsRecord, Short> IDENTITY_ITEMS = Identities0.IDENTITY_ITEMS;
+    public static final Identity<RecipesRecord, Short> IDENTITY_RECIPES = Identities0.IDENTITY_RECIPES;
     public static final Identity<UsersRecord, Short> IDENTITY_USERS = Identities0.IDENTITY_USERS;
     
     // -------------------------------------------------------------------------
     // UNIQUE and PRIMARY KEY definitions
     // -------------------------------------------------------------------------
-
-    public static final UniqueKey<EmployeesRecord> CONSTRAINT_1 = UniqueKeys0.CONSTRAINT_1;
+    
     public static final UniqueKey<IngredientsRecord> CONSTRAINT_E = UniqueKeys0.CONSTRAINT_E;
     public static final UniqueKey<ItemsRecord> CONSTRAINT_43 = UniqueKeys0.CONSTRAINT_43;
+    public static final UniqueKey<RecipeIngredientsRecord> CONSTRAINT_8 = UniqueKeys0.CONSTRAINT_8;
+    public static final UniqueKey<RecipeStepsRecord> CONSTRAINT_7 = UniqueKeys0.CONSTRAINT_7;
+    public static final UniqueKey<RecipesRecord> CONSTRAINT_A = UniqueKeys0.CONSTRAINT_A;
+    public static final UniqueKey<StepsRecord> CONSTRAINT_4C = UniqueKeys0.CONSTRAINT_4C;
     public static final UniqueKey<UsersRecord> CONSTRAINT_4 = UniqueKeys0.CONSTRAINT_4;
     
     // -------------------------------------------------------------------------
@@ -60,26 +56,33 @@ public class Keys {
     
     private static class Identities0
     {
-        public static Identity<EmployeesRecord, Short> IDENTITY_EMPLOYEES = Internal.createIdentity(Employees.EMPLOYEES,
-                                                                                                    Employees.EMPLOYEES.USERID);
         public static Identity<IngredientsRecord, Short> IDENTITY_INGREDIENTS = Internal.createIdentity(
                 Ingredients.INGREDIENTS, Ingredients.INGREDIENTS.ID);
         public static Identity<ItemsRecord, Short> IDENTITY_ITEMS = Internal.createIdentity(Items.ITEMS,
                                                                                             Items.ITEMS.ID);
+        public static Identity<RecipesRecord, Short> IDENTITY_RECIPES = Internal.createIdentity(Recipes.RECIPES,
+                                                                                                Recipes.RECIPES.ID);
         public static Identity<UsersRecord, Short> IDENTITY_USERS = Internal.createIdentity(Users.USERS,
                                                                                             Users.USERS.ID);
     }
     
     private static class UniqueKeys0
     {
-        public static final UniqueKey<EmployeesRecord> CONSTRAINT_1 = Internal.createUniqueKey(Employees.EMPLOYEES,
-                                                                                               "CONSTRAINT_1",
-                                                                                               Employees.EMPLOYEES.USERID);
         public static final UniqueKey<IngredientsRecord> CONSTRAINT_E = Internal.createUniqueKey(
                 Ingredients.INGREDIENTS, "CONSTRAINT_E", Ingredients.INGREDIENTS.ID);
         public static final UniqueKey<ItemsRecord> CONSTRAINT_43 = Internal.createUniqueKey(Items.ITEMS,
                                                                                             "CONSTRAINT_43",
                                                                                             Items.ITEMS.ID);
+        public static final UniqueKey<RecipeIngredientsRecord> CONSTRAINT_8 = Internal.createUniqueKey(
+                RecipeIngredients.RECIPE_INGREDIENTS, "CONSTRAINT_8", RecipeIngredients.RECIPE_INGREDIENTS.ID);
+        public static final UniqueKey<RecipeStepsRecord> CONSTRAINT_7 = Internal.createUniqueKey(
+                RecipeSteps.RECIPE_STEPS, "CONSTRAINT_7", RecipeSteps.RECIPE_STEPS.ID);
+        public static final UniqueKey<RecipesRecord> CONSTRAINT_A = Internal.createUniqueKey(Recipes.RECIPES,
+                                                                                             "CONSTRAINT_A",
+                                                                                             Recipes.RECIPES.ID);
+        public static final UniqueKey<StepsRecord> CONSTRAINT_4C = Internal.createUniqueKey(Steps.STEPS,
+                                                                                            "CONSTRAINT_4C",
+                                                                                            Steps.STEPS.ID);
         public static final UniqueKey<UsersRecord> CONSTRAINT_4 = Internal.createUniqueKey(Users.USERS, "CONSTRAINT_4",
                                                                                            Users.USERS.ID);
     }

@@ -24,13 +24,13 @@ public class EmployeesTable
 
             //TODO: What is the overhead of calling this each time the application is launched?
             databaseDSL.createTableIfNotExists("Employees")
-                       .column("UserID", SQLDataType.SMALLINT.identity(true)) //Range of -32,768 to 32,767 - TODO: UserID or just ID?
+                       .column("UserId", SQLDataType.SMALLINT.identity(true)) //Range of -32,768 to 32,767
                        .column("FirstName", SQLDataType.VARCHAR(64))
                        .column("LastName", SQLDataType.VARCHAR(64))
                        .column("Age", SQLDataType.TINYINT) //Range of -128 to 127
                        .column("DateOfBirth", SQLDataType.DATE) //Range handled by type
                        .column("Email", SQLDataType.VARCHAR(254)) //Max length of valid email address
-                       .constraints(DSL.constraint().primaryKey("UserID"))
+                       .constraints(DSL.constraint().primaryKey("UserId"))
                        .execute();
         }
         catch(DataAccessException | SQLException e)

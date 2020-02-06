@@ -1,6 +1,10 @@
 package com.jnutz.justcook.database;
 
+import com.jnutz.justcook.database.cookbook.recipes.RecipeIngredientsTable;
+import com.jnutz.justcook.database.cookbook.recipes.RecipeStepsTable;
+import com.jnutz.justcook.database.cookbook.recipes.RecipesTable;
 import com.jnutz.justcook.database.cookbook.recipes.ingredients.IngredientsTable;
+import com.jnutz.justcook.database.cookbook.recipes.steps.StepsTable;
 import com.jnutz.justcook.database.employees.EmployeesTable;
 import com.jnutz.justcook.database.inventory.ItemsTable;
 import com.jnutz.justcook.database.users.UsersTable;
@@ -31,6 +35,8 @@ public class Database
             System.err.println("Unable To Load Database Driver");
             e.printStackTrace();
         }
+    
+        //initTables();
     }
 
     public void initTables()
@@ -39,6 +45,10 @@ public class Database
         EmployeesTable.initEmployeesTable();
         ItemsTable.initItemsTable();
         IngredientsTable.initIngredientsTable();
+        StepsTable.initStepsTable();
+        RecipeIngredientsTable.initRecipeIngredientsTable();
+        RecipeStepsTable.initRecipeStepsTable();
+        RecipesTable.initRecipesTable();
     }
 
     public Connection getConnection() throws SQLException
