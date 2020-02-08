@@ -1,4 +1,4 @@
-package com.jnutz.justcook.database.cookbook.recipes;
+package com.jnutz.justcook.database.cookbook.recipes.steps;
 
 import org.jooq.DSLContext;
 import org.jooq.exception.DataAccessException;
@@ -11,27 +11,24 @@ import java.sql.SQLException;
 
 import static com.jnutz.justcook.Launcher.database;
 
-public class RecipesTable
+public class RecipeStepsTable
 {
-    public static void initRecipesTable()
+    public static void initRecipeStepsTable()
     {
         try(Connection connection = database.getConnection();
             DSLContext databaseDSL = H2DSL.using(connection))
         {
             //Instead of having to manually do it each time table is changed
-            databaseDSL.dropTableIfExists("Recipes")
+            databaseDSL.dropTableIfExists("Recipe_Steps")
                        .execute();
             
             //TODO: What is the overhead of calling this each time the application is launched?
-            databaseDSL.createTableIfNotExists("Recipes")
-                       .column("Id", SQLDataType.SMALLINT.identity(true))
-                       .column("Name", SQLDataType.VARCHAR(32))
-                       .column("Category", SQLDataType.VARCHAR(32)) //TODO: Length
-                       .column("Recipe_Ingredients_Index", SQLDataType.SMALLINT)
-                       .column("Recipe_Steps_Index", SQLDataType.SMALLINT)
+            databaseDSL.createTableIfNotExists("Recipe_Steps")
+                       .column("Id", SQLDataType.SMALLINT)
+                       .column("Index", SQLDataType.SMALLINT)
+                       .column("Step_Id", SQLDataType.SMALLINT)
                        .constraints(DSL.constraint().primaryKey("Id"))
-                       //DSL.constraint().foreignKey("Ingredients_Id").references("Recipe_Ingredients"),
-                       //DSL.constraint().foreignKey("Steps_Id").references("Recipe_Steps"))
+                       //DSL.constraint().foreignKey("Step_Id").references("Steps"))
                        .execute();
         }
         catch(DataAccessException | SQLException e)

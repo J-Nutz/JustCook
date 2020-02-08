@@ -30,7 +30,7 @@ import java.util.List;
 public class Ingredients extends TableImpl<IngredientsRecord>
 {
     
-    private static final long serialVersionUID = 736669414;
+    private static final long serialVersionUID = 1482186135;
     
     /**
      * The reference instance of <code>PUBLIC.Ingredients</code>
@@ -45,28 +45,21 @@ public class Ingredients extends TableImpl<IngredientsRecord>
     {
         return IngredientsRecord.class;
     }
-
+    
     /**
      * The column <code>PUBLIC.Ingredients.Id</code>.
      */
-    public final TableField<IngredientsRecord, Short> ID = createField(DSL.name("Id"), org.jooq.impl.SQLDataType.SMALLINT.nullable(false).identity(true), this, "");
-
-    /**
-     * The column <code>PUBLIC.Ingredients.Name</code>.
-     */
-    public final TableField<IngredientsRecord, String> NAME = createField(DSL.name("Name"), org.jooq.impl.SQLDataType.VARCHAR(32), this, "");
+    public final TableField<IngredientsRecord, Short> ID = createField(DSL.name("Id"),
+                                                                       org.jooq.impl.SQLDataType.SMALLINT
+                                                                               .nullable(false).identity(true), this,
+                                                                       "");
     
     /**
-     * The column <code>PUBLIC.Ingredients.Group</code>.
+     * The column <code>PUBLIC.Ingredients.Item_Id</code>.
      */
-    public final TableField<IngredientsRecord, String> GROUP = createField(DSL.name("Group"),
-                                                                           org.jooq.impl.SQLDataType.VARCHAR(16), this,
-                                                                           "");
-
-    /**
-     * The column <code>PUBLIC.Ingredients.Measurement</code>.
-     */
-    public final TableField<IngredientsRecord, String> MEASUREMENT = createField(DSL.name("Measurement"), org.jooq.impl.SQLDataType.VARCHAR(8), this, "");
+    public final TableField<IngredientsRecord, Short> ITEM_ID = createField(DSL.name("Item_Id"),
+                                                                            org.jooq.impl.SQLDataType.SMALLINT, this,
+                                                                            "");
     
     /**
      * Create a <code>PUBLIC.Ingredients</code> table reference
@@ -168,12 +161,12 @@ public class Ingredients extends TableImpl<IngredientsRecord>
     }
     
     // -------------------------------------------------------------------------
-    // Row4 type methods
+    // Row2 type methods
     // -------------------------------------------------------------------------
     
     @Override
-    public Row4<Short, String, String, String> fieldsRow()
+    public Row2<Short, Short> fieldsRow()
     {
-        return (Row4) super.fieldsRow();
+        return (Row2) super.fieldsRow();
     }
 }

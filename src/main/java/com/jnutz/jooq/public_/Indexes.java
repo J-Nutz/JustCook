@@ -29,6 +29,8 @@ public class Indexes
     // INDEX definitions
     // -------------------------------------------------------------------------
     
+    public static final Index PRIMARY_KEY_84 = Indexes0.PRIMARY_KEY_84;
+    public static final Index PRIMARY_KEY_1 = Indexes0.PRIMARY_KEY_1;
     public static final Index PRIMARY_KEY_E = Indexes0.PRIMARY_KEY_E;
     public static final Index PRIMARY_KEY_43 = Indexes0.PRIMARY_KEY_43;
     public static final Index PRIMARY_KEY_8 = Indexes0.PRIMARY_KEY_8;
@@ -43,6 +45,10 @@ public class Indexes
     
     private static class Indexes0
     {
+        public static Index PRIMARY_KEY_84 = Internal.createIndex("PRIMARY_KEY_84", Cookbooks.COOKBOOKS,
+                                                                  new OrderField[] {Cookbooks.COOKBOOKS.ID}, true);
+        public static Index PRIMARY_KEY_1 = Internal.createIndex("PRIMARY_KEY_1", Employees.EMPLOYEES,
+                                                                 new OrderField[] {Employees.EMPLOYEES.USERID}, true);
         public static Index PRIMARY_KEY_E = Internal.createIndex("PRIMARY_KEY_E", Ingredients.INGREDIENTS,
                                                                  new OrderField[] {Ingredients.INGREDIENTS.ID}, true);
         public static Index PRIMARY_KEY_43 = Internal.createIndex("PRIMARY_KEY_43", Items.ITEMS,

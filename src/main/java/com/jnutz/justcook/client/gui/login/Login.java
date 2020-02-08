@@ -3,7 +3,7 @@ package com.jnutz.justcook.client.gui.login;
 import com.jnutz.justcook.client.gui.container.*;
 import com.jnutz.justcook.database.users.CurrentUser;
 import com.jnutz.justcook.database.users.User;
-import com.jnutz.justcook.database.users.UserDAO;
+import com.jnutz.justcook.database.users.UsersDAO;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
@@ -91,7 +91,7 @@ public class Login extends BorderPane
                 if(password.length != 0)
                 {
                     //Get User info for attempted login
-                    User correctUser = UserDAO.getUser(username);
+                    User correctUser = UsersDAO.getUser(username);
     
                     //Make sure user with specified username exists
                     if(correctUser != null)
@@ -162,6 +162,7 @@ public class Login extends BorderPane
     private void showErrorMessage(String errorMessage)
     {
         errorLabel.setText(errorMessage);
+        loginBtn.setDisable(true);
         
         //Timer to show error message and then remove after 6 seconds
         errorMessageTimer.schedule(new TimerTask()
@@ -179,7 +180,11 @@ public class Login extends BorderPane
                 }
                 finally
                 {
-                    Platform.runLater(() -> errorLabel.setText(""));
+                    Platform.runLater(() ->
+                                      {
+                                          errorLabel.setText("");
+                                          loginBtn.setDisable(false);
+                                      });
                 }
             }
         }, 0);

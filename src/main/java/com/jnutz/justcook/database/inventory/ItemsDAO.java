@@ -11,7 +11,7 @@ import java.sql.SQLException;
 
 import static com.jnutz.justcook.Launcher.database;
 
-public class ItemDAO
+public class ItemsDAO
 {
     private static final src.main.java.com.jnutz.jooq.public_.tables.Items ITEMS = src.main.java.com.jnutz.jooq.public_.tables.Items.ITEMS;
     

@@ -1,4 +1,4 @@
-package com.jnutz.justcook.database.cookbook.recipes;
+package com.jnutz.justcook.database.cookbook.recipes.ingredients;
 
 import org.jooq.DSLContext;
 import org.jooq.exception.DataAccessException;
@@ -11,23 +11,25 @@ import java.sql.SQLException;
 
 import static com.jnutz.justcook.Launcher.database;
 
-public class RecipeStepsTable
+public class RecipeIngredientsTable
 {
-    public static void initRecipeStepsTable()
+    public static void initRecipeIngredientsTable()
     {
         try(Connection connection = database.getConnection();
             DSLContext databaseDSL = H2DSL.using(connection))
         {
             //Instead of having to manually do it each time table is changed
-            databaseDSL.dropTableIfExists("Recipe_Steps")
+            databaseDSL.dropTableIfExists("Recipe_Ingredients")
                        .execute();
             
             //TODO: What is the overhead of calling this each time the application is launched?
-            databaseDSL.createTableIfNotExists("Recipe_Steps")
+            databaseDSL.createTableIfNotExists("Recipe_Ingredients")
                        .column("Id", SQLDataType.SMALLINT)
-                       .column("Step_Id", SQLDataType.SMALLINT)
+                       .column("Index", SQLDataType.SMALLINT)
+                       .column("Ingredient_Id", SQLDataType.SMALLINT)
+                       .column("Amount_Needed", SQLDataType.SMALLINT)
                        .constraints(DSL.constraint().primaryKey("Id"))
-                       //DSL.constraint().foreignKey("Step_Id").references("Steps"))
+                       //DSL.constraint().foreignKey("Ingredient_Id").references("Ingredients"))
                        .execute();
         }
         catch(DataAccessException | SQLException e)

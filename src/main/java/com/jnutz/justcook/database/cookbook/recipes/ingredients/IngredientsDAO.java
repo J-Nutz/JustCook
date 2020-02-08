@@ -1,13 +1,10 @@
 package com.jnutz.justcook.database.cookbook.recipes.ingredients;
 
-import com.jnutz.justcook.database.inventory.ItemGroup;
-import com.jnutz.justcook.database.inventory.Measurement;
 import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.util.h2.H2DSL;
-import src.main.java.com.jnutz.jooq.public_.tables.Ingredients;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -17,18 +14,17 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import static com.jnutz.justcook.Launcher.database;
 
-public class IngredientDAO
+public class IngredientsDAO
 {
-    private static final Ingredients INGREDIENTS = Ingredients.INGREDIENTS;
+    private static final src.main.java.com.jnutz.jooq.public_.tables.Ingredients INGREDIENTS = src.main.java.com.jnutz.jooq.public_.tables.Ingredients.INGREDIENTS;
     
     public static boolean addIngredient(Ingredient ingredient)
     {
         try(Connection connection = database.getConnection();
             DSLContext database = H2DSL.using(connection, SQLDialect.H2))
         {
-            return database.insertInto(INGREDIENTS, INGREDIENTS.NAME, INGREDIENTS.GROUP, INGREDIENTS.MEASUREMENT)
-                           .values(ingredient.getName(), ingredient.getItemGroup().name(),
-                                   ingredient.getMeasurement().name())
+            return database.insertInto(INGREDIENTS, INGREDIENTS.ID, INGREDIENTS.ITEM_ID)
+                           .values(ingredient.getId(), ingredient.getItemId())
                            .execute() == 1;
         }
         catch(SQLException e)
@@ -55,11 +51,9 @@ public class IngredientDAO
                 Ingredient ingredient = new Ingredient();
             
                 Record record = fetchedIngredient.get(0);
-            
+    
                 ingredient.setId(record.get(INGREDIENTS.ID));
-                ingredient.setName(record.get(INGREDIENTS.NAME));
-                ingredient.setItemGroup(ItemGroup.valueOf(record.get(INGREDIENTS.GROUP)));
-                ingredient.setMeasurement(Measurement.valueOf(record.get(INGREDIENTS.MEASUREMENT)));
+                ingredient.setItemId(record.get(INGREDIENTS.ITEM_ID));
                 
                 return ingredient;
             }
@@ -92,11 +86,9 @@ public class IngredientDAO
                 if(fetchedIngredient.isNotEmpty())
                 {
                     Record record = fetchedIngredient.get(0);
-            
+    
                     ingredient.set(new Ingredient(record.get(INGREDIENTS.ID),
-                                                  record.get(INGREDIENTS.NAME),
-                                                  ItemGroup.valueOf(record.get(INGREDIENTS.GROUP)),
-                                                  Measurement.valueOf(record.get(INGREDIENTS.MEASUREMENT))));
+                                                  record.get(INGREDIENTS.ITEM_ID)));
                 }
             }
             catch(SQLException e)
@@ -130,11 +122,9 @@ public class IngredientDAO
                     Ingredient ingredient = new Ingredient();
                     
                     Record record = fetchedIngredient.get(0);
-                    
+    
                     ingredient.setId(record.get(INGREDIENTS.ID));
-                    ingredient.setName(record.get(INGREDIENTS.NAME));
-                    ingredient.setItemGroup(ItemGroup.valueOf(record.get(INGREDIENTS.GROUP)));
-                    ingredient.setMeasurement(Measurement.valueOf(record.get(INGREDIENTS.MEASUREMENT)));
+                    ingredient.setItemId(record.get(INGREDIENTS.ITEM_ID));
                     
                     ingredients.add(ingredient);
                 }

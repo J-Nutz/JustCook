@@ -3,20 +3,30 @@ package com.jnutz.justcook.database.cookbook.recipes;
 import com.jnutz.justcook.database.cookbook.recipes.ingredients.Ingredient;
 import com.jnutz.justcook.database.cookbook.recipes.steps.Step;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Recipe
 {
     private short id;
+    private String name;
+    private String category;
+    private short recipeIngredientsIndex;
+    private short recipeStepsIndex;
     
-    private String type;
+    private List<Ingredient> ingredients;
+    private List<Step> steps;
     
-    private List<Ingredient> ingredients = new ArrayList<>();
-    private short recipeIngredientsId;
+    public Recipe()
+    {
+    }
     
-    private List<Step> steps = new ArrayList<>();
-    private short recipeStepsId;
+    public Recipe(String name, String category, short recipeIngredientsIndex, short recipeStepsIndex)
+    {
+        this.name = name;
+        this.category = category;
+        this.recipeIngredientsIndex = recipeIngredientsIndex;
+        this.recipeStepsIndex = recipeStepsIndex;
+    }
     
     public short getId()
     {
@@ -28,14 +38,44 @@ public class Recipe
         this.id = id;
     }
     
-    public String getType()
+    public String getName()
     {
-        return type;
+        return name;
     }
     
-    public void setType(String type)
+    public void setName(String name)
     {
-        this.type = type;
+        this.name = name;
+    }
+    
+    public String getCategory()
+    {
+        return category;
+    }
+    
+    public void setCategory(String category)
+    {
+        this.category = category;
+    }
+    
+    public short getRecipeIngredientsIndex()
+    {
+        return recipeIngredientsIndex;
+    }
+    
+    public void setRecipeIngredientsIndex(short recipeIngredientsIndex)
+    {
+        this.recipeIngredientsIndex = recipeIngredientsIndex;
+    }
+    
+    public short getRecipeStepsIndex()
+    {
+        return recipeStepsIndex;
+    }
+    
+    public void setRecipeStepsIndex(short recipeStepsIndex)
+    {
+        this.recipeStepsIndex = recipeStepsIndex;
     }
     
     public List<Ingredient> getIngredients()
@@ -50,7 +90,7 @@ public class Recipe
     
     public void addIngredient(Ingredient ingredient)
     {
-        ingredients.add(ingredient);
+        this.ingredients.add(ingredient);
     }
     
     public List<Step> getSteps()
@@ -65,27 +105,6 @@ public class Recipe
     
     public void addStep(Step step)
     {
-        steps.add(step);
+        this.steps.add(step);
     }
-    
-    public short getRecipeStepsId()
-    {
-        return recipeStepsId;
-    }
-    
-    public void setRecipeStepsId(short recipeStepsId)
-    {
-        this.recipeStepsId = recipeStepsId;
-    }
-    
-    public short getRecipeIngredientsId()
-    {
-        return recipeIngredientsId;
-    }
-    
-    public void setRecipeIngredientsId(short recipeIngredientsId)
-    {
-        this.recipeIngredientsId = recipeIngredientsId;
-    }
-    
 }

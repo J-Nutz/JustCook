@@ -15,6 +15,7 @@ public class EmployeesTable
 {
     public static void initEmployeesTable()
     {
+    
         try(Connection connection =  database.getConnection();
             DSLContext databaseDSL = H2DSL.using(connection))
         {

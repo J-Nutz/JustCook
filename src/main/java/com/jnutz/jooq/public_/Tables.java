@@ -22,6 +22,16 @@ public class Tables
 {
     
     /**
+     * The table <code>PUBLIC.Cookbooks</code>.
+     */
+    public static final Cookbooks COOKBOOKS = Cookbooks.COOKBOOKS;
+    
+    /**
+     * The table <code>PUBLIC.Employees</code>.
+     */
+    public static final Employees EMPLOYEES = Employees.EMPLOYEES;
+    
+    /**
      * The table <code>PUBLIC.Ingredients</code>.
      */
     public static final Ingredients INGREDIENTS = Ingredients.INGREDIENTS;

@@ -1,6 +1,6 @@
 package com.jnutz.justcook.client.gui.container;
 
-import com.jnutz.justcook.client.gui.cookbook.Cookbook;
+import com.jnutz.justcook.client.gui.cookbook.CookbookView;
 import com.jnutz.justcook.client.gui.home.FakePayRoll;
 import javafx.scene.layout.Pane;
 
@@ -9,7 +9,7 @@ public enum ProtectedView
 {
     BLANK(null),
     
-    COOKBOOK(new Cookbook()),
+    COOKBOOK(new CookbookView()),
     
     PAYROLL(new FakePayRoll()),
     

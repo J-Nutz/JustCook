@@ -35,7 +35,8 @@ public class UsersTable
     
             byte[] salt = addSalt();
     
-            UserDAO.addUser(new User("Jonah", salt, encrypt(new char[] {'1', '2', '3', '4'}, salt), AccessLevel.MANAGER));
+            UsersDAO.addUser(
+                    new User("Jonah", salt, encrypt(new char[] {'1', '2', '3', '4'}, salt), AccessLevel.MANAGER));
         }
         catch(DataAccessException | SQLException e)
         {

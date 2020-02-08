@@ -2,8 +2,6 @@ package com.jnutz.justcook.database.employees;
 
 import org.jooq.*;
 import org.jooq.util.h2.H2DSL;
-import src.main.java.com.jnutz.jooq.public_.tables.Employees;
-import src.main.java.com.jnutz.jooq.public_.tables.records.EmployeesRecord;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -12,15 +10,15 @@ import java.util.List;
 
 import static com.jnutz.justcook.Launcher.database;
 
-public class EmployeeDAO
+public class EmployeesDAO
 {
-    private static final src.main.java.com.jnutz.jooq.public_.tables.Employees EMPLOYEES = Employees.EMPLOYEES;
-
+    private static final src.main.java.com.jnutz.jooq.public_.tables.Employees EMPLOYEES = src.main.java.com.jnutz.jooq.public_.tables.Employees.EMPLOYEES;
+    
     public static List<Employee> getAllEmployees()
     {
         return null;
     }
-
+    
     public static List<Employee> getEmployeesByFirstName(String firstName)
     {
         return null;
@@ -87,10 +85,12 @@ public class EmployeeDAO
         try(Connection connection =  database.getConnection();
             DSLContext database = H2DSL.using(connection, SQLDialect.H2))
         {
-            InsertValuesStep5<EmployeesRecord, String, String, String, Byte, Date> addEmployee =
-                    database.insertInto(EMPLOYEES, EMPLOYEES.EMAIL, EMPLOYEES.FIRSTNAME, EMPLOYEES.LASTNAME, EMPLOYEES.AGE, EMPLOYEES.DATEOFBIRTH)
-                                          .values(employee.getEmail(), employee.getFirstName(), employee.getLastName(), employee.getAge(), employee.getDateOfBirth());
-
+            InsertValuesStep5<src.main.java.com.jnutz.jooq.public_.tables.records.EmployeesRecord, String, String, String, Byte, Date> addEmployee =
+                    database.insertInto(EMPLOYEES, EMPLOYEES.EMAIL, EMPLOYEES.FIRSTNAME, EMPLOYEES.LASTNAME,
+                                        EMPLOYEES.AGE, EMPLOYEES.DATEOFBIRTH)
+                            .values(employee.getEmail(), employee.getFirstName(), employee.getLastName(),
+                                    employee.getAge(), employee.getDateOfBirth());
+    
             return addEmployee.execute() == 1;
         }
         catch(SQLException e)

@@ -11,7 +11,7 @@ import java.sql.SQLException;
 
 import static com.jnutz.justcook.Launcher.database;
 
-public class RecipeDAO
+public class RecipesDAO
 {
     private static final src.main.java.com.jnutz.jooq.public_.tables.Recipes RECIPE = src.main.java.com.jnutz.jooq.public_.tables.Recipes.RECIPES;
     
@@ -20,9 +20,10 @@ public class RecipeDAO
         try(Connection connection = database.getConnection();
             DSLContext database = H2DSL.using(connection, SQLDialect.H2))
         {
-            return database.insertInto(RECIPE, RECIPE.ID, RECIPE.TYPE, RECIPE.INGREDIENTS_ID, RECIPE.STEPS_ID)
-                           .values(recipe.getId(), recipe.getType(), recipe.getRecipeIngredientsId(),
-                                   recipe.getRecipeStepsId())
+            return database.insertInto(RECIPE, RECIPE.ID, RECIPE.NAME, RECIPE.RECIPE_INGREDIENTS_INDEX,
+                                       RECIPE.RECIPE_STEPS_INDEX)
+                           .values(recipe.getId(), recipe.getName(), recipe.getRecipeIngredientsIndex(),
+                                   recipe.getRecipeStepsIndex())
                            .execute() == 1;
         }
         catch(SQLException e)
@@ -48,12 +49,12 @@ public class RecipeDAO
             if(fetchedRecipe.isNotEmpty())
             {
                 Record record = fetchedRecipe.get(0);
-                
+    
                 recipe.setId(record.get(RECIPE.ID));
-                recipe.setType(record.get(RECIPE.TYPE));
-                recipe.setRecipeIngredientsId(record.get(RECIPE.INGREDIENTS_ID));
-                recipe.setRecipeStepsId(record.get(RECIPE.STEPS_ID));
-                
+                recipe.setName(record.get(RECIPE.NAME));
+                recipe.setCategory(record.get(RECIPE.CATEGORY));
+                recipe.setRecipeIngredientsIndex(record.get(RECIPE.RECIPE_INGREDIENTS_INDEX));
+                recipe.setRecipeStepsIndex(record.get(RECIPE.RECIPE_STEPS_INDEX));
             }
             
             return recipe;

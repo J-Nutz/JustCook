@@ -1,9 +1,10 @@
 package com.jnutz.justcook.database;
 
-import com.jnutz.justcook.database.cookbook.recipes.RecipeIngredientsTable;
-import com.jnutz.justcook.database.cookbook.recipes.RecipeStepsTable;
+import com.jnutz.justcook.database.cookbook.CookbooksTable;
 import com.jnutz.justcook.database.cookbook.recipes.RecipesTable;
 import com.jnutz.justcook.database.cookbook.recipes.ingredients.IngredientsTable;
+import com.jnutz.justcook.database.cookbook.recipes.ingredients.RecipeIngredientsTable;
+import com.jnutz.justcook.database.cookbook.recipes.steps.RecipeStepsTable;
 import com.jnutz.justcook.database.cookbook.recipes.steps.StepsTable;
 import com.jnutz.justcook.database.employees.EmployeesTable;
 import com.jnutz.justcook.database.inventory.ItemsTable;
@@ -35,20 +36,24 @@ public class Database
             System.err.println("Unable To Load Database Driver");
             e.printStackTrace();
         }
-    
-        //initTables();
     }
 
     public void initTables()
     {
-        UsersTable.initUsersTable();
         EmployeesTable.initEmployeesTable();
+        UsersTable.initUsersTable();
+    
         ItemsTable.initItemsTable();
+    
         IngredientsTable.initIngredientsTable();
-        StepsTable.initStepsTable();
         RecipeIngredientsTable.initRecipeIngredientsTable();
+    
+        StepsTable.initStepsTable();
         RecipeStepsTable.initRecipeStepsTable();
+    
         RecipesTable.initRecipesTable();
+    
+        CookbooksTable.initCookbooksTable();
     }
 
     public Connection getConnection() throws SQLException

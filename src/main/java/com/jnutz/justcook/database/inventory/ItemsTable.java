@@ -1,7 +1,5 @@
 package com.jnutz.justcook.database.inventory;
 
-import com.jnutz.justcook.database.cookbook.recipes.ingredients.Ingredient;
-import com.jnutz.justcook.database.cookbook.recipes.ingredients.IngredientDAO;
 import org.jooq.DSLContext;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
@@ -35,7 +33,7 @@ public class ItemsTable
                        .constraints(DSL.constraint().primaryKey("Id"))
                        .execute();
         
-            IngredientDAO.addIngredient(new Ingredient("Potato", ItemGroup.VEGETABLE, Measurement.LB));
+            //IngredientsDAO.addIngredient(new Ingredient("Potato", ItemGroup.VEGETABLE, Measurement.LB));
         }
         catch(DataAccessException | SQLException e)
         {

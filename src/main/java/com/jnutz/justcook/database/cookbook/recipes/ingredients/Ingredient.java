@@ -1,32 +1,23 @@
 package com.jnutz.justcook.database.cookbook.recipes.ingredients;
 
-import com.jnutz.justcook.database.inventory.ItemGroup;
-import com.jnutz.justcook.database.inventory.Measurement;
-
 public class Ingredient
 {
     private short id; //TODO: Should be itemId
-    private String name;
-    private ItemGroup itemGroup; //TODO: Rethink this class
-    private Measurement measurement;
+    private short itemId;
     
     public Ingredient()
     {
     }
     
-    public Ingredient(String name, ItemGroup itemGroup, Measurement measurement)
+    public Ingredient(short itemId)
     {
-        this.name = name;
-        this.itemGroup = itemGroup;
-        this.measurement = measurement;
+        this.itemId = itemId;
     }
     
-    public Ingredient(short id, String name, ItemGroup itemGroup, Measurement measurement)
+    public Ingredient(short id, short itemId)
     {
         this.id = id;
-        this.name = name;
-        this.itemGroup = itemGroup;
-        this.measurement = measurement;
+        this.itemId = itemId;
     }
     
     public short getId()
@@ -39,33 +30,13 @@ public class Ingredient
         this.id = id;
     }
     
-    public String getName()
+    public short getItemId()
     {
-        return name;
+        return itemId;
     }
     
-    public void setName(String name)
+    public void setItemId(short itemId)
     {
-        this.name = name;
-    }
-    
-    public ItemGroup getItemGroup()
-    {
-        return itemGroup;
-    }
-    
-    public void setItemGroup(ItemGroup itemGroup)
-    {
-        this.itemGroup = itemGroup;
-    }
-    
-    public Measurement getMeasurement()
-    {
-        return measurement;
-    }
-    
-    public void setMeasurement(Measurement measurement)
-    {
-        this.measurement = measurement;
+        this.itemId = itemId;
     }
 }

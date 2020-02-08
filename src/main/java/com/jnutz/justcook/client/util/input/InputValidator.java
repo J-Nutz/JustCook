@@ -1,7 +1,7 @@
 package com.jnutz.justcook.client.util.input;
 
 import com.jnutz.justcook.database.users.User;
-import com.jnutz.justcook.database.users.UserDAO;
+import com.jnutz.justcook.database.users.UsersDAO;
 
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
@@ -38,7 +38,7 @@ public class InputValidator
 
     public static boolean validUsername(String username)
     {
-        return (username.length() > 3) && (UserDAO.usernameAvailable(username));
+        return (username.length() > 3) && (UsersDAO.usernameAvailable(username));
     }
 
     public static boolean validPasswords(char[] pass1, char[] pass2)
@@ -48,7 +48,7 @@ public class InputValidator
 
     public static boolean validPassword(String username, byte[] attemptedPassword)
     {
-        User correctUser = UserDAO.getUser(username);
+        User correctUser = UsersDAO.getUser(username);
 
         return (correctUser != null) && (Arrays.equals(attemptedPassword, correctUser.getPassword()));
     }

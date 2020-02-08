@@ -1,7 +1,5 @@
 package com.jnutz.justcook.database.cookbook.recipes.ingredients;
 
-import com.jnutz.justcook.database.inventory.ItemGroup;
-import com.jnutz.justcook.database.inventory.Measurement;
 import org.jooq.DSLContext;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
@@ -25,14 +23,11 @@ public class IngredientsTable
     
             //TODO: What is the overhead of calling this each time the application is launched?
             databaseDSL.createTableIfNotExists("Ingredients")
-                       .column("Id", SQLDataType.SMALLINT
-                               .identity(true)) //This would be the Id of the actual 'Item' in 'Inventory'
-                       .column("Name", SQLDataType.VARCHAR(32)) //TODO: Length
-                       .column("Group", SQLDataType.VARCHAR(16)) //TODO: Length
-                       .column("Measurement", SQLDataType.VARCHAR(8)) //TODO: Length
+                       .column("Id", SQLDataType.SMALLINT.identity(true))
+                       .column("Item_Id", SQLDataType.SMALLINT) //TODO: Length
                        .constraints(DSL.constraint().primaryKey("Id")).execute();
     
-            IngredientDAO.addIngredient(new Ingredient("Potato", ItemGroup.VEGETABLE, Measurement.LB));
+            //IngredientsDAO.addIngredient(new Ingredient("Potato");
         }
         catch(DataAccessException | SQLException e)
         {
