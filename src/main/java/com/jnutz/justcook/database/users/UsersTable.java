@@ -1,6 +1,5 @@
 package com.jnutz.justcook.database.users;
 
-import com.jnutz.justcook.client.gui.container.AccessLevel;
 import org.jooq.DSLContext;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
@@ -11,8 +10,6 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import static com.jnutz.justcook.Launcher.database;
-import static com.jnutz.justcook.client.util.security.Encryption.addSalt;
-import static com.jnutz.justcook.client.util.security.Encryption.encrypt;
 
 public class UsersTable
 {
@@ -32,11 +29,6 @@ public class UsersTable
                        .column("Password", SQLDataType.BINARY) //TODO: Length
                        .column("AccessLevel", SQLDataType.VARCHAR(16)) //TODO: Length
                        .constraints(DSL.constraint().primaryKey("Id")).execute();
-    
-            byte[] salt = addSalt();
-    
-            UsersDAO.addUser(
-                    new User("Jonah", salt, encrypt(new char[] {'1', '2', '3', '4'}, salt), AccessLevel.MANAGER));
         }
         catch(DataAccessException | SQLException e)
         {

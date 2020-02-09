@@ -11,13 +11,18 @@ public class Cookbook
     private String name;
     private Short recipeId;
     
-    private List<Short> recipeIds;
+    private List<Short> recipeIds = new ArrayList<>();
     
     private List<Recipe> recipes = new ArrayList<>();
     
     public Cookbook()
     {
     
+    }
+    
+    public Cookbook(String name)
+    {
+        this.name = name;
     }
     
     public Cookbook(short id, String name, short recipeId)

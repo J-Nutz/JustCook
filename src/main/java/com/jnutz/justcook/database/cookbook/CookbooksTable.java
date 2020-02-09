@@ -19,9 +19,10 @@ public class CookbooksTable
             DSLContext databaseDSL = H2DSL.using(connection))
         {
             //Instead of having to manually do it each time table is changed
-            databaseDSL.dropTableIfExists("Cookbooks")
-                       .execute();
-            
+            //This creates problems testing due to back end handling of AccessLevels and view switching
+/*            databaseDSL.dropTableIfExists("Cookbooks")
+                       .execute();*/
+    
             //TODO: What is the overhead of calling this each time the application is launched?
             databaseDSL.createTableIfNotExists("Cookbooks")
                        .column("Id", SQLDataType.SMALLINT.identity(true))

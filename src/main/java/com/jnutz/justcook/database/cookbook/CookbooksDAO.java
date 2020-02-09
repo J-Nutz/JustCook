@@ -1,8 +1,19 @@
 package com.jnutz.justcook.database.cookbook;
 
+import org.jooq.*;
+import org.jooq.util.h2.H2DSL;
+import src.main.java.com.jnutz.jooq.public_.tables.records.CookbooksRecord;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.jnutz.justcook.Launcher.database;
+
 public class CookbooksDAO
 {
-    /*private static final com.jnutz.jooq.public_.tables.Cookbooks COOKBOOKS = Cookbooks.COOKBOOKS;
+    private static final src.main.java.com.jnutz.jooq.public_.tables.Cookbooks COOKBOOKS = src.main.java.com.jnutz.jooq.public_.tables.Cookbooks.COOKBOOKS;
     
     public static boolean addCookbookEntry(com.jnutz.justcook.database.cookbook.Cookbook cookbook)
     {
@@ -73,7 +84,7 @@ public class CookbooksDAO
                 cookbook.setName(record.get(COOKBOOKS.NAME));
                 cookbook.setRecipeId(record.get(COOKBOOKS.RECIPES_ID));
             }
-            
+    
             return cookbook;
         }
         catch(SQLException e)
@@ -81,5 +92,75 @@ public class CookbooksDAO
             e.printStackTrace();
             return null;
         }
-    }*/
+    }
+    
+    public static List<String> getCookbookNames()
+    {
+        List<String> cookbookNames = new ArrayList<>();
+        
+        try(Connection connection = database.getConnection();
+            DSLContext database = H2DSL.using(connection, SQLDialect.H2))
+        {
+            
+            Result<Record1<String>> fetchedNames = database.selectDistinct(COOKBOOKS.NAME)
+                                                           .from(COOKBOOKS)
+                                                           .fetch();
+            
+            if(fetchedNames.isNotEmpty())
+            {
+                for(Record1<String> record : fetchedNames)
+                {
+                    System.out.println("Getting tables");
+                    cookbookNames.add(record.get(COOKBOOKS.NAME));
+                }
+            }
+            
+            return cookbookNames;
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+        }
+        
+        return cookbookNames;
+    }
+    
+    public static List<Cookbook> getAllCookbooks()
+    {
+        List<Cookbook> cookbooks = new ArrayList<>();
+        
+        try(Connection connection = database.getConnection();
+            DSLContext database = H2DSL.using(connection, SQLDialect.H2))
+        {
+            List<String> cookbookNames = getCookbookNames();
+            
+            if(!cookbookNames.isEmpty())
+            {
+                for(String name : cookbookNames)
+                {
+                    Result<CookbooksRecord> fetchedCookbookRecipes = database.selectFrom(COOKBOOKS)
+                                                                             .where(COOKBOOKS.NAME.equal(name))
+                                                                             .fetch();
+                    
+                    Cookbook cookbook = new Cookbook(name);
+                    
+                    for(CookbooksRecord record : fetchedCookbookRecipes)
+                    {
+                        cookbook.setId(record.getId());
+                        cookbook.addRecipeId(record.getRecipesId());
+                    }
+                    
+                    cookbooks.add(cookbook);
+                }
+                
+                return cookbooks;
+            }
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+        }
+        
+        return cookbooks;
+    }
 }

@@ -67,23 +67,27 @@ public class Login extends BorderPane
         welcomeLabel.setFont(new Font(30));
         loginLabel.setFont(new Font(20));
         loginLabel.setPadding(new Insets(0, 0, 30, 0));
-
+    
         centerBox.setAlignment(Pos.CENTER);
-
+    
         usernameTF.setPromptText("Username");
         usernameTF.setMaxWidth(150);
         usernameTF.setFont(font14);
-
+    
         passwordTF.setPromptText("Password");
         passwordTF.setMaxWidth(150);
         passwordTF.setFont(font14);
-
+    
+        //For easier testing
+        usernameTF.setText("Jonah");
+        passwordTF.setText("1234");
+    
         loginBtn.setAlignment(Pos.CENTER);
         loginBtn.setFont(font16);
         loginBtn.setOnAction(event -> {
             String username = usernameTF.getText();
             char[] password = passwordTF.getText().toCharArray();
-    
+        
             //Make sure username has input
             if(!username.isBlank())
             {
@@ -172,7 +176,11 @@ public class Login extends BorderPane
             {
                 try
                 {
-                    Thread.sleep(6000);
+                    //TODO: Do I want to do it this way or re enable button at same time as removing error label text?
+                    Thread.sleep(4000);
+                    Platform.runLater(() -> loginBtn.setDisable(false));
+    
+                    Thread.sleep(2000);
                 }
                 catch(InterruptedException e)
                 {
@@ -180,11 +188,7 @@ public class Login extends BorderPane
                 }
                 finally
                 {
-                    Platform.runLater(() ->
-                                      {
-                                          errorLabel.setText("");
-                                          loginBtn.setDisable(false);
-                                      });
+                    Platform.runLater(() -> errorLabel.setText(""));
                 }
             }
         }, 0);
