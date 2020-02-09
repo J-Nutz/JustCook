@@ -26,8 +26,7 @@ public class CookbookQuickView extends GridPane
     {
         setPrefSize(150, 80);
         setPadding(new Insets(10));
-        setBorder(new Border(
-                new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+        setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
         setAlignment(Pos.CENTER);
         
         nameLbl.setText(cookbook.getName());

@@ -1,10 +1,13 @@
 package com.jnutz.justcook.database.users;
 
 import com.jnutz.justcook.client.gui.container.AccessLevel;
-import org.jooq.*;
+import org.jooq.Record;
+import org.jooq.Record1;
+import org.jooq.Result;
+import org.jooq.SQLDialect;
 import org.jooq.util.h2.H2DSL;
+import src.main.java.com.jnutz.jooq.public_.tables.Users;
 
-import java.sql.Connection;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
@@ -14,7 +17,7 @@ import static org.jooq.impl.DSL.val;
 
 public class UsersDAO
 {
-    private static final src.main.java.com.jnutz.jooq.public_.tables.Users USERS = src.main.java.com.jnutz.jooq.public_.tables.Users.USERS;
+    private static final Users USERS = Users.USERS;
     
     public static List<User> getAllUsers()
     {
@@ -53,14 +56,16 @@ public class UsersDAO
 
     public static User getUser(String username)
     {
-        try(Connection connection = database.getConnection();
-            DSLContext database = H2DSL.using(connection, SQLDialect.H2))
+        try(var connection = database.getConnection();
+            var database = H2DSL.using(connection, SQLDialect.H2))
         {
             Result<Record> fetchedUser =
-                    database.select().from(USERS).where(USERS.USERNAME.eq(username))
+                    database.select()
+                            .from(USERS)
+                            .where(USERS.USERNAME.eq(username))
                             .limit(1) //TODO: Is this necessary as there will be logic enforcing unique username's?
                             .fetch();
-
+        
             if(fetchedUser.isNotEmpty())
             {
                 User user = new User();
@@ -89,8 +94,8 @@ public class UsersDAO
 
     public static byte[] getUserPassword(String username)
     {
-        try(Connection connection = database.getConnection();
-            DSLContext database = H2DSL.using(connection, SQLDialect.H2))
+        try(var connection = database.getConnection();
+            var database = H2DSL.using(connection, SQLDialect.H2))
         {
             Result<Record1<byte[]>> fetchedPassword =
                     database.select(USERS.PASSWORD)
@@ -98,7 +103,7 @@ public class UsersDAO
                             .where(USERS.USERNAME.equal(val(username)))
                             .limit(1) //TODO: Is this necessary as there will be logic enforcing unique username's?
                             .fetch();
-
+        
             if(fetchedPassword.isNotEmpty())
             {
                 return fetchedPassword.get(0).get(USERS.PASSWORD);
@@ -117,20 +122,18 @@ public class UsersDAO
 
     public static boolean addUser(User user)
     {
-        try(Connection connection =  database.getConnection();
-            DSLContext database = H2DSL.using(connection, SQLDialect.H2))
+        try(var connection = database.getConnection();
+            var database = H2DSL.using(connection, SQLDialect.H2))
         {
-            InsertValuesStep4<src.main.java.com.jnutz.jooq.public_.tables.records.UsersRecord, String, byte[], byte[], String> addUser =
-                    database.insertInto(USERS, USERS.USERNAME, USERS.SALT, USERS.PASSWORD, USERS.ACCESSLEVEL)
-                            .values(user.getUsername(), user.getSalt(), user.getPassword(),
-                                    user.getAccessLevel().name());
-
-            return addUser.execute() == 1;
+            return database.insertInto(USERS, USERS.USERNAME, USERS.SALT, USERS.PASSWORD, USERS.ACCESSLEVEL)
+                           .values(user.getUsername(), user.getSalt(), user.getPassword(), user.getAccessLevel()
+                                                                                               .name())
+                           .execute() == 1;
         }
         catch(SQLException e)
         {
             e.printStackTrace();
-
+        
             return false;
         }
     }

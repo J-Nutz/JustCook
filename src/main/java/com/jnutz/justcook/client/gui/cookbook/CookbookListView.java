@@ -20,10 +20,10 @@ public class CookbookListView extends FlowPane
     private void init()
     {
         setPadding(new Insets(10));
-        setVgap(4);
-        setHgap(4);
+        setVgap(10);
+        setHgap(10);
         setPrefWrapLength(40);
-        
+    
         setBorder(new Border(
                 new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
     }

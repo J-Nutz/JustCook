@@ -103,7 +103,7 @@ public class Login extends BorderPane
                         //Make sure password matches user
                         if(Arrays.equals(correctUser.getPassword(), encrypt(password, correctUser.getSalt())))
                         {
-                            //Arrays.fill(password, '0');
+                            Arrays.fill(password, '0');
         
                             //This needs to be called in this order due to the dependency of AccessLevel during loading of menu screen
                             CurrentUser.login((short) 1, AccessLevel.MANAGER);
@@ -179,7 +179,7 @@ public class Login extends BorderPane
                     //TODO: Do I want to do it this way or re enable button at same time as removing error label text?
                     Thread.sleep(4000);
                     Platform.runLater(() -> loginBtn.setDisable(false));
-    
+        
                     Thread.sleep(2000);
                 }
                 catch(InterruptedException e)

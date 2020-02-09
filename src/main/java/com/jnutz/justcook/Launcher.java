@@ -19,11 +19,6 @@ public class Launcher extends Application
     public static Database database;
     //private Server server;
     
-    static
-    {
-    
-    }
-    
     //Not called on JavaFX Application Thread
     @Override
     public void init() throws Exception
@@ -40,8 +35,8 @@ public class Launcher extends Application
         database = new Database(env.get("DATABASE_USERNAME"), env.get("DATABASE_PASSWORD"));
         database.initTables();
         
+        //Add fake user for testing
         byte[] salt = addSalt();
-        
         UsersDAO.addUser(new User("Jonah", salt, encrypt(new char[] {'1', '2', '3', '4'}, salt), AccessLevel.MANAGER));
     }
 
@@ -65,7 +60,7 @@ public class Launcher extends Application
     
         //TODO: Get any non-saved information
     
-        //Closes Connections & Database //, then closes TCP Server
+        //Closes Connections & Database //then closes TCP Server
         database.closeDatabase();
         //server.stop();
     

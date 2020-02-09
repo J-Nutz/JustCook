@@ -1,12 +1,11 @@
 package com.jnutz.justcook.database.cookbook.recipes.ingredients;
 
-import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.util.h2.H2DSL;
+import src.main.java.com.jnutz.jooq.public_.tables.Ingredients;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,12 +15,12 @@ import static com.jnutz.justcook.Launcher.database;
 
 public class IngredientsDAO
 {
-    private static final src.main.java.com.jnutz.jooq.public_.tables.Ingredients INGREDIENTS = src.main.java.com.jnutz.jooq.public_.tables.Ingredients.INGREDIENTS;
+    private static final Ingredients INGREDIENTS = Ingredients.INGREDIENTS;
     
     public static boolean addIngredient(Ingredient ingredient)
     {
-        try(Connection connection = database.getConnection();
-            DSLContext database = H2DSL.using(connection, SQLDialect.H2))
+        try(var connection = database.getConnection();
+            var database = H2DSL.using(connection, SQLDialect.H2))
         {
             return database.insertInto(INGREDIENTS, INGREDIENTS.ID, INGREDIENTS.ITEM_ID)
                            .values(ingredient.getId(), ingredient.getItemId())
@@ -37,8 +36,8 @@ public class IngredientsDAO
     
     public static Ingredient getIngredient(short id)
     {
-        try(Connection connection = database.getConnection();
-            DSLContext database = H2DSL.using(connection, SQLDialect.H2))
+        try(var connection = database.getConnection();
+            var database = H2DSL.using(connection, SQLDialect.H2))
         {
             Result<Record> fetchedIngredient = database.select()
                                                        .from(INGREDIENTS)
@@ -74,8 +73,8 @@ public class IngredientsDAO
         AtomicReference<Ingredient> ingredient = new AtomicReference<>(null);
         
         Thread newThread = new Thread(() -> {
-            try(Connection connection = database.getConnection();
-                DSLContext database = H2DSL.using(connection, SQLDialect.H2))
+            try(var connection = database.getConnection();
+                var database = H2DSL.using(connection, SQLDialect.H2))
             {
                 Result<Record> fetchedIngredient = database.select()
                                                            .from(INGREDIENTS)
@@ -104,11 +103,11 @@ public class IngredientsDAO
     
     public static List<Ingredient> getIngredients(short... ids)
     {
-        try(Connection connection = database.getConnection();
-            DSLContext database = H2DSL.using(connection, SQLDialect.H2))
+        try(var connection = database.getConnection();
+            var database = H2DSL.using(connection, SQLDialect.H2))
         {
             List<Ingredient> ingredients = new ArrayList<>();
-            
+        
             for(short id : ids)
             {
                 Result<Record> fetchedIngredient = database.select()
