@@ -8,6 +8,7 @@ import java.util.List;
 public class Recipe
 {
     private short id;
+    private short index;
     private String name;
     private String category;
     private short recipeIngredientsIndex;
@@ -20,8 +21,9 @@ public class Recipe
     {
     }
     
-    public Recipe(String name, String category, short recipeIngredientsIndex, short recipeStepsIndex)
+    public Recipe(short index, String name, String category, short recipeIngredientsIndex, short recipeStepsIndex)
     {
+        this.index = index;
         this.name = name;
         this.category = category;
         this.recipeIngredientsIndex = recipeIngredientsIndex;
@@ -36,6 +38,16 @@ public class Recipe
     public void setId(short id)
     {
         this.id = id;
+    }
+    
+    public short getIndex()
+    {
+        return index;
+    }
+    
+    public void setIndex(short index)
+    {
+        this.index = index;
     }
     
     public String getName()

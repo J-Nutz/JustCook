@@ -30,14 +30,18 @@ public class Launcher extends Application
         
         //Start TCP Server
         //server = Server.createTcpServer().start();
-        
+    
         //Load up driver, connect to database and initialize all tables
         database = new Database(env.get("DATABASE_USERNAME"), env.get("DATABASE_PASSWORD"));
+    
         database.initTables();
-        
+    
         //Add fake user for testing
         byte[] salt = addSalt();
         UsersDAO.addUser(new User("Jonah", salt, encrypt(new char[] {'1', '2', '3', '4'}, salt), AccessLevel.MANAGER));
+    
+        /*RecipesDAO.addRecipe(new Recipe((short) 1, "Eggs", "Breakfast", (short) 1, (short) 2));
+        RecipesDAO.addRecipe(new Recipe((short) 1, "Pancakes", "Breakfast", (short) 3, (short) 4));*/
     }
 
     @Override

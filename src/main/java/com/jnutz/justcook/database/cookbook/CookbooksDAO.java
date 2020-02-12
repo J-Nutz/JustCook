@@ -23,8 +23,8 @@ public class CookbooksDAO
         try(var connection = database.getConnection();
             var database = H2DSL.using(connection, SQLDialect.H2))
         {
-            return database.insertInto(COOKBOOKS, COOKBOOKS.ID, COOKBOOKS.NAME, COOKBOOKS.RECIPES_ID)
-                           .values(cookbook.getId(), cookbook.getName(), cookbook.getRecipeId())
+            return database.insertInto(COOKBOOKS, COOKBOOKS.ID, COOKBOOKS.NAME, COOKBOOKS.RECIPES_INDEX)
+                           .values(cookbook.getId(), cookbook.getName(), cookbook.getRecipeIndex())
                            .execute() == 1;
         }
         catch(SQLException e)
@@ -53,7 +53,7 @@ public class CookbooksDAO
                 
                 cookbook.setId(record.get(COOKBOOKS.ID));
                 cookbook.setName(record.get(COOKBOOKS.NAME));
-                cookbook.setRecipeId(record.get(COOKBOOKS.RECIPES_ID));
+                cookbook.setRecipeIndex(record.get(COOKBOOKS.RECIPES_INDEX));
             }
             
             return cookbook;
@@ -81,10 +81,9 @@ public class CookbooksDAO
             if(fetchedRecipe.isNotEmpty())
             {
                 Record record = fetchedRecipe.get(0);
-                
-                cookbook.setId(record.get(COOKBOOKS.ID));
+    
                 cookbook.setName(record.get(COOKBOOKS.NAME));
-                cookbook.setRecipeId(record.get(COOKBOOKS.RECIPES_ID));
+                cookbook.setRecipeIndex(record.get(COOKBOOKS.RECIPES_INDEX));
             }
     
             return cookbook;
@@ -149,7 +148,7 @@ public class CookbooksDAO
                     for(CookbooksRecord record : fetchedCookbookRecipes)
                     {
                         cookbook.setId(record.getId());
-                        cookbook.addRecipeId(record.getRecipesId());
+                        cookbook.setRecipeIndex(record.getRecipesIndex());
                     }
                     
                     cookbooks.add(cookbook);

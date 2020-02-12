@@ -9,9 +9,9 @@ public class Cookbook
 {
     private short id;
     private String name;
-    private Short recipeId;
+    private short recipeIndex;
     
-    private List<Short> recipeIds = new ArrayList<>();
+    private List<Short> recipeIndices = new ArrayList<>();
     
     private List<Recipe> recipes = new ArrayList<>();
     
@@ -25,11 +25,11 @@ public class Cookbook
         this.name = name;
     }
     
-    public Cookbook(short id, String name, short recipeId)
+    public Cookbook(short id, String name, short recipeIndex)
     {
         this.id = id;
         this.name = name;
-        this.recipeId = recipeId;
+        this.recipeIndex = recipeIndex;
     }
     
     public short getId()
@@ -52,29 +52,29 @@ public class Cookbook
         this.name = name;
     }
     
-    public Short getRecipeId()
+    public Short getRecipeIndex()
     {
-        return recipeId;
+        return recipeIndex;
     }
     
-    public void setRecipeId(Short recipeId)
+    public void setRecipeIndex(Short recipeIndex)
     {
-        this.recipeId = recipeId;
+        this.recipeIndex = recipeIndex;
     }
     
-    public List<Short> getRecipeIds()
+    public List<Short> getRecipeIndices()
     {
-        return recipeIds;
+        return recipeIndices;
     }
     
-    public void setRecipeIds(List<Short> recipeIds)
+    public void setRecipeIndices(List<Short> recipeIndices)
     {
-        this.recipeIds = recipeIds;
+        this.recipeIndices = recipeIndices;
     }
     
-    public void addRecipeId(short recipeId)
+    public void addRecipeIndex(short recipeIndex)
     {
-        this.recipeIds.add(recipeId);
+        this.recipeIndices.add(recipeIndex);
     }
     
     public List<Recipe> getRecipes()

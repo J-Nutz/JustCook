@@ -40,7 +40,7 @@ public class Public extends SchemaImpl
      * The table <code>PUBLIC.Cookbooks</code>.
      */
     public final Cookbooks COOKBOOKS = src.main.java.com.jnutz.jooq.public_.tables.Cookbooks.COOKBOOKS;
-    
+
     /**
      * The table <code>PUBLIC.Employees</code>.
      */

@@ -37,7 +37,7 @@ public class Keys
     public static final Identity<ItemsRecord, Short> IDENTITY_ITEMS = Identities0.IDENTITY_ITEMS;
     public static final Identity<RecipesRecord, Short> IDENTITY_RECIPES = Identities0.IDENTITY_RECIPES;
     public static final Identity<UsersRecord, Short> IDENTITY_USERS = Identities0.IDENTITY_USERS;
-    
+
     // -------------------------------------------------------------------------
     // UNIQUE and PRIMARY KEY definitions
     // -------------------------------------------------------------------------
@@ -62,44 +62,24 @@ public class Keys
     
     private static class Identities0
     {
-        public static Identity<CookbooksRecord, Short> IDENTITY_COOKBOOKS = Internal.createIdentity(Cookbooks.COOKBOOKS,
-                                                                                                    Cookbooks.COOKBOOKS.ID);
-        public static Identity<EmployeesRecord, Short> IDENTITY_EMPLOYEES = Internal.createIdentity(Employees.EMPLOYEES,
-                                                                                                    Employees.EMPLOYEES.USERID);
-        public static Identity<IngredientsRecord, Short> IDENTITY_INGREDIENTS = Internal.createIdentity(
-                Ingredients.INGREDIENTS, Ingredients.INGREDIENTS.ID);
-        public static Identity<ItemsRecord, Short> IDENTITY_ITEMS = Internal.createIdentity(Items.ITEMS,
-                                                                                            Items.ITEMS.ID);
-        public static Identity<RecipesRecord, Short> IDENTITY_RECIPES = Internal.createIdentity(Recipes.RECIPES,
-                                                                                                Recipes.RECIPES.ID);
-        public static Identity<UsersRecord, Short> IDENTITY_USERS = Internal.createIdentity(Users.USERS,
-                                                                                            Users.USERS.ID);
+        public static Identity<CookbooksRecord, Short> IDENTITY_COOKBOOKS = Internal.createIdentity(Cookbooks.COOKBOOKS, Cookbooks.COOKBOOKS.ID);
+        public static Identity<EmployeesRecord, Short> IDENTITY_EMPLOYEES = Internal.createIdentity(Employees.EMPLOYEES, Employees.EMPLOYEES.USERID);
+        public static Identity<IngredientsRecord, Short> IDENTITY_INGREDIENTS = Internal.createIdentity(Ingredients.INGREDIENTS, Ingredients.INGREDIENTS.ID);
+        public static Identity<ItemsRecord, Short> IDENTITY_ITEMS = Internal.createIdentity(Items.ITEMS, Items.ITEMS.ID);
+        public static Identity<RecipesRecord, Short> IDENTITY_RECIPES = Internal.createIdentity(Recipes.RECIPES, Recipes.RECIPES.ID);
+        public static Identity<UsersRecord, Short> IDENTITY_USERS = Internal.createIdentity(Users.USERS, Users.USERS.ID);
     }
     
     private static class UniqueKeys0
     {
-        public static final UniqueKey<CookbooksRecord> CONSTRAINT_84 = Internal.createUniqueKey(Cookbooks.COOKBOOKS,
-                                                                                                "CONSTRAINT_84",
-                                                                                                Cookbooks.COOKBOOKS.ID);
-        public static final UniqueKey<EmployeesRecord> CONSTRAINT_1 = Internal.createUniqueKey(Employees.EMPLOYEES,
-                                                                                               "CONSTRAINT_1",
-                                                                                               Employees.EMPLOYEES.USERID);
-        public static final UniqueKey<IngredientsRecord> CONSTRAINT_E = Internal.createUniqueKey(
-                Ingredients.INGREDIENTS, "CONSTRAINT_E", Ingredients.INGREDIENTS.ID);
-        public static final UniqueKey<ItemsRecord> CONSTRAINT_43 = Internal.createUniqueKey(Items.ITEMS,
-                                                                                            "CONSTRAINT_43",
-                                                                                            Items.ITEMS.ID);
-        public static final UniqueKey<RecipeIngredientsRecord> CONSTRAINT_8 = Internal.createUniqueKey(
-                RecipeIngredients.RECIPE_INGREDIENTS, "CONSTRAINT_8", RecipeIngredients.RECIPE_INGREDIENTS.ID);
-        public static final UniqueKey<RecipeStepsRecord> CONSTRAINT_7 = Internal.createUniqueKey(
-                RecipeSteps.RECIPE_STEPS, "CONSTRAINT_7", RecipeSteps.RECIPE_STEPS.ID);
-        public static final UniqueKey<RecipesRecord> CONSTRAINT_A = Internal.createUniqueKey(Recipes.RECIPES,
-                                                                                             "CONSTRAINT_A",
-                                                                                             Recipes.RECIPES.ID);
-        public static final UniqueKey<StepsRecord> CONSTRAINT_4C = Internal.createUniqueKey(Steps.STEPS,
-                                                                                            "CONSTRAINT_4C",
-                                                                                            Steps.STEPS.ID);
-        public static final UniqueKey<UsersRecord> CONSTRAINT_4 = Internal.createUniqueKey(Users.USERS, "CONSTRAINT_4",
-                                                                                           Users.USERS.ID);
+        public static final UniqueKey<CookbooksRecord> CONSTRAINT_84 = Internal.createUniqueKey(Cookbooks.COOKBOOKS, "CONSTRAINT_84", Cookbooks.COOKBOOKS.ID);
+        public static final UniqueKey<EmployeesRecord> CONSTRAINT_1 = Internal.createUniqueKey(Employees.EMPLOYEES, "CONSTRAINT_1", Employees.EMPLOYEES.USERID);
+        public static final UniqueKey<IngredientsRecord> CONSTRAINT_E = Internal.createUniqueKey(Ingredients.INGREDIENTS, "CONSTRAINT_E", Ingredients.INGREDIENTS.ID);
+        public static final UniqueKey<ItemsRecord> CONSTRAINT_43 = Internal.createUniqueKey(Items.ITEMS, "CONSTRAINT_43", Items.ITEMS.ID);
+        public static final UniqueKey<RecipeIngredientsRecord> CONSTRAINT_8 = Internal.createUniqueKey(RecipeIngredients.RECIPE_INGREDIENTS, "CONSTRAINT_8", RecipeIngredients.RECIPE_INGREDIENTS.ID);
+        public static final UniqueKey<RecipeStepsRecord> CONSTRAINT_7 = Internal.createUniqueKey(RecipeSteps.RECIPE_STEPS, "CONSTRAINT_7", RecipeSteps.RECIPE_STEPS.ID);
+        public static final UniqueKey<RecipesRecord> CONSTRAINT_A = Internal.createUniqueKey(Recipes.RECIPES, "CONSTRAINT_A", Recipes.RECIPES.ID);
+        public static final UniqueKey<StepsRecord> CONSTRAINT_4C = Internal.createUniqueKey(Steps.STEPS, "CONSTRAINT_4C", Steps.STEPS.ID);
+        public static final UniqueKey<UsersRecord> CONSTRAINT_4 = Internal.createUniqueKey(Users.USERS, "CONSTRAINT_4", Users.USERS.ID);
     }
 }

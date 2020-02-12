@@ -25,7 +25,7 @@ public class CookbooksTable
             databaseDSL.createTableIfNotExists("Cookbooks")
                        .column("Id", SQLDataType.SMALLINT.identity(true))
                        .column("Name", SQLDataType.VARCHAR(32))
-                       .column("Recipes_Id", SQLDataType.SMALLINT)
+                       .column("Recipes_Index", SQLDataType.SMALLINT)
                        .constraints(DSL.constraint().primaryKey("Id"))
                        //DSL.constraint().foreignKey("Recipes_Id").references("Recipes.Id"),
                        .execute();

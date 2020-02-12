@@ -48,10 +48,8 @@ public class Users extends TableImpl<UsersRecord>
     /**
      * The column <code>PUBLIC.Users.Id</code>.
      */
-    public final TableField<UsersRecord, Short> ID = createField(DSL.name("Id"),
-                                                                 org.jooq.impl.SQLDataType.SMALLINT.nullable(false)
-                                                                                                   .identity(true),
-                                                                 this, "");
+    public final TableField<UsersRecord, Short> ID = createField(DSL.name("Id"), org.jooq.impl.SQLDataType.SMALLINT.nullable(false)
+                                                                                                                   .identity(true), this, "");
 
     /**
      * The column <code>PUBLIC.Users.Username</code>.

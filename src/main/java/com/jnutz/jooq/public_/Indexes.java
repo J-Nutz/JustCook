@@ -45,24 +45,14 @@ public class Indexes
     
     private static class Indexes0
     {
-        public static Index PRIMARY_KEY_84 = Internal.createIndex("PRIMARY_KEY_84", Cookbooks.COOKBOOKS,
-                                                                  new OrderField[] {Cookbooks.COOKBOOKS.ID}, true);
-        public static Index PRIMARY_KEY_1 = Internal.createIndex("PRIMARY_KEY_1", Employees.EMPLOYEES,
-                                                                 new OrderField[] {Employees.EMPLOYEES.USERID}, true);
-        public static Index PRIMARY_KEY_E = Internal.createIndex("PRIMARY_KEY_E", Ingredients.INGREDIENTS,
-                                                                 new OrderField[] {Ingredients.INGREDIENTS.ID}, true);
-        public static Index PRIMARY_KEY_43 = Internal.createIndex("PRIMARY_KEY_43", Items.ITEMS,
-                                                                  new OrderField[] {Items.ITEMS.ID}, true);
-        public static Index PRIMARY_KEY_8 = Internal.createIndex("PRIMARY_KEY_8", RecipeIngredients.RECIPE_INGREDIENTS,
-                                                                 new OrderField[] {RecipeIngredients.RECIPE_INGREDIENTS.ID},
-                                                                 true);
-        public static Index PRIMARY_KEY_7 = Internal.createIndex("PRIMARY_KEY_7", RecipeSteps.RECIPE_STEPS,
-                                                                 new OrderField[] {RecipeSteps.RECIPE_STEPS.ID}, true);
-        public static Index PRIMARY_KEY_A = Internal.createIndex("PRIMARY_KEY_A", Recipes.RECIPES,
-                                                                 new OrderField[] {Recipes.RECIPES.ID}, true);
-        public static Index PRIMARY_KEY_4C = Internal.createIndex("PRIMARY_KEY_4C", Steps.STEPS,
-                                                                  new OrderField[] {Steps.STEPS.ID}, true);
-        public static Index PRIMARY_KEY_4 = Internal.createIndex("PRIMARY_KEY_4", Users.USERS,
-                                                                 new OrderField[] {Users.USERS.ID}, true);
+        public static Index PRIMARY_KEY_84 = Internal.createIndex("PRIMARY_KEY_84", Cookbooks.COOKBOOKS, new OrderField[] {Cookbooks.COOKBOOKS.ID}, true);
+        public static Index PRIMARY_KEY_1 = Internal.createIndex("PRIMARY_KEY_1", Employees.EMPLOYEES, new OrderField[] {Employees.EMPLOYEES.USERID}, true);
+        public static Index PRIMARY_KEY_E = Internal.createIndex("PRIMARY_KEY_E", Ingredients.INGREDIENTS, new OrderField[] {Ingredients.INGREDIENTS.ID}, true);
+        public static Index PRIMARY_KEY_43 = Internal.createIndex("PRIMARY_KEY_43", Items.ITEMS, new OrderField[] {Items.ITEMS.ID}, true);
+        public static Index PRIMARY_KEY_8 = Internal.createIndex("PRIMARY_KEY_8", RecipeIngredients.RECIPE_INGREDIENTS, new OrderField[] {RecipeIngredients.RECIPE_INGREDIENTS.ID}, true);
+        public static Index PRIMARY_KEY_7 = Internal.createIndex("PRIMARY_KEY_7", RecipeSteps.RECIPE_STEPS, new OrderField[] {RecipeSteps.RECIPE_STEPS.ID}, true);
+        public static Index PRIMARY_KEY_A = Internal.createIndex("PRIMARY_KEY_A", Recipes.RECIPES, new OrderField[] {Recipes.RECIPES.ID}, true);
+        public static Index PRIMARY_KEY_4C = Internal.createIndex("PRIMARY_KEY_4C", Steps.STEPS, new OrderField[] {Steps.STEPS.ID}, true);
+        public static Index PRIMARY_KEY_4 = Internal.createIndex("PRIMARY_KEY_4", Users.USERS, new OrderField[] {Users.USERS.ID}, true);
     }
 }

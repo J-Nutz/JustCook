@@ -49,17 +49,13 @@ public class Ingredients extends TableImpl<IngredientsRecord>
     /**
      * The column <code>PUBLIC.Ingredients.Id</code>.
      */
-    public final TableField<IngredientsRecord, Short> ID = createField(DSL.name("Id"),
-                                                                       org.jooq.impl.SQLDataType.SMALLINT
-                                                                               .nullable(false).identity(true), this,
-                                                                       "");
+    public final TableField<IngredientsRecord, Short> ID = createField(DSL.name("Id"), org.jooq.impl.SQLDataType.SMALLINT.nullable(false)
+                                                                                                                         .identity(true), this, "");
     
     /**
      * The column <code>PUBLIC.Ingredients.Item_Id</code>.
      */
-    public final TableField<IngredientsRecord, Short> ITEM_ID = createField(DSL.name("Item_Id"),
-                                                                            org.jooq.impl.SQLDataType.SMALLINT, this,
-                                                                            "");
+    public final TableField<IngredientsRecord, Short> ITEM_ID = createField(DSL.name("Item_Id"), org.jooq.impl.SQLDataType.SMALLINT, this, "");
     
     /**
      * Create a <code>PUBLIC.Ingredients</code> table reference
