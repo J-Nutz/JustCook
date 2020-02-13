@@ -1,5 +1,6 @@
 package com.jnutz.justcook.client.gui.login;
 
+import com.jnutz.justcook.client.gui.Styling;
 import com.jnutz.justcook.client.gui.container.*;
 import com.jnutz.justcook.database.users.CurrentUser;
 import com.jnutz.justcook.database.users.User;
@@ -39,9 +40,6 @@ public class Login extends BorderPane
     private Button newUserBtn = new Button("Go Sign Up");
     private Label copyrightLabel = new Label("Copyright \u00a9 2020 Jonah Stieglitz & Noah Manders");
     
-    private Font font14 = Font.font(14);
-    private Font font16 = Font.font(16);
-    
     private Timer errorMessageTimer = new Timer();
     
     public Login()
@@ -72,21 +70,22 @@ public class Login extends BorderPane
     
         usernameTF.setPromptText("Username");
         usernameTF.setMaxWidth(150);
-        usernameTF.setFont(font14);
+        usernameTF.setFont(Styling.Font_14);
     
         passwordTF.setPromptText("Password");
         passwordTF.setMaxWidth(150);
-        passwordTF.setFont(font14);
+        passwordTF.setFont(Styling.Font_14);
     
         //For easier testing
         usernameTF.setText("Jonah");
         passwordTF.setText("1234");
     
         loginBtn.setAlignment(Pos.CENTER);
-        loginBtn.setFont(font16);
+        loginBtn.setFont(Styling.Font_16);
         loginBtn.setOnAction(event -> {
             String username = usernameTF.getText();
-            char[] password = passwordTF.getText().toCharArray();
+            char[] password = passwordTF.getText()
+                                        .toCharArray();
         
             //Make sure username has input
             if(!username.isBlank())
@@ -130,17 +129,17 @@ public class Login extends BorderPane
                 showErrorMessage("Must Enter A Username");
             }
         });
-
-        errorLabel.setPadding(new Insets(20, 0, 0 , 0));
-        errorLabel.setFont(font16);
+    
+        errorLabel.setPadding(new Insets(20, 0, 0, 0));
+        errorLabel.setFont(Styling.Font_16);
         errorLabel.setTextFill(Color.RED);
 
         bottomBox.setAlignment(Pos.CENTER);
         bottomBox.setPadding(new Insets(15, 0, 15, 0));
-
-        newUserLabel.setFont(font16);
-
-        newUserBtn.setFont(font14);
+    
+        newUserLabel.setFont(Styling.Font_16);
+    
+        newUserBtn.setFont(Styling.Font_14);
         newUserBtn.setOnAction(e -> ViewContainer.switchProtectedView(ProtectedView.BLANK, ViewPosition.CENTER));
         copyrightLabel.setPadding(new Insets(20, 0, 0, 0));
     }
@@ -177,18 +176,15 @@ public class Login extends BorderPane
                 try
                 {
                     //TODO: Do I want to do it this way or re enable button at same time as removing error label text?
-                    Thread.sleep(4000);
+                    Thread.sleep(3000);
                     Platform.runLater(() -> loginBtn.setDisable(false));
-        
-                    Thread.sleep(2000);
+    
+                    Thread.sleep(3000);
+                    Platform.runLater(() -> errorLabel.setText(""));
                 }
                 catch(InterruptedException e)
                 {
                     e.printStackTrace();
-                }
-                finally
-                {
-                    Platform.runLater(() -> errorLabel.setText(""));
                 }
             }
         }, 0);

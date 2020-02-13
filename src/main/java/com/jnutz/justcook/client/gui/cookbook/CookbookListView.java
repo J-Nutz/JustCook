@@ -32,6 +32,8 @@ public class CookbookListView extends GridPane
         setVgap(10);
         setHgap(10);
         setBorder(Styling.Border_Default);
+    
+        backBtn.setFont(Styling.Font_14);
     }
     
     private void addComponents()

@@ -34,8 +34,10 @@ public class CookbookQuickView extends GridPane
         setOnMouseExited(event -> setCursor(Cursor.DEFAULT));
     
         nameLbl.setText(cookbook.getName());
+        nameLbl.setFont(Styling.Font_16);
     
         recipeCountLbl.setText("Contains " + RecipesDAO.getRecipeCount(cookbook.getRecipeIndex()) + " Recipes");
+        recipeCountLbl.setFont(Styling.Font_14);
     }
     
     private void addComponents()

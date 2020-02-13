@@ -35,7 +35,10 @@ public class RecipeQuickView extends GridPane
         setOnMouseExited(event -> setCursor(Cursor.DEFAULT));
     
         nameLbl.setText(recipe.getName());
+        nameLbl.setFont(Styling.Font_16);
+    
         categoryLbl.setText(recipe.getCategory());
+        categoryLbl.setFont(Styling.Font_14);
         //stepCountLbl.setText("Number Of Steps: " + recipe.getSteps().size());
         //ingredientCountLbl.setText("Number Of Ingredients: " + recipe.getIngredients().size());
     }
