@@ -4,6 +4,7 @@ import com.jnutz.justcook.database.cookbook.Cookbook;
 import com.jnutz.justcook.database.cookbook.recipes.RecipesDAO;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -29,10 +30,12 @@ public class CookbookQuickView extends GridPane
         setPadding(new Insets(10));
         setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
         setAlignment(Pos.CENTER);
+        setOnMouseEntered(event -> setCursor(Cursor.HAND));
+        setOnMouseExited(event -> setCursor(Cursor.DEFAULT));
     
         nameLbl.setText(cookbook.getName());
     
-        recipeCountLbl.setText("Contains: " + RecipesDAO.getRecipeCount(cookbook.getRecipeIndex()) + " Recipes");
+        recipeCountLbl.setText("Contains " + RecipesDAO.getRecipeCount(cookbook.getRecipeIndex()) + " Recipes");
     }
     
     private void addComponents()

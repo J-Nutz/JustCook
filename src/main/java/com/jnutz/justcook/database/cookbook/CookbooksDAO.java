@@ -133,28 +133,22 @@ public class CookbooksDAO
         try(var connection = database.getConnection();
             var database = H2DSL.using(connection, SQLDialect.H2))
         {
-            List<String> cookbookNames = getCookbookNames();
-        
-            if(!cookbookNames.isEmpty())
+            Result<CookbooksRecord> cookbooksRecords = database.selectFrom(COOKBOOKS)
+                                                               .fetch();
+    
+            if(cookbooksRecords.isNotEmpty())
             {
-                for(String name : cookbookNames)
+                for(CookbooksRecord cookbooksRecord : cookbooksRecords)
                 {
-                    Result<CookbooksRecord> fetchedCookbookRecipes = database.selectFrom(COOKBOOKS)
-                                                                             .where(COOKBOOKS.NAME.equal(name))
-                                                                             .fetch();
-                    
-                    Cookbook cookbook = new Cookbook(name);
-                    
-                    for(CookbooksRecord record : fetchedCookbookRecipes)
-                    {
-                        cookbook.setId(record.getId());
-                        cookbook.setRecipeIndex(record.getRecipesIndex());
-                    }
-                    
+                    Cookbook cookbook = new Cookbook();
+            
+                    cookbook.setId(cookbooksRecord.getId());
+                    cookbook.setName(cookbooksRecord.getName());
+                    //cookbook.setCategory(cookbooksRecord.getCategory());
+                    cookbook.setRecipeIndex(cookbooksRecord.getRecipesIndex());
+            
                     cookbooks.add(cookbook);
                 }
-                
-                return cookbooks;
             }
         }
         catch(SQLException e)

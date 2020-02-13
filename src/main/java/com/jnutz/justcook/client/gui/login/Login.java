@@ -33,23 +33,23 @@ public class Login extends BorderPane
     private PasswordField passwordTF = new PasswordField();
     private Button loginBtn = new Button("Login");
     private Label errorLabel = new Label();
-
+    
     private VBox bottomBox = new VBox(15);
     private Label newUserLabel = new Label("Don't Have An Account Yet?");
     private Button newUserBtn = new Button("Go Sign Up");
     private Label copyrightLabel = new Label("Copyright \u00a9 2020 Jonah Stieglitz & Noah Manders");
-
-    private Font font14 = new Font(14);
-    private Font font16 = new Font(16);
-
+    
+    private Font font14 = Font.font(14);
+    private Font font16 = Font.font(16);
+    
     private Timer errorMessageTimer = new Timer();
-
+    
     public Login()
     {
         init();
         addComponents();
     }
-
+    
     private void init()
     {
         setOnMousePressed(event -> Platform.runLater(super::requestFocus));

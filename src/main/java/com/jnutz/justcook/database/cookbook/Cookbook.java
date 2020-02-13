@@ -9,6 +9,7 @@ public class Cookbook
 {
     private short id;
     private String name;
+    private String category;
     private short recipeIndex;
     
     private List<Short> recipeIndices = new ArrayList<>();
@@ -20,15 +21,17 @@ public class Cookbook
     
     }
     
-    public Cookbook(String name)
+    public Cookbook(String name, String category)
     {
         this.name = name;
+        this.category = category;
     }
     
-    public Cookbook(short id, String name, short recipeIndex)
+    public Cookbook(short id, String name, String category, short recipeIndex)
     {
         this.id = id;
         this.name = name;
+        this.category = category;
         this.recipeIndex = recipeIndex;
     }
     
@@ -40,6 +43,16 @@ public class Cookbook
     public void setId(short id)
     {
         this.id = id;
+    }
+    
+    public String getCategory()
+    {
+        return category;
+    }
+    
+    public void setCategory(String category)
+    {
+        this.category = category;
     }
     
     public String getName()
@@ -97,4 +110,5 @@ public class Cookbook
         //TODO: Actually implement this
         this.recipes.get(recipeId);
     }
+    
 }
