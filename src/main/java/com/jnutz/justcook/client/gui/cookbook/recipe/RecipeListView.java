@@ -1,8 +1,8 @@
 package com.jnutz.justcook.client.gui.cookbook.recipe;
 
+import com.jnutz.justcook.client.gui.Styling;
 import javafx.geometry.Insets;
-import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
+import javafx.scene.layout.FlowPane;
 
 public class RecipeListView extends FlowPane
 {
@@ -20,7 +20,7 @@ public class RecipeListView extends FlowPane
         setHgap(10);
         setPrefWrapLength(40);
     
-        setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+        setBorder(Styling.Border_Default);
     }
     
     private void addComponents()

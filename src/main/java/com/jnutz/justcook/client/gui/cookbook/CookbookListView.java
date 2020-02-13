@@ -1,5 +1,6 @@
 package com.jnutz.justcook.client.gui.cookbook;
 
+import com.jnutz.justcook.client.gui.Styling;
 import com.jnutz.justcook.client.gui.cookbook.recipe.RecipeQuickView;
 import com.jnutz.justcook.client.gui.cookbook.recipe.RecipeView;
 import com.jnutz.justcook.database.cookbook.Cookbook;
@@ -10,8 +11,8 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
 import javafx.scene.control.Button;
-import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 
 public class CookbookListView extends GridPane
 {
@@ -30,7 +31,7 @@ public class CookbookListView extends GridPane
         setPadding(new Insets(10));
         setVgap(10);
         setHgap(10);
-        setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+        setBorder(Styling.Border_Default);
     }
     
     private void addComponents()
@@ -41,13 +42,13 @@ public class CookbookListView extends GridPane
     private void addCookbooks()
     {
         getChildren().clear();
-        add(backBtn, 0, 0, 1, 1);
     
         int column = 0;
-        int row = 1;
+        int row = 0;
     
         for(Cookbook cookbook : CookbooksDAO.getAllCookbooks())
         {
+            //Just for simulating a bunch of entries
             for(int i = 1; i < 10; i++)
             {
                 CookbookQuickView cookbookQuickView = new CookbookQuickView(cookbook);
@@ -83,6 +84,7 @@ public class CookbookListView extends GridPane
         
         for(Recipe recipe : RecipesDAO.getRecipes(cookbook.getRecipeIndex()))
         {
+            //Just for simulating a bunch of entries
             for(int i = 1; i < 20; i++)
             {
                 RecipeQuickView recipeQuickView = new RecipeQuickView(recipe);
@@ -111,7 +113,8 @@ public class CookbookListView extends GridPane
         backBtn.setOnAction(event -> addRecipes(currentCookbook));
         
         RecipeView recipeView = new RecipeView(recipe);
-        
+    
+        //Make the recipe view take up the whole view
         GridPane.setValignment(recipeView, VPos.CENTER);
         GridPane.setHalignment(recipeView, HPos.CENTER);
         GridPane.setVgrow(recipeView, Priority.ALWAYS);

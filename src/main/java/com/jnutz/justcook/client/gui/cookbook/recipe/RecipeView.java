@@ -1,10 +1,10 @@
 package com.jnutz.justcook.client.gui.cookbook.recipe;
 
+import com.jnutz.justcook.client.gui.Styling;
 import com.jnutz.justcook.database.cookbook.recipes.Recipe;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
+import javafx.scene.layout.VBox;
 
 public class RecipeView extends VBox
 {
@@ -12,6 +12,6 @@ public class RecipeView extends VBox
     {
         setAlignment(Pos.CENTER);
         getChildren().add(new Label("Temporary Label!"));
-        setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+        setBorder(Styling.Border_Default);
     }
 }
