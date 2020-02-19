@@ -41,7 +41,7 @@ public class Keys
     // -------------------------------------------------------------------------
     // UNIQUE and PRIMARY KEY definitions
     // -------------------------------------------------------------------------
-    
+
     public static final UniqueKey<CookbooksRecord> CONSTRAINT_84 = UniqueKeys0.CONSTRAINT_84;
     public static final UniqueKey<EmployeesRecord> CONSTRAINT_1 = UniqueKeys0.CONSTRAINT_1;
     public static final UniqueKey<IngredientsRecord> CONSTRAINT_E = UniqueKeys0.CONSTRAINT_E;

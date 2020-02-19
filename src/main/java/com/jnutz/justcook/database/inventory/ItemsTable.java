@@ -17,9 +17,9 @@ public class ItemsTable
             var databaseDSL = H2DSL.using(connection))
         {
             //Instead of having to manually do it each time table is changed
-            databaseDSL.dropTableIfExists("Items")
-                       .execute();
-        
+            /*databaseDSL.dropTableIfExists("Items")
+                       .execute();*/
+    
             //TODO: What is the overhead of calling this each time the application is launched?
             databaseDSL.createTableIfNotExists("Items")
                        .column("Id", SQLDataType.SMALLINT.identity(true))
@@ -28,7 +28,8 @@ public class ItemsTable
                        .column("Price", SQLDataType.DECIMAL(19, 4))
                        .column("AvailableAmount", SQLDataType.SMALLINT)
                        .column("Measurement", SQLDataType.VARCHAR(16)) //TODO: Length
-                       .constraints(DSL.constraint().primaryKey("Id"))
+                       .constraints(DSL.constraint()
+                                       .primaryKey("Id"))
                        .execute();
         }
         catch(DataAccessException | SQLException e)

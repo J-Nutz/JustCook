@@ -1,10 +1,10 @@
 package com.jnutz.justcook.database.inventory;
 
-import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.util.h2.H2DSL;
 import src.main.java.com.jnutz.jooq.public_.tables.Items;
+import src.main.java.com.jnutz.jooq.public_.tables.records.ItemsRecord;
 
 import java.sql.SQLException;
 
@@ -38,25 +38,21 @@ public class ItemsDAO
         try(var connection = database.getConnection();
             var database = H2DSL.using(connection, SQLDialect.H2))
         {
-            Result<Record> fetchedIngredient = database.select()
-                                                       .from(ITEMS)
-                                                       .where(ITEMS.ID.equal(id))
-                                                       .limit(1)
-                                                       .fetch();
-        
+            Result<ItemsRecord> fetchedIngredient = database.selectFrom(ITEMS)
+                                                            .where(ITEMS.ID.equal(id))
+                                                            .limit(1)
+                                                            .fetch();
+    
             if(fetchedIngredient.isNotEmpty())
             {
-                Record record = fetchedIngredient.get(0);
-            
-                Item item = new Item();
-                item.setId(record.get(ITEMS.ID));
-                item.setName(record.get(ITEMS.NAME));
-                item.setGroup(ItemGroup.valueOf(record.get(ITEMS.GROUP)));
-                item.setPrice(record.get(ITEMS.PRICE));
-                item.setAvailableAmount(record.get(ITEMS.AVAILABLEAMOUNT));
-                item.setMeasurement(Measurement.valueOf(record.get(ITEMS.MEASUREMENT)));
-            
-                return item;
+                ItemsRecord itemRecord = fetchedIngredient.get(0);
+        
+                return new Item(itemRecord.getId(),
+                                itemRecord.getName(),
+                                ItemGroup.valueOf(itemRecord.getGroup()),
+                                itemRecord.getPrice(),
+                                itemRecord.getAvailableamount(),
+                                Measurement.valueOf(itemRecord.getMeasurement()));
             }
             else
             {

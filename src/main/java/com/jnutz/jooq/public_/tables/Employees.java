@@ -62,17 +62,17 @@ public class Employees extends TableImpl<EmployeesRecord>
      * The column <code>PUBLIC.Employees.LastName</code>.
      */
     public final TableField<EmployeesRecord, String> LASTNAME = createField(DSL.name("LastName"), org.jooq.impl.SQLDataType.VARCHAR(64), this, "");
-    
+
     /**
      * The column <code>PUBLIC.Employees.Age</code>.
      */
     public final TableField<EmployeesRecord, Byte> AGE = createField(DSL.name("Age"), org.jooq.impl.SQLDataType.TINYINT, this, "");
-    
+
     /**
      * The column <code>PUBLIC.Employees.DateOfBirth</code>.
      */
     public final TableField<EmployeesRecord, Date> DATEOFBIRTH = createField(DSL.name("DateOfBirth"), org.jooq.impl.SQLDataType.DATE, this, "");
-    
+
     /**
      * The column <code>PUBLIC.Employees.Email</code>.
      */

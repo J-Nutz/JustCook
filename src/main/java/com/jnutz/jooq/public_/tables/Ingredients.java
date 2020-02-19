@@ -30,7 +30,7 @@ import java.util.List;
 public class Ingredients extends TableImpl<IngredientsRecord>
 {
     
-    private static final long serialVersionUID = 1482186135;
+    private static final long serialVersionUID = 317300095;
     
     /**
      * The reference instance of <code>PUBLIC.Ingredients</code>
@@ -51,6 +51,11 @@ public class Ingredients extends TableImpl<IngredientsRecord>
      */
     public final TableField<IngredientsRecord, Short> ID = createField(DSL.name("Id"), org.jooq.impl.SQLDataType.SMALLINT.nullable(false)
                                                                                                                          .identity(true), this, "");
+    
+    /**
+     * The column <code>PUBLIC.Ingredients.Name</code>.
+     */
+    public final TableField<IngredientsRecord, String> NAME = createField(DSL.name("Name"), org.jooq.impl.SQLDataType.VARCHAR(32), this, "");
     
     /**
      * The column <code>PUBLIC.Ingredients.Item_Id</code>.
@@ -157,12 +162,12 @@ public class Ingredients extends TableImpl<IngredientsRecord>
     }
     
     // -------------------------------------------------------------------------
-    // Row2 type methods
+    // Row3 type methods
     // -------------------------------------------------------------------------
     
     @Override
-    public Row2<Short, Short> fieldsRow()
+    public Row3<Short, String, Short> fieldsRow()
     {
-        return (Row2) super.fieldsRow();
+        return (Row3) super.fieldsRow();
     }
 }

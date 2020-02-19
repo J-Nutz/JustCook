@@ -17,12 +17,13 @@ public class IngredientsTable
             var databaseDSL = H2DSL.using(connection))
         {
             //Instead of having to manually do it each time table is changed
-            databaseDSL.dropTableIfExists("Ingredients")
-                       .execute();
-        
+            /*databaseDSL.dropTableIfExists("Ingredients")
+                       .execute();*/
+    
             //TODO: What is the overhead of calling this each time the application is launched?
             databaseDSL.createTableIfNotExists("Ingredients")
                        .column("Id", SQLDataType.SMALLINT.identity(true))
+                       .column("Name", SQLDataType.VARCHAR(32))
                        .column("Item_Id", SQLDataType.SMALLINT) //TODO: Length
                        .constraints(DSL.constraint()
                                        .primaryKey("Id"))

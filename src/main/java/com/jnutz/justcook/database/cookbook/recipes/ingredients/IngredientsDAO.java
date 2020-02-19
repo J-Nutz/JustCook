@@ -1,10 +1,10 @@
 package com.jnutz.justcook.database.cookbook.recipes.ingredients;
 
-import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.util.h2.H2DSL;
 import src.main.java.com.jnutz.jooq.public_.tables.Ingredients;
+import src.main.java.com.jnutz.jooq.public_.tables.records.IngredientsRecord;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -22,8 +22,8 @@ public class IngredientsDAO
         try(var connection = database.getConnection();
             var database = H2DSL.using(connection, SQLDialect.H2))
         {
-            return database.insertInto(INGREDIENTS, INGREDIENTS.ID, INGREDIENTS.ITEM_ID)
-                           .values(ingredient.getId(), ingredient.getItemId())
+            return database.insertInto(INGREDIENTS, INGREDIENTS.ID, INGREDIENTS.NAME, INGREDIENTS.ITEM_ID)
+                           .values(ingredient.getId(), ingredient.getName(), ingredient.getItemId())
                            .execute() == 1;
         }
         catch(SQLException e)
@@ -39,22 +39,18 @@ public class IngredientsDAO
         try(var connection = database.getConnection();
             var database = H2DSL.using(connection, SQLDialect.H2))
         {
-            Result<Record> fetchedIngredient = database.select()
-                                                       .from(INGREDIENTS)
-                                                       .where(INGREDIENTS.ID.equal(id))
-                                                       .limit(1)
-                                                       .fetch();
-        
+            Result<IngredientsRecord> fetchedIngredient = database.selectFrom(INGREDIENTS)
+                                                                  .where(INGREDIENTS.ID.equal(id))
+                                                                  .limit(1)
+                                                                  .fetch();
+    
             if(fetchedIngredient.isNotEmpty())
             {
-                Ingredient ingredient = new Ingredient();
-            
-                Record record = fetchedIngredient.get(0);
-    
-                ingredient.setId(record.get(INGREDIENTS.ID));
-                ingredient.setItemId(record.get(INGREDIENTS.ITEM_ID));
-                
-                return ingredient;
+                IngredientsRecord record = fetchedIngredient.get(0);
+        
+                return new Ingredient(record.getId(),
+                                      record.getName(),
+                                      record.getItemId());
             }
             else
             {
@@ -76,18 +72,18 @@ public class IngredientsDAO
             try(var connection = database.getConnection();
                 var database = H2DSL.using(connection, SQLDialect.H2))
             {
-                Result<Record> fetchedIngredient = database.select()
-                                                           .from(INGREDIENTS)
-                                                           .where(INGREDIENTS.ID.equal(id))
-                                                           .limit(1)
-                                                           .fetch();
-        
+                Result<IngredientsRecord> fetchedIngredient = database.selectFrom(INGREDIENTS)
+                                                                      .where(INGREDIENTS.ID.equal(id))
+                                                                      .limit(1)
+                                                                      .fetch();
+    
                 if(fetchedIngredient.isNotEmpty())
                 {
-                    Record record = fetchedIngredient.get(0);
-    
-                    ingredient.set(new Ingredient(record.get(INGREDIENTS.ID),
-                                                  record.get(INGREDIENTS.ITEM_ID)));
+                    IngredientsRecord record = fetchedIngredient.get(0);
+        
+                    ingredient.set(new Ingredient(record.getId(),
+                                                  record.getName(),
+                                                  record.getItemId()));
                 }
             }
             catch(SQLException e)
@@ -110,30 +106,25 @@ public class IngredientsDAO
         
             for(short id : ids)
             {
-                Result<Record> fetchedIngredient = database.select()
-                                                           .from(INGREDIENTS)
-                                                           .where(INGREDIENTS.ID.equal(id))
-                                                           .limit(1)
-                                                           .fetch();
-                
+                Result<IngredientsRecord> fetchedIngredient = database.selectFrom(INGREDIENTS)
+                                                                      .where(INGREDIENTS.ID.equal(id))
+                                                                      .fetch();
+    
                 if(fetchedIngredient.isNotEmpty())
                 {
+                    IngredientsRecord ingredientsRecord = fetchedIngredient.get(0);
+        
                     Ingredient ingredient = new Ingredient();
-                    
-                    Record record = fetchedIngredient.get(0);
-    
-                    ingredient.setId(record.get(INGREDIENTS.ID));
-                    ingredient.setItemId(record.get(INGREDIENTS.ITEM_ID));
-                    
+        
+                    ingredient.setId(ingredientsRecord.getId());
+                    ingredient.setName(ingredientsRecord.getName());
+                    ingredient.setItemId(ingredientsRecord.getItemId());
+        
                     ingredients.add(ingredient);
                 }
-                else
-                {
-                    return null;
-                }
             }
-            
-            return ingredients;
+    
+            return ingredients.isEmpty() ? null : ingredients;
         }
         catch(SQLException e)
         {

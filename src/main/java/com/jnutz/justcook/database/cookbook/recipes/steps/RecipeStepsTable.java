@@ -17,15 +17,16 @@ public class RecipeStepsTable
             var databaseDSL = H2DSL.using(connection))
         {
             //Instead of having to manually do it each time table is changed
-            databaseDSL.dropTableIfExists("Recipe_Steps")
-                       .execute();
-        
+            /*databaseDSL.dropTableIfExists("Recipe_Steps")
+                       .execute();*/
+    
             //TODO: What is the overhead of calling this each time the application is launched?
             databaseDSL.createTableIfNotExists("Recipe_Steps")
                        .column("Id", SQLDataType.SMALLINT)
                        .column("Index", SQLDataType.SMALLINT)
                        .column("Step_Id", SQLDataType.SMALLINT)
-                       .constraints(DSL.constraint().primaryKey("Id"))
+                       .constraints(DSL.constraint()
+                                       .primaryKey("Id"))
                        //DSL.constraint().foreignKey("Step_Id").references("Steps"))
                        .execute();
         }

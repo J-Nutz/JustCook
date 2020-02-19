@@ -5,6 +5,7 @@ import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.util.h2.H2DSL;
 import src.main.java.com.jnutz.jooq.public_.tables.Steps;
+import src.main.java.com.jnutz.jooq.public_.tables.records.StepsRecord;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -65,36 +66,34 @@ public class StepsDAO
     
     public static List<Step> getSteps(short id)
     {
+        List<Step> steps = new ArrayList<>();
+    
         try(var connection = database.getConnection();
             var database = H2DSL.using(connection, SQLDialect.H2))
         {
-            Result<Record> fetchedStep = database.select()
-                                                 .from(STEPS)
-                                                 .where(STEPS.ID.equal(id))
-                                                 .fetch();
+            Result<StepsRecord> fetchedSteps = database.selectFrom(STEPS)
+                                                       .where(STEPS.ID.equal(id))
+                                                       .fetch();
         
-            List<Step> steps = new ArrayList<>();
-        
-            if(fetchedStep.isNotEmpty())
+            if(fetchedSteps.isNotEmpty())
             {
-                for(Record record : fetchedStep)
+                for(StepsRecord stepsRecord : fetchedSteps)
                 {
                     Step step = new Step();
-                    
-                    step.setId(record.get(STEPS.ID));
-                    step.setNumber(record.get(STEPS.NUMBER));
-                    step.setText(record.get(STEPS.TEXT));
-                    
+                
+                    step.setId(stepsRecord.getId());
+                    step.setNumber(stepsRecord.getNumber());
+                    step.setText(stepsRecord.getText());
+                
                     steps.add(step);
                 }
             }
-            
-            return steps;
         }
         catch(SQLException e)
         {
             e.printStackTrace();
-            return null;
         }
+    
+        return steps;
     }
 }

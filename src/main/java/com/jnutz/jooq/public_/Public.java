@@ -45,7 +45,7 @@ public class Public extends SchemaImpl
      * The table <code>PUBLIC.Employees</code>.
      */
     public final Employees EMPLOYEES = src.main.java.com.jnutz.jooq.public_.tables.Employees.EMPLOYEES;
-    
+
     /**
      * The table <code>PUBLIC.Ingredients</code>.
      */

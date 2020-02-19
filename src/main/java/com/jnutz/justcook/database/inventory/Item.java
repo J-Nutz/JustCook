@@ -17,10 +17,6 @@ public class Item
     //      private short amountOfProductLost = amountPurchased - amountSold;
     //      private BigDecimal amountOfMoneyLost = amountOfProductLost * price;
     
-    public Item()
-    {
-    }
-    
     //Used when creating a new Item
     public Item(String name, ItemGroup group, BigDecimal price, short availableAmount, Measurement measurement)
     {

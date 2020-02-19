@@ -1,6 +1,5 @@
 package com.jnutz.justcook.database.cookbook.recipes;
 
-import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.util.h2.H2DSL;
@@ -39,23 +38,22 @@ public class RecipesDAO
         try(var connection = database.getConnection();
             var database = H2DSL.using(connection, SQLDialect.H2))
         {
-            Result<Record> fetchedRecipe = database.select()
-                                                   .from(RECIPES)
-                                                   .where(RECIPES.ID.equal(id))
-                                                   .fetch();
-        
+            Result<RecipesRecord> fetchedRecipe = database.selectFrom(RECIPES)
+                                                          .where(RECIPES.ID.equal(id))
+                                                          .fetch();
+    
             Recipe recipe = new Recipe();
-        
+    
             if(fetchedRecipe.isNotEmpty())
             {
-                Record record = fetchedRecipe.get(0);
-    
-                recipe.setId(record.get(RECIPES.ID));
-                recipe.setIndex(record.get(RECIPES.INDEX));
-                recipe.setName(record.get(RECIPES.NAME));
-                recipe.setCategory(record.get(RECIPES.CATEGORY));
-                recipe.setRecipeIngredientsIndex(record.get(RECIPES.RECIPE_INGREDIENTS_INDEX));
-                recipe.setRecipeStepsIndex(record.get(RECIPES.RECIPE_STEPS_INDEX));
+                RecipesRecord recipesRecord = fetchedRecipe.get(0);
+        
+                recipe.setId(recipesRecord.getId());
+                recipe.setIndex(recipesRecord.getIndex());
+                recipe.setName(recipesRecord.getName());
+                recipe.setCategory(recipesRecord.getCategory());
+                recipe.setRecipeIngredientsIndex(recipesRecord.getRecipeIngredientsIndex());
+                recipe.setRecipeStepsIndex(recipesRecord.getRecipeStepsIndex());
             }
     
             return recipe;
