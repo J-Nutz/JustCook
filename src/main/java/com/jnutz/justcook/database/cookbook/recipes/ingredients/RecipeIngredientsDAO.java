@@ -1,6 +1,6 @@
 package com.jnutz.justcook.database.cookbook.recipes.ingredients;
 
-import org.jooq.Record;
+import org.jooq.Record1;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.util.h2.H2DSL;
@@ -33,15 +33,14 @@ public class RecipeIngredientsDAO
         }
     }
     
-    public static List<RecipeIngredient> getRecipeIngredients(short index)
+    /*public static List<RecipeIngredient> getRecipeIngredients(short index)
     {
         try(var connection = database.getConnection();
             var database = H2DSL.using(connection, SQLDialect.H2))
         {
-            Result<Record> fetchedRecipeIngredient = database.select()
-                                                             .from(RECIPE_INGREDIENTS)
-                                                             .where(RECIPE_INGREDIENTS.INDEX.equal(index))
-                                                             .fetch();
+            Result<RecipeIngredientsRecord> fetchedRecipeIngredient = database.selectFrom(RECIPE_INGREDIENTS)
+                                                                              .where(RECIPE_INGREDIENTS.INDEX.equal(index))
+                                                                              .fetch();
         
             List<RecipeIngredient> recipeIngredients = new ArrayList<>();
         
@@ -67,9 +66,42 @@ public class RecipeIngredientsDAO
             e.printStackTrace();
             return null;
         }
+    }*/
+    
+    public static List<Short> getRecipeIngredientIds(short index)
+    {
+        try(var connection = database.getConnection();
+            var database = H2DSL.using(connection, SQLDialect.H2))
+        {
+            Result<Record1<Short>> fetchedIngredientIds = database.select(RECIPE_INGREDIENTS.INGREDIENT_ID)
+                                                                  .from(RECIPE_INGREDIENTS)
+                                                                  .where(RECIPE_INGREDIENTS.INDEX.equal(index))
+                                                                  .fetch();
+            
+            if(fetchedIngredientIds.isNotEmpty())
+            {
+                List<Short> ingredientIds = new ArrayList<>();
+                
+                for(Record1<Short> record : fetchedIngredientIds)
+                {
+                    ingredientIds.add(record.value1());
+                }
+                
+                return ingredientIds;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+            return null;
+        }
     }
     
-    public static RecipeIngredient getRecipeIngredient(short id, short index)
+/*    public static RecipeIngredient getRecipeIngredient(short id, short index)
     {
         try(var connection = database.getConnection();
             var database = H2DSL.using(connection, SQLDialect.H2))
@@ -99,5 +131,5 @@ public class RecipeIngredientsDAO
             e.printStackTrace();
             return null;
         }
-    }
+    }*/
 }

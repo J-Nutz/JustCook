@@ -1,6 +1,7 @@
 package com.jnutz.justcook.database.cookbook.recipes.steps;
 
 import org.jooq.Record;
+import org.jooq.Record1;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.util.h2.H2DSL;
@@ -55,8 +56,41 @@ public class RecipeStepsDAO
                 recipeStep.setIndex(record.get(RECIPE_STEPS.INDEX));
                 recipeStep.setStepId(record.get(RECIPE_STEPS.STEP_ID));
             }
-            
+    
             return recipeStep;
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    public static List<Short> getRecipeStepIds(short index)
+    {
+        try(var connection = database.getConnection();
+            var database = H2DSL.using(connection, SQLDialect.H2))
+        {
+            Result<Record1<Short>> fetchedRecipeSteps = database.select(RECIPE_STEPS.STEP_ID)
+                                                                .from(RECIPE_STEPS)
+                                                                .where(RECIPE_STEPS.INDEX.equal(index))
+                                                                .fetch();
+            
+            if(fetchedRecipeSteps.isNotEmpty())
+            {
+                List<Short> recipeSteps = new ArrayList<>();
+                
+                for(Record1<Short> stepId : fetchedRecipeSteps)
+                {
+                    recipeSteps.add(stepId.value1());
+                }
+                
+                return recipeSteps;
+            }
+            else
+            {
+                return null;
+            }
         }
         catch(SQLException e)
         {

@@ -64,36 +64,56 @@ public class StepsDAO
         }
     }
     
-    public static List<Step> getSteps(short id)
+    public static List<Step> getSteps(short index)
     {
-        List<Step> steps = new ArrayList<>();
+        List<Short> stepIds = RecipeStepsDAO.getRecipeStepIds(index);
     
-        try(var connection = database.getConnection();
-            var database = H2DSL.using(connection, SQLDialect.H2))
+        if(stepIds != null)
         {
-            Result<StepsRecord> fetchedSteps = database.selectFrom(STEPS)
-                                                       .where(STEPS.ID.equal(id))
-                                                       .fetch();
-        
-            if(fetchedSteps.isNotEmpty())
+            try(var connection = database.getConnection();
+                var database = H2DSL.using(connection, SQLDialect.H2))
             {
-                for(StepsRecord stepsRecord : fetchedSteps)
+                List<Step> steps = new ArrayList<>();
+            
+                for(Short id : stepIds)
                 {
-                    Step step = new Step();
+                    Result<StepsRecord> fetchedSteps = database.selectFrom(STEPS)
+                                                               .where(STEPS.ID.equal(id))
+                                                               .fetch();
                 
-                    step.setId(stepsRecord.getId());
-                    step.setNumber(stepsRecord.getNumber());
-                    step.setText(stepsRecord.getText());
-                
-                    steps.add(step);
+                    if(fetchedSteps.isNotEmpty())
+                    {
+                        for(StepsRecord stepsRecord : fetchedSteps)
+                        {
+                            Step step = new Step();
+                        
+                            step.setId(stepsRecord.getId());
+                            step.setNumber(stepsRecord.getNumber());
+                            step.setText(stepsRecord.getText());
+                        
+                            steps.add(step);
+                        }
+                    }
+                    // TODO: How should this be handled?
+                    //  There might still be more Steps that aren't null
+                    //  However we have now misplaced a step somehow
+                    /*else
+                    {
+                        return null;
+                    }*/
                 }
+            
+                return steps;
+            }
+            catch(SQLException e)
+            {
+                e.printStackTrace();
+                return null;
             }
         }
-        catch(SQLException e)
+        else
         {
-            e.printStackTrace();
+            return null;
         }
-    
-        return steps;
     }
 }

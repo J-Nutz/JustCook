@@ -10,4 +10,6 @@ public class Styling
     
     public static final Font Font_14 = Font.font(14);
     public static final Font Font_16 = Font.font(16);
+    public static final Font Font_18 = Font.font(18);
+    public static final Font Font_20 = Font.font(20);
 }

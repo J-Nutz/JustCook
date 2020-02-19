@@ -97,13 +97,50 @@ public class IngredientsDAO
         return ingredient.get();
     }
     
+    public static List<Ingredient> getIngredients2(short index)
+    {
+        try(var connection = database.getConnection();
+            var database = H2DSL.using(connection, SQLDialect.H2))
+        {
+            List<Short> ingredientIds = RecipeIngredientsDAO.getRecipeIngredientIds(index);
+            List<Ingredient> ingredients = new ArrayList<>();
+            
+            for(Short id : RecipeIngredientsDAO.getRecipeIngredientIds(index))
+            {
+                Result<IngredientsRecord> fetchedIngredient = database.selectFrom(INGREDIENTS)
+                                                                      .where(INGREDIENTS.ID.equal(id))
+                                                                      .fetch();
+                
+                if(fetchedIngredient.isNotEmpty())
+                {
+                    IngredientsRecord ingredientsRecord = fetchedIngredient.get(0);
+                    
+                    Ingredient ingredient = new Ingredient();
+                    
+                    ingredient.setId(ingredientsRecord.getId());
+                    ingredient.setName(ingredientsRecord.getName());
+                    ingredient.setItemId(ingredientsRecord.getItemId());
+                    
+                    ingredients.add(ingredient);
+                }
+            }
+            
+            return ingredients.isEmpty() ? null : ingredients;
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
     public static List<Ingredient> getIngredients(short... ids)
     {
         try(var connection = database.getConnection();
             var database = H2DSL.using(connection, SQLDialect.H2))
         {
             List<Ingredient> ingredients = new ArrayList<>();
-        
+            
             for(short id : ids)
             {
                 Result<IngredientsRecord> fetchedIngredient = database.selectFrom(INGREDIENTS)

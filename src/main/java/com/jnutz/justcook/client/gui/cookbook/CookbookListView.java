@@ -11,17 +11,21 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 
 public class CookbookListView extends GridPane
 {
+    private BorderPane topContainer = new BorderPane();
     private Button backBtn = new Button("Back");
+    private Label titleLbl = new Label("Cookbooks");
+    
     private Cookbook currentCookbook;
     
     public CookbookListView()
     {
-        
         init();
         addComponents();
     }
@@ -32,21 +36,33 @@ public class CookbookListView extends GridPane
         setVgap(10);
         setHgap(10);
         setBorder(Styling.Border_Default);
-    
+        
+        topContainer.setPadding(new Insets(10));
+        
         backBtn.setFont(Styling.Font_14);
+        
+        titleLbl.setFont(Styling.Font_20);
     }
     
     private void addComponents()
     {
+        topContainer.setCenter(titleLbl);
+    
+        add(topContainer, 0, 0, 9, 1);
+    
         addCookbooks();
     }
     
     private void addCookbooks()
     {
-        getChildren().clear();
+        getChildren().removeIf((child) -> child != topContainer);
+    
+        topContainer.setLeft(null);
+    
+        titleLbl.setText("Cookbooks");
     
         int column = 0;
-        int row = 0;
+        int row = 1;
     
         for(Cookbook cookbook : CookbooksDAO.getAllCookbooks())
         {
@@ -57,6 +73,8 @@ public class CookbookListView extends GridPane
                 cookbookQuickView.setOnMouseClicked(event -> {
                     currentCookbook = cookbook;
                     addRecipes(cookbook);
+    
+                    topContainer.setLeft(backBtn);
                 });
             
                 add(cookbookQuickView, column, row);
@@ -76,10 +94,10 @@ public class CookbookListView extends GridPane
     
     private void addRecipes(Cookbook cookbook)
     {
-        getChildren().clear();
-        add(backBtn, 0, 0, 1, 1);
-        
+        getChildren().removeIf((child) -> child != topContainer);
+    
         backBtn.setOnAction(event -> addCookbooks());
+        titleLbl.setText(cookbook.getName());
         
         int column = 0;
         int row = 1;
@@ -109,10 +127,10 @@ public class CookbookListView extends GridPane
     
     private void showRecipe(Recipe recipe)
     {
-        getChildren().clear();
-        add(backBtn, 0, 0, 1, 1);
-        
+        getChildren().removeIf((child) -> child != topContainer);
+    
         backBtn.setOnAction(event -> addRecipes(currentCookbook));
+        titleLbl.setText(recipe.getName());
         
         RecipeView recipeView = new RecipeView(recipe);
     
